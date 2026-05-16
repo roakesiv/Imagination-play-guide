@@ -31,6 +31,13 @@ const resetButton = document.querySelector('#resetButton');
 const fillExampleButton = document.querySelector('#fillExampleButton');
 const copyStatus = document.querySelector('#copyStatus');
 const styleInput = document.querySelector('#pictureStyle');
+const artifactChoices = document.querySelector('#artifactChoices');
+const artifactOutputPanel = document.querySelector('#artifactOutputPanel');
+const artifactTitle = document.querySelector('#artifactTitle');
+const artifactOutput = document.querySelector('#artifactOutput');
+const copyArtifactButton = document.querySelector('#copyArtifactButton');
+const artifactCopyStatus = document.querySelector('#artifactCopyStatus');
+let currentArtifactType = '';
 
 function getValues() {
   return fields.reduce((values, field) => {
@@ -66,6 +73,114 @@ Picture style: ${promptValue(values.pictureStyle)}
 Style instructions:
 Use a bright, kid-friendly magical creature profile card style with soft shapes, friendly expression, readable text, playful details, and a magical background.`;
 }
+
+function getFindItItems(values) {
+  const rawItems = [
+    values.accessories,
+    values.extraDetail,
+    values.magic ? `${values.magic} sparkle` : '',
+    values.colors ? `${values.colors} tiny gem` : '',
+    values.home ? `small sign for ${values.home}` : ''
+  ];
+
+  const items = rawItems
+    .filter(Boolean)
+    .flatMap((item) => item.split(','))
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  const uniqueItems = [...new Set(items)];
+  return uniqueItems.length ? uniqueItems : ['a tiny star', 'a smiley flower', 'a magic key', 'a little crown', 'a hidden heart'];
+}
+
+const artifactTemplates = {
+  card: {
+    title: 'Creature Card',
+    build(values) {
+      return `Kid-friendly magical creature profile card
+
+Name: ${promptValue(values.name)}
+Creature mix: ${promptValue(values.creatureMix)}
+Magic: ${promptValue(values.magic)}
+Colors: ${promptValue(values.colors)}
+Home: ${promptValue(values.home)}
+Personality: ${promptValue(values.personality)}
+Carries or wears: ${promptValue(values.accessories)}
+Fun fact: ${promptValue(values.extraDetail)}
+
+Make it cute, colorful, whimsical, and safe for young children. Preserve every specific silly detail.`;
+    }
+  },
+  story: {
+    title: 'Story',
+    build(values) {
+      const name = values.name || 'the creature';
+      return `Write a short, cozy kid-friendly story.
+
+Main creature: ${name}, a ${promptValue(values.creatureMix)}
+Magic: ${promptValue(values.magic)}
+Home: ${promptValue(values.home)}
+Colors: ${promptValue(values.colors)}
+Personality: ${promptValue(values.personality)}
+Special detail: ${promptValue(values.extraDetail)}
+
+Story shape:
+1. ${name} notices a tiny problem near ${promptValue(values.home)}.
+2. ${name} uses ${promptValue(values.magic)} in a kind or funny way.
+3. A friend helps or cheers.
+4. End with everyone safe, happy, and ready to play again.`;
+    }
+  },
+  adventure: {
+    title: 'Adventure',
+    build(values) {
+      const name = values.name || 'the creature';
+      return `Make a gentle adventure seed for young kids.
+
+Hero: ${name}, a ${promptValue(values.creatureMix)}
+Home base: ${promptValue(values.home)}
+Magic tool: ${promptValue(values.magic)}
+Personality: ${promptValue(values.personality)}
+Carries or wears: ${promptValue(values.accessories)}
+
+Quest: Help find a missing happy thing from ${promptValue(values.home)}.
+Friendly helper: A tiny glowing guide who likes ${promptValue(values.colors)} things.
+Obstacle: A silly mix-up, a locked door, or a confusing map.
+Choice moment: Go over, under, around, or ask for help?
+Reward: A cheerful celebration and a new badge for ${name}.`;
+    }
+  },
+  coloring: {
+    title: 'Coloring Page',
+    build(values) {
+      return `Create a printable coloring book page for a kid-friendly magical creature.
+
+Main creature: ${promptValue(values.name)}, a ${promptValue(values.creatureMix)}
+Magic: ${promptValue(values.magic)}
+Home/background: ${promptValue(values.home)}
+Personality: ${promptValue(values.personality)}
+Extra detail to include: ${promptValue(values.extraDetail)}
+
+Use clean bold outlines, simple shapes, open spaces for coloring, no heavy shading, no scary details, and a playful printable style.`;
+    }
+  },
+  findIt: {
+    title: 'Find-It Game',
+    build(values) {
+      return `Create a kid-friendly hidden-object activity page.
+
+Scene: ${promptValue(values.name)}, a ${promptValue(values.creatureMix)}, is playing in ${promptValue(values.home)}.
+Magic: ${promptValue(values.magic)}
+Colors/vibe: ${promptValue(values.colors)}
+Personality: ${promptValue(values.personality)}
+
+Things to find:
+${getFindItItems(values).map((item) => `- ${item}`).join('\n')}
+
+Make the page whimsical, readable, safe for young children, and full of fun details.`;
+    }
+  }
+};
 
 function buildSummary(values) {
   const name = values.name || 'This creature';
@@ -133,6 +248,27 @@ function generateOutputs() {
   renderDetails(values);
   copyButton.disabled = false;
   copyStatus.textContent = '';
+
+  if (currentArtifactType) {
+    renderArtifact(currentArtifactType);
+  }
+}
+
+function renderArtifact(type) {
+  const template = artifactTemplates[type];
+  if (!template) {
+    return;
+  }
+
+  currentArtifactType = type;
+  artifactTitle.textContent = template.title;
+  artifactOutput.value = template.build(getValues());
+  artifactOutputPanel.hidden = false;
+  artifactCopyStatus.textContent = '';
+
+  document.querySelectorAll('.choice-card').forEach((choice) => {
+    choice.classList.toggle('is-selected', choice.dataset.output === type);
+  });
 }
 
 form.addEventListener('submit', (event) => {
@@ -144,10 +280,17 @@ form.addEventListener('submit', (event) => {
 resetButton.addEventListener('click', () => {
   window.setTimeout(() => {
     promptOutput.value = '';
-    summaryOutput.textContent = 'Make a prompt to see the creature summary.';
+    summaryOutput.textContent = 'Make a creature to see the summary.';
     renderDetails({});
     copyButton.disabled = true;
     copyStatus.textContent = '';
+    artifactOutput.value = '';
+    artifactOutputPanel.hidden = true;
+    artifactCopyStatus.textContent = '';
+    currentArtifactType = '';
+    document.querySelectorAll('.choice-card').forEach((choice) => {
+      choice.classList.remove('is-selected');
+    });
   }, 0);
 });
 
@@ -177,12 +320,38 @@ copyButton.addEventListener('click', async () => {
     return;
   }
 
-  try {
-    await navigator.clipboard.writeText(promptOutput.value);
-    copyStatus.textContent = 'Prompt copied.';
-  } catch (error) {
-    promptOutput.select();
-    document.execCommand('copy');
-    copyStatus.textContent = 'Prompt copied.';
-  }
+  await copyText(promptOutput, copyStatus, 'Prompt copied.');
 });
+
+artifactChoices.addEventListener('click', (event) => {
+  const choice = event.target.closest('.choice-card');
+  if (!choice) {
+    return;
+  }
+
+  if (!promptOutput.value) {
+    generateOutputs();
+  }
+
+  renderArtifact(choice.dataset.output);
+  artifactOutputPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+copyArtifactButton.addEventListener('click', async () => {
+  if (!artifactOutput.value) {
+    return;
+  }
+
+  await copyText(artifactOutput, artifactCopyStatus, 'Output copied.');
+});
+
+async function copyText(textarea, statusElement, message) {
+  try {
+    await navigator.clipboard.writeText(textarea.value);
+    statusElement.textContent = message;
+  } catch (error) {
+    textarea.select();
+    document.execCommand('copy');
+    statusElement.textContent = message;
+  }
+}

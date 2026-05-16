@@ -9,73 +9,73 @@
 <body>
   <main class="app-shell">
     <header class="hero">
-      <p class="eyebrow">Parent-guided creative play</p>
+      <p class="eyebrow">Grown-up guided play</p>
       <h1>Magic Creature Card Maker</h1>
       <p>
-        Ask your child each question, type their exact answers, then make a
-        copy/paste-ready prompt for a kid-friendly magical creature profile card.
+        Ask a few playful questions, keep the exact silly answers, then make
+        something fun with the creature.
       </p>
     </header>
 
     <section class="panel" aria-labelledby="questions-heading">
       <div class="section-heading">
-        <h2 id="questions-heading">Ask the Questions</h2>
+        <h2 id="questions-heading">Make a Creature</h2>
         <button class="secondary-button" type="button" id="fillExampleButton">Fill Example</button>
       </div>
 
       <form id="creatureForm">
         <div class="question-block">
-          <label for="creatureMix">Creature mix</label>
-          <p class="parent-script">"Let's decide what creatures are mixed together. It could be dragon + unicorn, raccoon + pony, dinosaur + snake, or something else."</p>
-          <input id="creatureMix" name="creatureMix" type="text" placeholder="Example: raccoon witch + pony" autocomplete="off">
+          <div class="prompt-label"><span aria-hidden="true">🧩</span><label for="creatureMix">What is the magic creature made of?</label></div>
+          <p class="parent-script">Try any mix. Weird is welcome.</p>
+          <input id="creatureMix" name="creatureMix" type="text" placeholder="dragon + flower + cloud" autocomplete="off">
         </div>
 
         <div class="question-block">
-          <label for="magic">Magic</label>
-          <p class="parent-script">"What kind of magic does it have? It could be art magic, invisibility, rainbow magic, flying, demon hunting, healing, or something else."</p>
-          <input id="magic" name="magic" type="text" placeholder="Example: demon hunter" autocomplete="off">
+          <div class="prompt-label"><span aria-hidden="true">✨</span><label for="magic">What magic does the magic creature have?</label></div>
+          <p class="parent-script">Tiny magic, huge magic, snack magic, anything.</p>
+          <input id="magic" name="magic" type="text" placeholder="bubble shield magic" autocomplete="off">
         </div>
 
         <div class="question-block">
-          <label for="colors">Colors</label>
-          <p class="parent-script">"What colors should it be? It could be rainbow, grey, blue, pink, gold, rainbow but not blue, or something else."</p>
-          <input id="colors" name="colors" type="text" placeholder="Example: rainbow but not blue" autocomplete="off">
+          <div class="prompt-label"><span aria-hidden="true">🎨</span><label for="colors">What colors?</label></div>
+          <p class="parent-script">One color, rainbow, or a very specific rule.</p>
+          <input id="colors" name="colors" type="text" placeholder="rainbow but not blue" autocomplete="off">
         </div>
 
         <div class="question-block">
-          <label for="home">Home</label>
-          <p class="parent-script">"Where does it live? It could be a candy castle, underwater palace, sky castle, moon cave, or somewhere even weirder."</p>
-          <input id="home" name="home" type="text" placeholder="Example: castle in the sky but higher than space" autocomplete="off">
+          <div class="prompt-label"><span aria-hidden="true">🏰</span><label for="home">Where does the magic creature live?</label></div>
+          <p class="parent-script">A cave, castle, puddle, planet, or made-up place.</p>
+          <input id="home" name="home" type="text" placeholder="a castle higher than space" autocomplete="off">
         </div>
 
         <div class="question-block">
-          <label for="personality">What are they like?</label>
-          <p class="parent-script">"What are they like? They could be silly, kind, brave, sleepy, sneaky, gentle, or something else."</p>
-          <input id="personality" name="personality" type="text" placeholder="Example: kind and silly" autocomplete="off">
+          <div class="prompt-label"><span aria-hidden="true">💛</span><label for="personality">What is the magic creature like?</label></div>
+          <p class="parent-script">Silly, brave, sleepy, bossy, gentle, or new words.</p>
+          <input id="personality" name="personality" type="text" placeholder="kind and silly" autocomplete="off">
         </div>
 
         <div class="question-block">
-          <label for="accessories">Accessories</label>
-          <p class="parent-script">"What do they wear or carry? They could have a necklace, rings, books, toys, a cape, boots, a crown, or something else."</p>
-          <input id="accessories" name="accessories" type="text" placeholder="Example: books and toys" autocomplete="off">
+          <div class="prompt-label"><span aria-hidden="true">🎒</span><label for="accessories">What does the magic creature carry or wear?</label></div>
+          <p class="parent-script">A crown, backpack, boots, snacks, or nothing.</p>
+          <input id="accessories" name="accessories" type="text" placeholder="books and shiny boots" autocomplete="off">
         </div>
 
         <div class="question-block">
-          <label for="extraDetail">Extra weird detail</label>
-          <p class="parent-script">"What is one extra silly, magical, or weird detail?"</p>
-          <input id="extraDetail" name="extraDetail" type="text" placeholder="Example: sneezes glitter stars" autocomplete="off">
+          <div class="prompt-label"><span aria-hidden="true">🌟</span><label for="extraDetail">One extra silly detail?</label></div>
+          <p class="parent-script">This can be tiny, strange, or completely surprising.</p>
+          <input id="extraDetail" name="extraDetail" type="text" placeholder="sneezes glitter stars" autocomplete="off">
         </div>
 
         <div class="question-block">
-          <label for="creatureName">Name</label>
-          <p class="parent-script">"What is their name? It is okay to decide this last."</p>
-          <input id="creatureName" name="creatureName" type="text" placeholder="Example: Amor" autocomplete="off">
+          <div class="prompt-label"><span aria-hidden="true">📛</span><label for="creatureName">What is the magic creature's name?</label></div>
+          <p class="parent-script">You can decide this last.</p>
+          <input id="creatureName" name="creatureName" type="text" placeholder="Amor" autocomplete="off">
         </div>
 
         <div class="question-block">
-          <label for="pictureStyle">Picture style</label>
-          <p class="parent-script">"What should the picture feel like? Pick a style or make one up."</p>
-          <input id="pictureStyle" name="pictureStyle" type="text" placeholder="Example: cuddly storybook" autocomplete="off">
+          <div class="prompt-label"><span aria-hidden="true">🖍️</span><label for="pictureStyle">Picture style</label></div>
+          <p class="parent-script">Pick a button or invent a style.</p>
+          <input id="pictureStyle" name="pictureStyle" type="text" placeholder="cuddly storybook" autocomplete="off">
           <div class="chip-group" aria-label="Picture style suggestions">
             <button type="button" class="chip" data-style="storybook">storybook</button>
             <button type="button" class="chip" data-style="cuddly">cuddly</button>
@@ -91,7 +91,7 @@
         </div>
 
         <div class="action-row">
-          <button class="primary-button" type="submit">Make Prompt</button>
+          <button class="primary-button" type="submit">Make Creature</button>
           <button class="secondary-button" type="reset" id="resetButton">Reset</button>
         </div>
       </form>
@@ -103,13 +103,13 @@
           <h2>Image Prompt</h2>
           <button class="secondary-button" type="button" id="copyButton" disabled>Copy Prompt</button>
         </div>
-        <textarea id="promptOutput" readonly placeholder="Your image prompt will appear here after you tap Make Prompt."></textarea>
+        <textarea id="promptOutput" readonly placeholder="Your image prompt will appear here after you tap Make Creature."></textarea>
         <p class="copy-status" id="copyStatus" role="status"></p>
       </div>
 
       <div class="panel">
         <h2>Creature Summary</h2>
-        <p class="summary-output" id="summaryOutput">Make a prompt to see the creature summary.</p>
+        <p class="summary-output" id="summaryOutput">Make a creature to see the summary.</p>
       </div>
 
       <div class="panel">
@@ -125,6 +125,52 @@
           <div><dt>Extra weird detail</dt><dd>not specified</dd></div>
           <div><dt>Picture style</dt><dd>not specified</dd></div>
         </dl>
+      </div>
+    </section>
+
+    <section class="panel bridge-panel" aria-labelledby="bridge-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Next play step</p>
+          <h2 id="bridge-heading">What do we make next?</h2>
+        </div>
+      </div>
+
+      <div class="choice-grid" id="artifactChoices" aria-label="Creative output choices">
+        <button class="choice-card" type="button" data-output="card">
+          <span aria-hidden="true">🃏</span>
+          <strong>Creature Card</strong>
+          <small>A tidy profile to keep or share.</small>
+        </button>
+        <button class="choice-card" type="button" data-output="story">
+          <span aria-hidden="true">📖</span>
+          <strong>Story</strong>
+          <small>A cozy story starter.</small>
+        </button>
+        <button class="choice-card" type="button" data-output="adventure">
+          <span aria-hidden="true">🧭</span>
+          <strong>Adventure</strong>
+          <small>A tiny quest with choices.</small>
+        </button>
+        <button class="choice-card" type="button" data-output="coloring">
+          <span aria-hidden="true">🖍️</span>
+          <strong>Coloring Page</strong>
+          <small>A printable picture prompt.</small>
+        </button>
+        <button class="choice-card" type="button" data-output="findIt">
+          <span aria-hidden="true">🔎</span>
+          <strong>Find-It Game</strong>
+          <small>A hidden-object activity.</small>
+        </button>
+      </div>
+
+      <div class="artifact-output" id="artifactOutputPanel" hidden>
+        <div class="section-heading">
+          <h2 id="artifactTitle">Creature Card</h2>
+          <button class="secondary-button" type="button" id="copyArtifactButton">Copy</button>
+        </div>
+        <textarea id="artifactOutput" readonly></textarea>
+        <p class="copy-status" id="artifactCopyStatus" role="status"></p>
       </div>
     </section>
   </main>

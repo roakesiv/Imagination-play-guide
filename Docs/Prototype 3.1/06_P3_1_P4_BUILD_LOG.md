@@ -1,0 +1,79 @@
+# P3.1 + P4 Build Log
+
+## Date
+2026-05-16
+
+## Prototype
+Magic Creature Card Maker - Prototype 3.1 UX pass plus P4 bridge MVP.
+
+## Build Summary
+This build keeps the app as a small static prototype while making it feel more like a playful creative toy and less like a form.
+
+## Files Changed
+- `index.html`
+- `styles.css`
+- `script.js`
+- `Docs/Prototype 3.1/03_UX_SPEC_KID_FRIENDLY.md`
+- `Docs/Prototype 3.1/06_P3_1_P4_BUILD_LOG.md`
+- `Docs/Prototype 3.1/07_P3_1_IMPLEMENTATION_REVIEW.md`
+
+## UX Changes
+- Rewrote the intro copy to be shorter and warmer.
+- Changed the main form heading to "Make a Creature."
+- Replaced longer parent-script copy with short prompt hints.
+- Updated prompt labels to use "the magic creature" instead of "it" where helpful.
+- Added small playful visual markers beside prompt labels.
+- Increased input, button, chip, and choice-card touch target sizes.
+- Improved mobile spacing.
+- Added a more playful background with soft rainbow bands, tree-like shapes, and star dots.
+- Kept all core fields flexible free text.
+
+## P4 Bridge Changes
+- Added a bridge section titled "What do we make next?"
+- Added five large output choice cards:
+  - Creature Card
+  - Story
+  - Adventure
+  - Coloring Page
+  - Find-It Game
+- Added deterministic template output generation using the current creature data.
+- Added a Copy button for selected bridge output.
+- Kept the original image prompt and Copy Prompt behavior.
+
+## Implementation Notes
+- No backend added.
+- No accounts, auth, database, persistent storage, or AI API added.
+- No new dependencies added.
+- Current creature data is read directly from form inputs.
+- Bridge output refreshes if the user regenerates the creature after selecting an output type.
+
+## Verification Completed
+- Reviewed static HTML/CSS/JS diffs after implementation.
+- Confirmed all five bridge templates exist in `script.js`.
+- Ran `git diff --check`; it passed with only Git line-ending warnings.
+- Confirmed no package-based test or build command exists in this static prototype.
+
+## Verification Not Completed
+- `node --check script.js` could not be run because Node is not installed in this workspace.
+- Browser/mobile interaction testing still needs to be done manually.
+- Clipboard behavior still needs to be tested on phone.
+
+## Current Acceptance Criteria Status
+| Criteria | Status | Notes |
+|---|---|---|
+| App is easier and more playful on mobile | Ready for test | Visual pass implemented; needs phone check. |
+| Primary actions are obvious and easy to tap | Ready for test | Bigger buttons and choice cards added. |
+| Copy is short and friendly | Pass / Ready for test | Form copy shortened. |
+| Creature creation still works | Ready for test | Logic preserved; needs browser confirmation. |
+| Completed creature can flow into bridge screen | Ready for test | Bridge appears below generated outputs. |
+| At least 3 output types work | Pass by implementation | Five templates added. |
+| Generated output uses entered creature data | Pass by implementation | Templates read current form values. |
+| Output can be copied | Ready for test | Copy logic added; needs phone confirmation. |
+| Build log exists | Pass | This file. |
+
+## Follow-Up Issues
+- Test on an actual phone while holding the device one-handed.
+- Confirm the rainbow/tree/star background does not reduce readability outdoors or in bright rooms.
+- Confirm whether the single-page form is still too long during live play.
+- Consider a future print layout for Coloring Page and Find-It Game outputs.
+- Consider lightweight step navigation only if live testing shows the full-page form creates friction.
