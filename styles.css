@@ -7,6 +7,15 @@
   --primary-dark: #d94855;
   --secondary: #247c77;
   --secondary-dark: #155d58;
+  --rainbow-red: #e53935;
+  --rainbow-orange: #f57c00;
+  --rainbow-yellow: #ffd54f;
+  --rainbow-green: #2e7d32;
+  --rainbow-blue: #1976d2;
+  --rainbow-indigo: #4b4fc4;
+  --rainbow-violet: #8e24aa;
+  --rainbow-pink: #d81b60;
+  --rainbow-teal: #00897b;
   --accent: #ffd45c;
   --mint: #dff8ed;
   --sky: #e2f0ff;
@@ -86,6 +95,48 @@ h2 {
   margin-bottom: 0;
   color: var(--muted);
   font-size: 1.08rem;
+}
+
+.parent-tips {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 2px solid #f2ca55;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.parent-tips summary {
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.parent-tips-content {
+  padding-top: 12px;
+  color: var(--muted);
+}
+
+.parent-tips-content p {
+  margin-bottom: 10px;
+}
+
+.parent-tips-content ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.parent-tips-content li {
+  margin-bottom: 6px;
+}
+
+.parent-tips-content li:last-child {
+  margin-bottom: 0;
+}
+
+.tips-label {
+  color: var(--ink);
+  font-weight: 900;
 }
 
 .panel {
@@ -212,26 +263,64 @@ button:focus-visible {
 }
 
 .primary-button {
-  background: var(--primary);
+  background: var(--rainbow-orange);
   color: #ffffff;
 }
 
 .primary-button:hover {
-  background: var(--primary-dark);
+  background: #d96800;
 }
 
 .secondary-button {
-  background: var(--secondary);
+  background: var(--rainbow-green);
   color: #ffffff;
 }
 
 .secondary-button:hover {
-  background: var(--secondary-dark);
+  background: #236329;
 }
 
 .secondary-button:disabled {
   background: #b9c6c2;
   cursor: not-allowed;
+}
+
+#fillExampleButton {
+  background: var(--rainbow-red);
+}
+
+#fillExampleButton:hover {
+  background: #c62828;
+}
+
+#resetButton {
+  background: var(--rainbow-yellow);
+  color: var(--ink);
+}
+
+#resetButton:hover {
+  background: #fbc02d;
+}
+
+#copyButton {
+  background: var(--rainbow-green);
+}
+
+#copyButton:hover {
+  background: #236329;
+}
+
+#copyButton:disabled {
+  background: #b9c6c2;
+  color: #ffffff;
+}
+
+#copyArtifactButton {
+  background: var(--rainbow-teal);
+}
+
+#copyArtifactButton:hover {
+  background: #00695c;
 }
 
 .copy-status {
@@ -245,6 +334,13 @@ button:focus-visible {
   margin-bottom: 0;
   color: var(--muted);
   font-size: 1.04rem;
+}
+
+.prompt-helper {
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 .details-list {
@@ -296,14 +392,29 @@ dd {
   cursor: pointer;
 }
 
-.choice-card:nth-child(2n) {
-  border-color: #bfe7dc;
-  background: var(--mint);
+.choice-card:nth-child(1) {
+  border-color: var(--rainbow-blue);
+  background: #e3f2fd;
 }
 
-.choice-card:nth-child(3n) {
-  border-color: #ffd2df;
-  background: var(--pink);
+.choice-card:nth-child(2) {
+  border-color: var(--rainbow-indigo);
+  background: #ecebff;
+}
+
+.choice-card:nth-child(3) {
+  border-color: var(--rainbow-violet);
+  background: #f6e7fb;
+}
+
+.choice-card:nth-child(4) {
+  border-color: var(--rainbow-pink);
+  background: #fde7f0;
+}
+
+.choice-card:nth-child(5) {
+  border-color: var(--rainbow-orange);
+  background: #fff0dc;
 }
 
 .choice-card span {
@@ -328,8 +439,37 @@ dd {
 
 .choice-card:hover,
 .choice-card.is-selected {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.14);
+  box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.16);
+}
+
+.choice-card:nth-child(1):hover,
+.choice-card:nth-child(1).is-selected {
+  border-color: var(--rainbow-blue);
+  box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.18);
+}
+
+.choice-card:nth-child(2):hover,
+.choice-card:nth-child(2).is-selected {
+  border-color: var(--rainbow-indigo);
+  box-shadow: 0 0 0 4px rgba(75, 79, 196, 0.18);
+}
+
+.choice-card:nth-child(3):hover,
+.choice-card:nth-child(3).is-selected {
+  border-color: var(--rainbow-violet);
+  box-shadow: 0 0 0 4px rgba(142, 36, 170, 0.18);
+}
+
+.choice-card:nth-child(4):hover,
+.choice-card:nth-child(4).is-selected {
+  border-color: var(--rainbow-pink);
+  box-shadow: 0 0 0 4px rgba(216, 27, 96, 0.18);
+}
+
+.choice-card:nth-child(5):hover,
+.choice-card:nth-child(5).is-selected {
+  border-color: var(--rainbow-orange);
+  box-shadow: 0 0 0 4px rgba(245, 124, 0, 0.18);
 }
 
 .artifact-output {

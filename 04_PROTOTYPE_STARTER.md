@@ -30,7 +30,9 @@ Send ChatGPT a curated context bundle, not the whole repo.
 
 Recommended current-truth bundle:
 - `00_README.md`
-- `01_PRODUCT_VISION.md`
+- `01_01_PRODUCT_VISION.md`
+- `01_02_PRODUCT_INSIGHTS_DESIGN_SESSION.md`
+- `01_03_PRODUCT_ROADMAP.md`
 - `02_APP_SPEC.md`
 - `03_UX_SPEC.md`
 - `04_PROTOTYPE_STARTER.md`
@@ -115,7 +117,9 @@ Do not create a prototype-specific UX spec by default. Durable UX rules should m
 Top-level docs describe what is true now:
 
 - `00_README.md` - repo orientation
-- `01_PRODUCT_VISION.md` - product why
+- `01_01_PRODUCT_VISION.md` - product why
+- `01_02_PRODUCT_INSIGHTS_DESIGN_SESSION.md` - product insights and design-session synthesis
+- `01_03_PRODUCT_ROADMAP.md` - staged roadmap
 - `02_APP_SPEC.md` - current app requirements and architecture
 - `03_UX_SPEC.md` - current UX rules
 - `04_PROTOTYPE_STARTER.md` - reusable launch prompt for the next prototype
@@ -165,7 +169,9 @@ I want to launch Prototype [X.Y] for Magic Creature Card Maker.
 
 Read the top-level source-of-truth docs first:
 - 00_README.md
-- 01_PRODUCT_VISION.md
+- 01_01_PRODUCT_VISION.md
+- 01_02_PRODUCT_INSIGHTS_DESIGN_SESSION.md
+- 01_03_PRODUCT_ROADMAP.md
 - 02_APP_SPEC.md
 - 03_UX_SPEC.md
 - 04_PROTOTYPE_STARTER.md
@@ -218,15 +224,17 @@ Then, unless I ask you to pause:
 Use this section when launching Prototype 4.0.
 
 Current likely inputs:
-- Prototype 3.1 phone testing
-- `Docs/Prototype 3.1/P3.1_IMPLEMENTATION_REVIEW.md`
+- Prototype 3.1 validation
+- Prototype 3.2 results, if P3.2 is complete or explicitly paused
+- `Docs/Prototype 3.1/P3.1_VALIDATION_RESULTS.md`
+- `Docs/Prototype 3.2/P3.2_PROTOTYPE_PLAN.md`
 - Open questions in `02_APP_SPEC.md`
 - UX testing checklist in `03_UX_SPEC.md`
 
 Likely Prototype 4.0 decision area:
-- Whether the full-page form is still too long
-- Which fields are essential
-- Whether the bridge outputs are useful during real play
-- Whether step navigation, shorter flow, or better output previews are justified
+- Whether the bridge should become a focused activity-book flow
+- Which initial activity outputs are worth improving first
+- Whether coloring/find-it should be pruned, rewritten, or expanded with maze and tracing
+- Whether step navigation, shorter flow, or better output previews are justified after P3.2
 
 Keep Prototype 4.0 focused on the highest-friction finding from testing.

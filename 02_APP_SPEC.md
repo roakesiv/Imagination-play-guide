@@ -1,13 +1,15 @@
 # App Spec
 
 Status: Current  
-Last updated after: Prototype 3.1 UX pass plus P4 bridge MVP  
-Last updated: 2026-05-16
+Last updated after: Prototype 3.2 UX refinement
+Last updated: 2026-05-17
 
 This is the living product and engineering spec for Magic Creature Card Maker. Prototype folders preserve history. This file captures the current truth: what the app is, what it needs to do, what has been decided, and what remains open.
 
 Related source-of-truth docs:
-- `01_PRODUCT_VISION.md` captures the product why.
+- `01_01_PRODUCT_VISION.md` captures the product why.
+- `01_02_PRODUCT_INSIGHTS_DESIGN_SESSION.md` captures working product insights from design sessions and validation.
+- `01_03_PRODUCT_ROADMAP.md` captures staged product direction.
 - `03_UX_SPEC.md` captures the current UX, copy, layout, and interaction rules.
 
 ## Product Intent
@@ -43,6 +45,7 @@ The adult facilitator needs:
 - Low setup effort
 - Phone-friendly controls
 - Short prompts that are easy to skim and say aloud
+- Clear understanding that the app creates copyable prompts, not images directly
 - Flexible fields that work even when skipped or partially answered
 - No prompt-engineering knowledge required
 - Fast output so children do not lose attention
@@ -60,11 +63,12 @@ The child needs:
 ### Make a Creature
 
 1. Adult opens `index.html`.
-2. Adult asks the creature prompts aloud.
-3. Child gives answers.
-4. Adult types answers into free-text fields.
-5. Adult taps `Make Creature`.
-6. App generates an image prompt, creature summary, and details recap.
+2. Adult optionally opens the Parent Tips section for facilitation guidance.
+3. Adult asks or adapts the creature prompts aloud.
+4. Child gives answers.
+5. Adult types answers into free-text fields.
+6. Adult taps `Make Creature`.
+7. App generates an image prompt, creature summary, and details recap.
 
 ### Use a Style Suggestion
 
@@ -98,6 +102,7 @@ Creature creation:
 - The app must preserve free-text answers without normalizing or overcorrecting them.
 - The app must work when fields are skipped.
 - Missing values should render as `not specified`.
+- The user-facing flow must clearly state that the app makes a prompt to copy into ChatGPT or another AI image creator.
 - The generated image prompt must be kid-safe, whimsical, and explicit about avoiding scary, violent, horror, or adult content.
 - The generated summary must be readable as a short creature recap.
 - The details recap must show the current values for all creature fields.
@@ -112,6 +117,14 @@ Input fields:
 - Extra silly detail
 - Creature name
 - Picture style
+
+Content maintainability:
+- Field titles, parent-facing questions, suggestion examples, placeholders, visual markers, style chips, parent tips, and example values live in `content.js`.
+- Editable content should stay in a simple static structure that works locally and on GitHub Pages.
+
+Parent tips:
+- The app should provide compact optional facilitation guidance near the top.
+- Parent tips should be expandable/collapsible and not block the main creature flow.
 
 Bridge outputs:
 - The app must show a visible next-step bridge after creature creation.
@@ -152,13 +165,17 @@ The canonical UX rules live in `03_UX_SPEC.md`. This section summarizes the prod
 Current UX rules:
 - Use short, warm, playful copy.
 - Make the screen purpose obvious within a few seconds.
+- Make the prompt-only workflow explicit for first-time users.
 - Use large phone-friendly buttons, inputs, chips, and choice cards.
+- Use visually distinct major buttons so an adult can guide a non-reading child by color.
+- Keep optional parent guidance compact, skimmable, and collapsible.
 - Treat fields as creative signposts, not correctness checks.
 - Preserve absurd child specificity.
+- Treat field text as glanceable cue cards for adult facilitation, not scripts to read verbatim.
 - Prefer "the magic creature" over ambiguous "it" in prompt labels.
 - Keep the bridge from creature creation to next output visible and obvious.
 - Avoid long parent scripts.
-- Keep the visual design playful without reducing readability.
+- Keep the visual design playful without reducing readability; decorative elements must not conflict with title or intro text.
 
 Accessibility basics:
 - Use readable font sizes.
@@ -173,14 +190,17 @@ Accessibility basics:
 The current app is a small static web app:
 
 - `index.html` contains the app structure, form fields, output panels, and bridge choice buttons.
+- `content.js` contains editable field text, suggestions, placeholders, markers, style chips, parent tips, and Fill Example values.
 - `styles.css` contains mobile-first layout, visual styling, responsive rules, and component states.
 - `script.js` contains form behavior, prompt generation, summary rendering, details rendering, bridge templates, style chip behavior, copy behavior, and reset behavior.
 
 There is no build step and no package manager. The app runs by opening `index.html` in a browser.
 
-Current JavaScript shape:
-- `fields` defines the form field mapping.
-- `exampleValues` defines the Fill Example data.
+Current JavaScript/content shape:
+- `content.js` defines editable app content.
+- `parentTips` defines the expandable Parent Tips section.
+- `fields` defines the details/order mapping derived from `content.js`.
+- `exampleValues` defines the Fill Example data from `content.js`.
 - `getValues()` reads current form state.
 - `buildPrompt()` creates the image prompt.
 - `buildSummary()` creates the readable creature summary.
@@ -188,6 +208,9 @@ Current JavaScript shape:
 - `artifactTemplates` contains deterministic bridge output builders.
 - `renderArtifact()` updates selected bridge output.
 - `copyText()` handles Clipboard API copy with fallback behavior.
+
+Architecture direction:
+- Keep editable copy/content separate from logic-heavy behavior code while the app remains static and dependency-free.
 
 Current state model:
 - Form fields are the source of truth.
@@ -212,7 +235,7 @@ Current UI patterns:
 - Textareas for generated copyable outputs
 - Clear selected state on bridge choice cards
 
-The current background uses rainbow bands, tree-like shapes, and star dots. This should be validated on phone and in bright rooms.
+The current background uses rainbow bands, tree-like shapes, and star dots. P3.1 validation found that the decoration helped the mood but could interfere with the first intro sentence near the title, so header readability needs a targeted fix.
 
 ## Prototype Learnings
 
@@ -239,6 +262,23 @@ Durable learning:
 - The product needs both creation and continuation. After a creature is made, the next useful question is "What do we make next?"
 - The bridge can be lightweight and template-based before becoming a full story engine.
 - Shorter copy, larger controls, and friendlier labels are part of the product, not just polish.
+- First-time users need clearer direction that the app creates a prompt to copy elsewhere, not an image directly.
+- Parent-facing field text should be editable without hunting through behavior logic.
+- Button color differentiation matters because children may participate by pressing buttons before they can read.
+- Decorative playfulness needs readability guardrails on phone.
+
+### Prototype 3.2
+
+Prototype 3.2 is a targeted foundation refinement before full P4 activity-book work.
+
+Durable learning:
+- Clarify prompt-only workflow.
+- Centralize editable field text, suggestions, style chips, parent tips, and examples in `content.js`.
+- Rewrite field questions and examples for glanceable live facilitation.
+- Differentiate major buttons with distinct readable colors.
+- Fix header/rainbow readability conflict.
+- Add compact Parent Tips guidance for first-time adult facilitators.
+- Update prototype docs and durable source-of-truth docs.
 
 ## Current Non-Goals
 
@@ -259,13 +299,17 @@ The app is not currently:
 Product and UX:
 - Is the single-page form still too long during live play?
 - Which fields are essential, and which create friction?
-- Does the background help the play mood or hurt readability on phone?
+- After P3.2, does the background still support the play mood without hurting title or intro readability?
 - Which bridge output is most useful first: card, story, adventure, coloring page, or find-it game?
 - Are generated bridge outputs too long for tired or distracted adults?
+- Does clearer prompt-only copy prevent first-time-user confusion?
+- Do rewritten field prompts reduce adult facilitation effort during live play?
+- Do distinct button colors help adults guide child participation?
 - Should Prototype 4.0 add lightweight step navigation, or keep the full-page form?
 
 Architecture:
 - How long can the app stay as plain HTML/CSS/JS before structure becomes a constraint?
+- Is `content.js` enough structure for editable field text, or should the app later use a more explicit content model?
 - Should output templates be separated from UI code if they grow?
 - Should creature data become an explicit object model with validation, defaults, and serialization?
 - Is local storage useful, or would it add premature complexity?

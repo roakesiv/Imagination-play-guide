@@ -13,9 +13,11 @@
       <h1>Magic Creature Card Maker</h1>
       <p>
         Ask a few playful questions, keep the exact silly answers, then make
-        something fun with the creature.
+        a prompt to copy into ChatGPT or your favorite AI image creator.
       </p>
     </header>
+
+    <div id="parentTipsMount"></div>
 
     <section class="panel" aria-labelledby="questions-heading">
       <div class="section-heading">
@@ -24,71 +26,7 @@
       </div>
 
       <form id="creatureForm">
-        <div class="question-block">
-          <div class="prompt-label"><span aria-hidden="true">🧩</span><label for="creatureMix">What is the magic creature made of?</label></div>
-          <p class="parent-script">Try any mix. Weird is welcome.</p>
-          <input id="creatureMix" name="creatureMix" type="text" placeholder="dragon + flower + cloud" autocomplete="off">
-        </div>
-
-        <div class="question-block">
-          <div class="prompt-label"><span aria-hidden="true">✨</span><label for="magic">What magic does the magic creature have?</label></div>
-          <p class="parent-script">Tiny magic, huge magic, snack magic, anything.</p>
-          <input id="magic" name="magic" type="text" placeholder="bubble shield magic" autocomplete="off">
-        </div>
-
-        <div class="question-block">
-          <div class="prompt-label"><span aria-hidden="true">🎨</span><label for="colors">What colors?</label></div>
-          <p class="parent-script">One color, rainbow, or a very specific rule.</p>
-          <input id="colors" name="colors" type="text" placeholder="rainbow but not blue" autocomplete="off">
-        </div>
-
-        <div class="question-block">
-          <div class="prompt-label"><span aria-hidden="true">🏰</span><label for="home">Where does the magic creature live?</label></div>
-          <p class="parent-script">A cave, castle, puddle, planet, or made-up place.</p>
-          <input id="home" name="home" type="text" placeholder="a castle higher than space" autocomplete="off">
-        </div>
-
-        <div class="question-block">
-          <div class="prompt-label"><span aria-hidden="true">💛</span><label for="personality">What is the magic creature like?</label></div>
-          <p class="parent-script">Silly, brave, sleepy, bossy, gentle, or new words.</p>
-          <input id="personality" name="personality" type="text" placeholder="kind and silly" autocomplete="off">
-        </div>
-
-        <div class="question-block">
-          <div class="prompt-label"><span aria-hidden="true">🎒</span><label for="accessories">What does the magic creature carry or wear?</label></div>
-          <p class="parent-script">A crown, backpack, boots, snacks, or nothing.</p>
-          <input id="accessories" name="accessories" type="text" placeholder="books and shiny boots" autocomplete="off">
-        </div>
-
-        <div class="question-block">
-          <div class="prompt-label"><span aria-hidden="true">🌟</span><label for="extraDetail">One extra silly detail?</label></div>
-          <p class="parent-script">This can be tiny, strange, or completely surprising.</p>
-          <input id="extraDetail" name="extraDetail" type="text" placeholder="sneezes glitter stars" autocomplete="off">
-        </div>
-
-        <div class="question-block">
-          <div class="prompt-label"><span aria-hidden="true">📛</span><label for="creatureName">What is the magic creature's name?</label></div>
-          <p class="parent-script">You can decide this last.</p>
-          <input id="creatureName" name="creatureName" type="text" placeholder="Amor" autocomplete="off">
-        </div>
-
-        <div class="question-block">
-          <div class="prompt-label"><span aria-hidden="true">🖍️</span><label for="pictureStyle">Picture style</label></div>
-          <p class="parent-script">Pick a button or invent a style.</p>
-          <input id="pictureStyle" name="pictureStyle" type="text" placeholder="cuddly storybook" autocomplete="off">
-          <div class="chip-group" aria-label="Picture style suggestions">
-            <button type="button" class="chip" data-style="storybook">storybook</button>
-            <button type="button" class="chip" data-style="cuddly">cuddly</button>
-            <button type="button" class="chip" data-style="cute cartoon">cute cartoon</button>
-            <button type="button" class="chip" data-style="kids anime">kids anime</button>
-            <button type="button" class="chip" data-style="magical nature">magical nature</button>
-            <button type="button" class="chip" data-style="candy fantasy">candy fantasy</button>
-            <button type="button" class="chip" data-style="spooky but friendly">spooky but friendly</button>
-            <button type="button" class="chip" data-style="dreamy">dreamy</button>
-            <button type="button" class="chip" data-style="soft watercolor">soft watercolor</button>
-            <button type="button" class="chip" data-style="bright fantasy">bright fantasy</button>
-          </div>
-        </div>
+        <div id="questionFields"></div>
 
         <div class="action-row">
           <button class="primary-button" type="submit">Make Creature</button>
@@ -103,6 +41,10 @@
           <h2>Image Prompt</h2>
           <button class="secondary-button" type="button" id="copyButton" disabled>Copy Prompt</button>
         </div>
+        <p class="prompt-helper">
+          Press Button to Copy this prompt. Then paste it into ChatGPT or another AI image creator.
+          The app does the prompt engineering, no images atm.
+        </p>
         <textarea id="promptOutput" readonly placeholder="Your image prompt will appear here after you tap Make Creature."></textarea>
         <p class="copy-status" id="copyStatus" role="status"></p>
       </div>
@@ -175,6 +117,7 @@
     </section>
   </main>
 
+  <script src="content.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

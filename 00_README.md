@@ -6,12 +6,16 @@ The app helps an adult facilitator capture a child's magical creature idea, pres
 
 ## Current Status
 
-Current working version: Prototype 3.1 UX pass plus P4 bridge MVP.
+Current working version: Prototype 3.2 content, copy, and usability refinement.
+
+Current validation focus: P3.2 browser checks and post-publish mobile validation.
 
 The app currently supports:
 - Free-text creature creation prompts
 - Kid-safe magical creature image prompt generation
 - Creature summary and detail recap
+- Editable field, suggestion, parent tips, and example content in `content.js`
+- Compact expandable parent tips near the top of the app
 - Picture style suggestion chips
 - Copy buttons for generated text
 - A lightweight "What do we make next?" bridge
@@ -28,18 +32,22 @@ No build step is required.
 ## Current App Flow
 
 1. Fill in the creature prompts.
-2. Use optional picture style chips if helpful.
-3. Tap `Make Creature`.
-4. Review the generated image prompt, summary, and details.
-5. Choose an output under `What do we make next?`
-6. Copy the selected output.
+2. Open `Need a tip?` if facilitation guidance would help.
+3. Use optional picture style chips if helpful.
+4. Tap `Make Creature`.
+5. Review the generated image prompt, summary, and details.
+6. Copy the prompt into ChatGPT or another image creator.
+7. Choose an output under `What do we make next?`
+8. Copy the selected output.
 
 Use `Fill Example` to quickly populate sample creature data for testing.
 
 ## Top-Level Docs
 
 - `00_README.md` - repo front door, current status, run instructions, and doc map
-- `01_PRODUCT_VISION.md` - product intent, target users, long-term ladder, and design principles
+- `01_01_PRODUCT_VISION.md` - product intent, target users, long-term ladder, and design principles
+- `01_02_PRODUCT_INSIGHTS_DESIGN_SESSION.md` - working insight log from design sessions, P3.1 validation, and early bridge discovery
+- `01_03_PRODUCT_ROADMAP.md` - staged roadmap for 3.X foundation, 4.X activity book, 5.X story mode, and deferred ideas
 - `02_APP_SPEC.md` - living app spec with current requirements, UX rules, architecture notes, learnings, and open questions
 - `03_UX_SPEC.md` - living UX source of truth for copy style, mobile layout, interaction rules, and testing checks
 - `04_PROTOTYPE_STARTER.md` - reusable prompt and workflow for launching the next prototype folder
@@ -49,7 +57,9 @@ Use `Fill Example` to quickly populate sample creature data for testing.
 Top-level numbered docs are the current source of truth:
 
 - `00_...` - repo orientation
-- `01_...` - product vision
+- `01_01_...` - product vision
+- `01_02_...` - product insights and design-session synthesis
+- `01_03_...` - product roadmap
 - `02_...` - app spec
 - `03_...` - UX spec
 - `04_...` - prototype starter prompt and workflow
@@ -66,11 +76,13 @@ Use top-level docs to understand the current app. Use prototype docs to understa
 ## Repository Structure
 
 - `index.html` - static app markup
+- `content.js` - editable field text, suggestions, parent tips, style chips, and example values
 - `styles.css` - visual styling and mobile layout
 - `script.js` - form behavior, prompt generation, bridge output templates, copy actions
 - `Docs/Prototype 1` - earlier project history
 - `Docs/Prototype 3.0` - prior prototype scope, testing, and implementation context
 - `Docs/Prototype 3.1` - current handoff docs, UX spec, build log, and testing guide
+- `Docs/Prototype 3.2` - P3.2 plan, scope, build log, validation results, and implementation review
 
 ## Key Prototype 3.1 Docs
 
@@ -82,6 +94,20 @@ For the next build or review pass, start in `Docs/Prototype 3.1`:
 - `P3.1_P4_BRIDGE_PLAN.md` - bridge concept and output plan
 - `P3.1_P4_BUILD_LOG.md` - what changed in the current build
 - `P3.1_IMPLEMENTATION_REVIEW.md` - smoke test, mobile review, and live testing guide
+- `P3.1_VALIDATION_RESULTS.md` - sanitized validation results, durable findings, and P3.2 recommendation
+
+## Current Prototype 3.2 Docs
+
+Prototype 3.2 is tracked in `Docs/Prototype 3.2`.
+
+Key docs:
+
+- `P3.2_README.md` - folder guide
+- `P3.2_SCOPE.md` - concise scope and acceptance criteria
+- `P3.2_PROTOTYPE_PLAN.md` - controlling work package plan
+- `P3.2_BUILD_LOG.md` - implementation notes
+- `P3.2_VALIDATION_RESULTS.md` - validation status
+- `P3.2_IMPLEMENTATION_REVIEW.md` - browser/mobile test checklist
 
 ## Working Method
 
@@ -101,14 +127,14 @@ Recommended update loop:
 
 ## Direction Toward Prototype 4.0
 
-Prototype 4.0 should build from the Prototype 3.1 testing results and the living app spec.
+Prototype 4.0 should wait until P3.2 browser checks and post-publish mobile validation are reviewed.
 
 Recommended next step:
 
-1. Test Prototype 3.1 on phone.
-2. Fill in `Docs/Prototype 3.1/P3.1_IMPLEMENTATION_REVIEW.md`.
-3. Identify the top friction points.
-4. Update `02_APP_SPEC.md` and `03_UX_SPEC.md` with durable learnings.
-5. Use those findings to define Prototype 4.0.
+1. Finish P3.2 browser smoke checks.
+2. Commit and publish P3.2.
+3. Test P3.2 on mobile.
+4. Update `Docs/Prototype 3.2/P3.2_VALIDATION_RESULTS.md`.
+5. Use P3.2 results to decide the smallest useful P4.0 activity-book scope.
 
 Keep the product lightweight until testing shows which next feature is truly needed.

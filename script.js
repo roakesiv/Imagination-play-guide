@@ -1,26 +1,28 @@
-const fields = [
-  { id: 'creatureName', label: 'Name', key: 'name' },
-  { id: 'creatureMix', label: 'Creature mix', key: 'creatureMix' },
-  { id: 'magic', label: 'Magic', key: 'magic' },
-  { id: 'colors', label: 'Colors', key: 'colors' },
-  { id: 'home', label: 'Home', key: 'home' },
-  { id: 'personality', label: 'What they are like', key: 'personality' },
-  { id: 'accessories', label: 'Accessories', key: 'accessories' },
-  { id: 'extraDetail', label: 'Extra weird detail', key: 'extraDetail' },
-  { id: 'pictureStyle', label: 'Picture style', key: 'pictureStyle' }
+const appContent = window.creatureAppContent || {};
+const parentTips = appContent.parentTips || {};
+const fieldDefinitions = appContent.fields || [];
+const fieldMap = Object.fromEntries(fieldDefinitions.map((field) => [field.id, field]));
+const detailFieldOrder = [
+  'creatureName',
+  'creatureMix',
+  'magic',
+  'colors',
+  'home',
+  'personality',
+  'accessories',
+  'extraDetail',
+  'pictureStyle'
 ];
+const fields = detailFieldOrder.map((id) => ({
+  id,
+  label: fieldMap[id].title,
+  key: fieldMap[id].key
+}));
+const exampleValues = appContent.exampleValues || {};
+const styleSuggestions = appContent.styleSuggestions || [];
 
-const exampleValues = {
-  creatureMix: 'raccoon witch + pony',
-  magic: 'demon hunter',
-  colors: 'grey',
-  home: 'castle of candy and balloons',
-  personality: 'kind',
-  accessories: 'books and toys',
-  extraDetail: 'loves storytime',
-  creatureName: 'Amor',
-  pictureStyle: 'cuddly storybook'
-};
+renderQuestionFields();
+renderParentTips();
 
 const form = document.querySelector('#creatureForm');
 const promptOutput = document.querySelector('#promptOutput');
@@ -38,6 +40,48 @@ const artifactOutput = document.querySelector('#artifactOutput');
 const copyArtifactButton = document.querySelector('#copyArtifactButton');
 const artifactCopyStatus = document.querySelector('#artifactCopyStatus');
 let currentArtifactType = '';
+
+function renderParentTips() {
+  const container = document.querySelector('#parentTipsMount');
+  if (!container || !parentTips.summary) {
+    return;
+  }
+
+  container.innerHTML = `<details class="parent-tips">
+    <summary>${escapeHtml(parentTips.summary)}</summary>
+    <div class="parent-tips-content">
+      <p>${escapeHtml(parentTips.intro)}</p>
+      <p>${escapeHtml(parentTips.body)}</p>
+      <p>${escapeHtml(parentTips.promptNote)}</p>
+      <p class="tips-label">Tips:</p>
+      <ul>
+        ${(parentTips.tips || []).map((tip) => `<li>${escapeHtml(tip)}</li>`).join('')}
+      </ul>
+    </div>
+  </details>`;
+}
+
+function renderQuestionFields() {
+  const container = document.querySelector('#questionFields');
+  if (!container) {
+    return;
+  }
+
+  container.innerHTML = fieldDefinitions.map((field) => {
+    const chips = field.id === 'pictureStyle'
+      ? `<div class="chip-group" aria-label="Picture style suggestions">
+          ${styleSuggestions.map((style) => `<button type="button" class="chip" data-style="${escapeHtml(style)}">${escapeHtml(style)}</button>`).join('')}
+        </div>`
+      : '';
+
+    return `<div class="question-block">
+      <div class="prompt-label"><span aria-hidden="true">${escapeHtml(field.marker)}</span><label for="${escapeHtml(field.id)}">${escapeHtml(field.question)}</label></div>
+      <p class="parent-script">${escapeHtml(field.suggestion)}</p>
+      <input id="${escapeHtml(field.id)}" name="${escapeHtml(field.id)}" type="text" placeholder="${escapeHtml(field.placeholder)}" autocomplete="off">
+      ${chips}
+    </div>`;
+  }).join('');
+}
 
 function getValues() {
   return fields.reduce((values, field) => {

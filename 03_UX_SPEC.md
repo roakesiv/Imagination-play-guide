@@ -1,8 +1,8 @@
 # UX Spec
 
 Status: Current  
-Last updated after: Prototype 3.1 UX pass plus P4 bridge MVP  
-Last updated: 2026-05-16
+Last updated after: Prototype 3.2 UX refinement
+Last updated: 2026-05-17
 
 This is the living UX source of truth for Magic Creature Card Maker. Prototype UX files are historical snapshots. When a prototype changes the durable UX direction, promote the current rules into this file.
 
@@ -49,6 +49,11 @@ Every screen should answer quickly:
 - What are we making?
 - What should I tap next?
 - Can I skip or improvise?
+- Does this app make the image, or make the prompt I copy elsewhere?
+
+The app must clearly communicate that it creates a prompt to copy into ChatGPT or another AI image creator.
+
+Optional guidance can appear near the top, but it should be compact and collapsible so confident adults can move straight into the form.
 
 ### Big Friendly Controls
 
@@ -57,6 +62,9 @@ Every screen should answer quickly:
 - Choice cards should be large enough to hit quickly.
 - Avoid dense button clusters.
 - Keep the main action visually obvious.
+- Major actions should be visually distinct enough that an adult can guide a non-reading child by color.
+- Color can support guidance, but text labels and selected states must remain clear.
+- Major action colors should be distinct enough for adult guidance, such as "press the red button" or "press the orange button."
 
 ### Playful But Not Busy
 
@@ -71,6 +79,8 @@ Current visual ingredients:
 
 Decoration should support the play mood without making text harder to read.
 
+Header and intro text should remain readable over the decorative background on browser and mobile.
+
 ### Fields Are Signposts
 
 Fields guide creativity, not correctness. The app should still work when:
@@ -78,6 +88,15 @@ Fields guide creativity, not correctness. The app should still work when:
 - An answer is partial
 - A child gives an absurd answer
 - The adult changes the question wording out loud
+
+Field text should work as a cue card for the adult:
+
+```text
+Field Name - short question
+Ideas: example, example, example, or anything else.
+```
+
+The adult should be able to glance, paraphrase, and type without reading a full script.
 
 ### Preserve Absurdity
 
@@ -94,6 +113,20 @@ Current preferred labels:
 - What is the magic creature like?
 - What does the magic creature carry or wear?
 - What is the magic creature's name?
+
+Current field questions and suggestion examples live in `content.js` so they can be revised without editing behavior logic.
+
+### Parent Tips
+
+Use a compact native `details` / `summary` pattern for optional adult facilitation guidance.
+
+The tips should:
+- Appear after the title/intro and before the form.
+- Be easy to notice but not distracting.
+- Expand and collapse cleanly.
+- Explain that the app is a guide, not a script.
+- Reinforce that the app makes an AI-ready prompt, not an image directly.
+- Encourage weird, specific, kid-owned answers.
 
 ### Make Success Visible
 
@@ -123,6 +156,13 @@ What magic does the magic creature have?
 Tiny magic, huge magic, snack magic, anything.
 ```
 
+Current preferred copy direction:
+
+```text
+Magic - What magic does the magic creature have?
+Ideas: Rainbow magic, snack magic, flying, healing, spooky-hunter magic, or anything else.
+```
+
 Avoid:
 
 ```text
@@ -138,6 +178,7 @@ Please describe the creature's magical capabilities, including how they manifest
 - Keep buttons and cards large.
 - Make output easy to read and copy.
 - Avoid requiring the adult to scroll back and forth during live play.
+- Keep optional guidance compact so it does not push the first form fields too far down.
 
 ## Bridge UX
 
@@ -155,6 +196,8 @@ Bridge requirements:
 - Output has a Copy button.
 - The bridge remains lightweight and does not create new app state complexity.
 
+P3.1 validation showed that the bridge is useful discovery territory, but it should not expand into full P4 activity-book scope until P3.2 foundation refinements are complete or explicitly paused.
+
 ## Accessibility Basics
 
 - Use readable font sizes.
@@ -170,9 +213,14 @@ Before calling a UX pass ready, verify:
 
 - [ ] Mobile layout is comfortable.
 - [ ] Primary actions are easy to tap.
+- [ ] First-time users can tell the app creates prompts, not images directly.
+- [ ] Parent Tips section is visible, expandable, readable, and not intrusive.
+- [ ] Major buttons are visually distinct enough to guide by color.
 - [ ] Prompt labels use "the magic creature" where appropriate.
 - [ ] Instructions are short enough to skim.
-- [ ] Background feels playful without hurting readability.
+- [ ] Field prompts work as glanceable adult cue cards.
+- [ ] Suggestion examples inspire absurd or hybrid ideas without constraining answers.
+- [ ] Background feels playful without hurting title, intro, or field readability.
 - [ ] Silly answers still work.
 - [ ] Creature creation still generates summary and image prompt.
 - [ ] Bridge screen is visible and obvious.
