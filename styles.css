@@ -252,6 +252,12 @@ button:focus-visible {
   margin-top: 8px;
 }
 
+.reset-action {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
 .primary-button,
 .secondary-button {
   min-height: 56px;
@@ -296,6 +302,9 @@ button:focus-visible {
 #resetButton {
   background: var(--rainbow-yellow);
   color: var(--ink);
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 2px solid #d8aa18;
 }
 
 #resetButton:hover {
@@ -485,10 +494,6 @@ dd {
 
   .panel {
     padding: 24px;
-  }
-
-  .action-row {
-    grid-template-columns: 2fr 1fr;
   }
 
   .output-grid {
