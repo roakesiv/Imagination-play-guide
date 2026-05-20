@@ -102,15 +102,29 @@ Reward: A cheerful celebration and a new badge for ${name}.`;
     coloring: {
       title: 'Coloring Page',
       build(values, helpers) {
-        return `Create a printable coloring book page for a kid-friendly magical creature.
+        const creatureName = values.name || 'the magic creature';
 
-Main creature: ${helpers.promptValue(values.name)}, a ${helpers.promptValue(values.creatureMix)}
+        return `Create a black-and-white printable coloring page for a young child featuring a kid-friendly magical creature.
+
+Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
-Extra detail to include: ${helpers.promptValue(values.extraDetail)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
 
-Use clean bold outlines, simple shapes, open spaces for coloring, no heavy shading, no scary details, and a playful printable style.`;
+Show ${creatureName} as the clear main focus of the page. Include a simple, playful background with a few easy-to-color elements inspired by the home/background, but keep the scene uncluttered and easy for a child to color.
+
+Use:
+- bold, clean outlines
+- large simple shapes
+- open spaces for coloring
+- minimal detail
+- no shading or grayscale
+- no tiny patterns
+- no heavy textures
+- no scary details
+
+Make it feel like a cute children's coloring book page, not a detailed illustration or an adult coloring page.`;
       }
     },
     findIt: {

@@ -2,7 +2,7 @@
 
 Status: Current  
 Last updated after: Prototype 4.0 architecture runway
-Last updated: 2026-05-19
+Last updated: 2026-05-20
 
 This is the living product and engineering spec for Magic Creature Card Maker. Prototype folders preserve history. This file captures the current truth: what the app is, what it needs to do, what has been decided, and what remains open.
 
@@ -322,7 +322,7 @@ Product and UX:
 - Does clearer prompt-only copy prevent first-time-user confusion?
 - Do rewritten field prompts reduce adult facilitation effort during live play?
 - Do distinct button colors help adults guide child participation?
-- Should Prototype 4.0 add lightweight step navigation, or keep the full-page form?
+- Should a future prototype add lightweight step navigation, or keep the full-page form?
 
 Architecture:
 - How long can the app stay as plain HTML/CSS/JS before structure becomes a constraint?

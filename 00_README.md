@@ -6,9 +6,9 @@ The app helps an adult facilitator capture a child's magical creature idea, pres
 
 ## Current Status
 
-Current working version: Prototype 4.0 architecture runway.
+Current working version: Prototype 4.0 complete; V4.1 is the recommended next prototype.
 
-Current validation focus: P4.0 final documentation/review and transition to V4.1 prompt-quality work.
+Current validation focus: V4.1 Coloring + Find-It prompt-quality work.
 
 The app currently supports:
 - Free-text creature creation prompts
@@ -87,7 +87,7 @@ Use top-level docs to understand the current app. Use prototype docs to understa
 - `script.js` - UI rendering, form behavior, data gathering, summary/details, copy actions, reset behavior, and selected output state
 - `Docs/Prototype 1` - earlier project history
 - `Docs/Prototype 3.0` - prior prototype scope, testing, and implementation context
-- `Docs/Prototype 3.1` - current handoff docs, UX spec, build log, and testing guide
+- `Docs/Prototype 3.1` - historical handoff docs, UX spec, build log, and testing guide
 - `Docs/Prototype 3.2` - P3.2 plan, scope, build log, validation results, and implementation review
 - `Docs/Prototype 4.0` - P4.0 architecture runway scope, build log, test plan, implementation review, and architecture draft history
 
@@ -103,7 +103,7 @@ For the next build or review pass, start in `Docs/Prototype 3.1`:
 - `P3.1_IMPLEMENTATION_REVIEW.md` - smoke test, mobile review, and live testing guide
 - `P3.1_VALIDATION_RESULTS.md` - sanitized validation results, durable findings, and P3.2 recommendation
 
-## Current Prototype 3.2 Docs
+## Prototype 3.2 Docs
 
 Prototype 3.2 is tracked in `Docs/Prototype 3.2`.
 
@@ -116,7 +116,7 @@ Key docs:
 - `P3.2_VALIDATION_RESULTS.md` - validation status
 - `P3.2_IMPLEMENTATION_REVIEW.md` - browser/mobile test checklist
 
-## Current Prototype 4.0 Docs
+## Prototype 4.0 Docs
 
 Prototype 4.0 is tracked in `Docs/Prototype 4.0`.
 

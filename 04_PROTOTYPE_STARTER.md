@@ -131,6 +131,8 @@ After each prototype, promote durable decisions into `02_APP_SPEC.md` and `03_UX
 
 Promote durable architecture decisions into `05_ARCHITECTURE_SPEC.md`.
 
+Use `05_ARCHITECTURE_SPEC.md` as the architecture source of truth before changing prompt templates, builder helpers, creature data flow, or module boundaries.
+
 ## ChatGPT To Codex Workflow
 
 It is reasonable to keep using ChatGPT on your phone for design thinking, reflection, and planning. That mode is good for low-friction thought capture.
@@ -225,22 +227,35 @@ Then, unless I ask you to pause:
 9. Summarize changed files, verification, and remaining risks.
 ```
 
-## Prototype 4.0 Starter Notes
+## Prototype 4.1 Starter Notes
 
-Use this section when launching Prototype 4.0.
+Use this section when launching Prototype 4.1.
 
-Current likely inputs:
-- Prototype 3.1 validation
-- Prototype 3.2 results, if P3.2 is complete or explicitly paused
-- `Docs/Prototype 3.1/P3.1_VALIDATION_RESULTS.md`
-- `Docs/Prototype 3.2/P3.2_PROTOTYPE_PLAN.md`
-- Open questions in `02_APP_SPEC.md`
-- UX testing checklist in `03_UX_SPEC.md`
+Current status:
+- P4.0 is complete.
+- Use `05_ARCHITECTURE_SPEC.md` as the architecture source of truth.
+- V4.1 should focus on Coloring + Find-It prompt quality.
+- V4.1 should not add new output types.
+- V4.1 should preserve P4.0 architecture boundaries.
+- V4.1 should use the P4.0 prompt-output matrix for regression checks.
 
-Likely Prototype 4.0 decision area:
-- Whether the bridge should become a focused activity-book flow
-- Which initial activity outputs are worth improving first
-- Whether coloring/find-it should be pruned, rewritten, or expanded with maze and tracing
-- Whether step navigation, shorter flow, or better output previews are justified after P3.2
+Recommended current inputs:
+- `00_README.md`
+- `01_01_PRODUCT_VISION.md`
+- `01_02_PRODUCT_INSIGHTS_DESIGN_SESSION.md`
+- `01_03_PRODUCT_ROADMAP.md`
+- `02_APP_SPEC.md`
+- `03_UX_SPEC.md`
+- `04_PROTOTYPE_STARTER.md`
+- `05_ARCHITECTURE_SPEC.md`
+- `Docs/Prototype 4.0/P4.0_TEST_PLAN.md`
+- `Docs/Prototype 4.0/P4.0_BUILD_LOG.md`
+- `Docs/Prototype 4.0/P4.0_IMPLEMENTATION_REVIEW.md`
 
-Keep Prototype 4.0 focused on the highest-friction finding from testing.
+Likely Prototype 4.1 decision area:
+- Improve the existing Coloring Page prompt.
+- Improve the existing Find-It Game prompt.
+- Define or refine the printable prompt-quality standard.
+- Verify output behavior against the P4.0 prompt-output matrix.
+
+Keep Prototype 4.1 focused on improving the quality of existing outputs, not expanding the output set.

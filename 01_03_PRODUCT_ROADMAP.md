@@ -81,9 +81,9 @@ Establish a reusable prototype development system and app foundation.
 
 ### Current 3.X Status
 
-In work.
+Complete.
 
-P3.1 improved the UX and added a bridge spike. P3.2 is planned as a targeted content, copy, and usability refinement.
+P3.1 improved the UX and added a bridge spike. P3.2 completed the targeted content, copy, and usability foundation refinement. P4.0 then completed the architecture runway needed for prompt-quality work.
 
 ### 3.X Done When
 
@@ -91,7 +91,7 @@ P3.1 improved the UX and added a bridge spike. P3.2 is planned as a targeted con
 The creature creation flow is usable on phone, easy to revise, documented, and stable enough to build activity-book features on top of it.
 ```
 
-If P3.2 completes this, 3.X can close. If not, continue with targeted 3.3/3.x work only.
+3.X is closed unless future testing reveals a focused foundation regression.
 
 ---
 
@@ -471,9 +471,9 @@ These are not near-term scope, but they define the long-term product imagination
 
 ## 7. Roadmap Discipline Rules
 
-### Rule 1 — Finish 3.X Foundation Before 4.X Expansion
+### Rule 1 — Preserve 3.X Foundation During 4.X Expansion
 
-Do not build activity-book features on unstable copy/content architecture.
+3.X foundation is complete. Do not expand activity-book features in ways that destabilize the established copy/content architecture.
 
 ### Rule 2 — Keep 4.X Activity Book Tight
 

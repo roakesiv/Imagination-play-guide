@@ -1,8 +1,8 @@
 # UX Spec
 
 Status: Current  
-Last updated after: Prototype 3.2 UX refinement
-Last updated: 2026-05-17
+Last updated after: Prototype 4.0 architecture runway
+Last updated: 2026-05-20
 
 This is the living UX source of truth for Magic Creature Card Maker. Prototype UX files are historical snapshots. When a prototype changes the durable UX direction, promote the current rules into this file.
 
@@ -40,6 +40,8 @@ Current output options:
 - Adventure
 - Coloring Page
 - Find-It Game
+
+Prototype 4.0 introduced no major runtime UX changes, so the P3.2 UX rules remain current.
 
 ## UX Principles
 
@@ -196,7 +198,7 @@ Bridge requirements:
 - Output has a Copy button.
 - The bridge remains lightweight and does not create new app state complexity.
 
-P3.1 validation showed that the bridge is useful discovery territory, but it should not expand into full P4 activity-book scope until P3.2 foundation refinements are complete or explicitly paused.
+P3.1 validation showed that the bridge is useful discovery territory. P3.2 foundation refinements and P4.0 architecture work are complete, so V4.1 should focus on improving existing Coloring Page and Find-It Game prompt quality without adding new output types.
 
 ## Accessibility Basics
 

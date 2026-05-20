@@ -81,7 +81,7 @@ Convert creature profile, adventure summary, and generated images into a simple 
 
 ### Phase 6 — External integrations
 
-Possible future integrations include direct image generation, print/book services, or physical toy/model inspiration. These are explicitly out of scope for Prototype 3.
+Possible future integrations include direct image generation, print/book services, or physical toy/model inspiration. These are explicitly out of scope for the current prototype phase.
 
 ## Design principles
 
