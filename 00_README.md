@@ -6,15 +6,17 @@ The app helps an adult facilitator capture a child's magical creature idea, pres
 
 ## Current Status
 
-Current working version: Prototype 3.2 content, copy, and usability refinement.
+Current working version: Prototype 4.0 architecture runway.
 
-Current validation focus: P3.2 browser checks and post-publish mobile validation.
+Current validation focus: P4.0 final documentation/review and transition to V4.1 prompt-quality work.
 
 The app currently supports:
 - Free-text creature creation prompts
 - Kid-safe magical creature image prompt generation
 - Creature summary and detail recap
 - Editable field, suggestion, parent tips, and example content in `content.js`
+- Dedicated prompt templates in `promptTemplates.js`
+- Shared prompt builder helpers in `promptBuilder.js`
 - Compact expandable parent tips near the top of the app
 - Picture style suggestion chips
 - Copy buttons for generated text
@@ -51,6 +53,7 @@ Use `Fill Example` to quickly populate sample creature data for testing.
 - `02_APP_SPEC.md` - living app spec with current requirements, UX rules, architecture notes, learnings, and open questions
 - `03_UX_SPEC.md` - living UX source of truth for copy style, mobile layout, interaction rules, and testing checks
 - `04_PROTOTYPE_STARTER.md` - reusable prompt and workflow for launching the next prototype folder
+- `05_ARCHITECTURE_SPEC.md` - living architecture source of truth for app structure, data flow, prompt templates, and module boundaries
 
 ## Naming Conventions
 
@@ -63,6 +66,7 @@ Top-level numbered docs are the current source of truth:
 - `02_...` - app spec
 - `03_...` - UX spec
 - `04_...` - prototype starter prompt and workflow
+- `05_...` - architecture spec
 
 Prototype-folder docs are historical records and should use a prototype prefix:
 
@@ -78,11 +82,14 @@ Use top-level docs to understand the current app. Use prototype docs to understa
 - `index.html` - static app markup
 - `content.js` - editable field text, suggestions, parent tips, style chips, and example values
 - `styles.css` - visual styling and mobile layout
-- `script.js` - form behavior, prompt generation, bridge output templates, copy actions
+- `promptTemplates.js` - prompt/output templates and output-specific prompt-engineering text
+- `promptBuilder.js` - shared prompt rendering helpers, missing-value fallback, and template lookup
+- `script.js` - UI rendering, form behavior, data gathering, summary/details, copy actions, reset behavior, and selected output state
 - `Docs/Prototype 1` - earlier project history
 - `Docs/Prototype 3.0` - prior prototype scope, testing, and implementation context
 - `Docs/Prototype 3.1` - current handoff docs, UX spec, build log, and testing guide
 - `Docs/Prototype 3.2` - P3.2 plan, scope, build log, validation results, and implementation review
+- `Docs/Prototype 4.0` - P4.0 architecture runway scope, build log, test plan, implementation review, and architecture draft history
 
 ## Key Prototype 3.1 Docs
 
@@ -109,6 +116,20 @@ Key docs:
 - `P3.2_VALIDATION_RESULTS.md` - validation status
 - `P3.2_IMPLEMENTATION_REVIEW.md` - browser/mobile test checklist
 
+## Current Prototype 4.0 Docs
+
+Prototype 4.0 is tracked in `Docs/Prototype 4.0`.
+
+Key docs:
+
+- `P4.0_README.md` - folder guide
+- `P4.0_SCOPE.md` - architecture runway scope and work packages
+- `P4.0_ARCHITECTURE_PLAN.md` - original target architecture plan
+- `P4.0_TEST_PLAN.md` - prompt-output and architecture test matrix
+- `P4.0_BUILD_LOG.md` - implementation notes
+- `P4.0_IMPLEMENTATION_REVIEW.md` - final review and pass decision
+- `05_ARCHITECTURE_SPEC_DRAFT.md` - historical draft promoted to top-level `05_ARCHITECTURE_SPEC.md`
+
 ## Working Method
 
 Prototype docs are historical experiment records. They capture scope, build notes, test plans, and implementation reviews for a specific prototype.
@@ -125,16 +146,15 @@ Recommended update loop:
 4. Update `02_APP_SPEC.md` and `03_UX_SPEC.md` with the current truth.
 5. Use `04_PROTOTYPE_STARTER.md` to launch the next prototype folder from the remaining open questions and highest-friction workflows.
 
-## Direction Toward Prototype 4.0
+## Direction Toward Prototype 4.1
 
-Prototype 4.0 should wait until P3.2 browser checks and post-publish mobile validation are reviewed.
+Prototype 4.0 created the architecture runway for prompt-based creative outputs and passed browser smoke testing.
 
 Recommended next step:
 
-1. Finish P3.2 browser smoke checks.
-2. Commit and publish P3.2.
-3. Test P3.2 on mobile.
-4. Update `Docs/Prototype 3.2/P3.2_VALIDATION_RESULTS.md`.
-5. Use P3.2 results to decide the smallest useful P4.0 activity-book scope.
+1. Use `05_ARCHITECTURE_SPEC.md` as the architecture source of truth.
+2. Start V4.1 Coloring + Find-It prompt quality work.
+3. Keep V4.1 focused on improving existing output quality, not adding new output types.
+4. Use the P4.0 prompt-output matrix to verify behavior stays stable.
 
 Keep the product lightweight until testing shows which next feature is truly needed.

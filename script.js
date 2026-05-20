@@ -1,4 +1,5 @@
 const appContent = window.creatureAppContent || {};
+const promptBuilder = window.creaturePromptBuilder || {};
 const parentTips = appContent.parentTips || {};
 const fieldDefinitions = appContent.fields || [];
 const fieldMap = Object.fromEntries(fieldDefinitions.map((field) => [field.id, field]));
@@ -13,6 +14,20 @@ const detailFieldOrder = [
   'extraDetail',
   'pictureStyle'
 ];
+
+// Creature data contract consumed by prompt templates and builder helpers.
+const creatureDataKeys = [
+  'name',
+  'creatureMix',
+  'magic',
+  'colors',
+  'home',
+  'personality',
+  'accessories',
+  'extraDetail',
+  'pictureStyle'
+];
+
 const fields = detailFieldOrder.map((id) => ({
   id,
   label: fieldMap[id].title,
@@ -83,148 +98,26 @@ function renderQuestionFields() {
   }).join('');
 }
 
-function getValues() {
-  return fields.reduce((values, field) => {
-    values[field.key] = document.querySelector(`#${field.id}`).value.trim();
-    return values;
+function createEmptyCreatureData() {
+  return creatureDataKeys.reduce((creatureData, key) => {
+    creatureData[key] = '';
+    return creatureData;
   }, {});
 }
 
+function getCreatureData() {
+  const creatureData = createEmptyCreatureData();
+
+  fields.forEach((field) => {
+    creatureData[field.key] = document.querySelector(`#${field.id}`).value.trim();
+  });
+
+  return creatureData;
+}
+
 function promptValue(value) {
-  return value || 'not specified';
+  return promptBuilder.promptValue(value);
 }
-
-function buildPrompt(values) {
-  return `Create a kid-friendly magical creature profile card image.
-
-Put the creature's name clearly at the top in playful, readable storybook text.
-
-Show the creature as the main focus of the card. Show the creature's home or habitat in the background. Add a fun profile-card layout with the creature's attributes listed clearly on the side or around the image.
-
-Make the image cute, colorful, whimsical, imaginative, and safe for young children. Preserve the child's specific ideas, including silly, absurd, or unusual details. Do not make the image scary, violent, realistic horror, or adult.
-
-Creature details:
-Name: ${promptValue(values.name)}
-Creature mix: ${promptValue(values.creatureMix)}
-Magic: ${promptValue(values.magic)}
-Colors: ${promptValue(values.colors)}
-Home: ${promptValue(values.home)}
-What they are like: ${promptValue(values.personality)}
-Accessories: ${promptValue(values.accessories)}
-Extra weird detail: ${promptValue(values.extraDetail)}
-Picture style: ${promptValue(values.pictureStyle)}
-
-Style instructions:
-Use a bright, kid-friendly magical creature profile card style with soft shapes, friendly expression, readable text, playful details, and a magical background.`;
-}
-
-function getFindItItems(values) {
-  const rawItems = [
-    values.accessories,
-    values.extraDetail,
-    values.magic ? `${values.magic} sparkle` : '',
-    values.colors ? `${values.colors} tiny gem` : '',
-    values.home ? `small sign for ${values.home}` : ''
-  ];
-
-  const items = rawItems
-    .filter(Boolean)
-    .flatMap((item) => item.split(','))
-    .map((item) => item.trim())
-    .filter(Boolean);
-
-  const uniqueItems = [...new Set(items)];
-  return uniqueItems.length ? uniqueItems : ['a tiny star', 'a smiley flower', 'a magic key', 'a little crown', 'a hidden heart'];
-}
-
-const artifactTemplates = {
-  card: {
-    title: 'Creature Card',
-    build(values) {
-      return `Kid-friendly magical creature profile card
-
-Name: ${promptValue(values.name)}
-Creature mix: ${promptValue(values.creatureMix)}
-Magic: ${promptValue(values.magic)}
-Colors: ${promptValue(values.colors)}
-Home: ${promptValue(values.home)}
-Personality: ${promptValue(values.personality)}
-Carries or wears: ${promptValue(values.accessories)}
-Fun fact: ${promptValue(values.extraDetail)}
-
-Make it cute, colorful, whimsical, and safe for young children. Preserve every specific silly detail.`;
-    }
-  },
-  story: {
-    title: 'Story',
-    build(values) {
-      const name = values.name || 'the creature';
-      return `Write a short, cozy kid-friendly story.
-
-Main creature: ${name}, a ${promptValue(values.creatureMix)}
-Magic: ${promptValue(values.magic)}
-Home: ${promptValue(values.home)}
-Colors: ${promptValue(values.colors)}
-Personality: ${promptValue(values.personality)}
-Special detail: ${promptValue(values.extraDetail)}
-
-Story shape:
-1. ${name} notices a tiny problem near ${promptValue(values.home)}.
-2. ${name} uses ${promptValue(values.magic)} in a kind or funny way.
-3. A friend helps or cheers.
-4. End with everyone safe, happy, and ready to play again.`;
-    }
-  },
-  adventure: {
-    title: 'Adventure',
-    build(values) {
-      const name = values.name || 'the creature';
-      return `Make a gentle adventure seed for young kids.
-
-Hero: ${name}, a ${promptValue(values.creatureMix)}
-Home base: ${promptValue(values.home)}
-Magic tool: ${promptValue(values.magic)}
-Personality: ${promptValue(values.personality)}
-Carries or wears: ${promptValue(values.accessories)}
-
-Quest: Help find a missing happy thing from ${promptValue(values.home)}.
-Friendly helper: A tiny glowing guide who likes ${promptValue(values.colors)} things.
-Obstacle: A silly mix-up, a locked door, or a confusing map.
-Choice moment: Go over, under, around, or ask for help?
-Reward: A cheerful celebration and a new badge for ${name}.`;
-    }
-  },
-  coloring: {
-    title: 'Coloring Page',
-    build(values) {
-      return `Create a printable coloring book page for a kid-friendly magical creature.
-
-Main creature: ${promptValue(values.name)}, a ${promptValue(values.creatureMix)}
-Magic: ${promptValue(values.magic)}
-Home/background: ${promptValue(values.home)}
-Personality: ${promptValue(values.personality)}
-Extra detail to include: ${promptValue(values.extraDetail)}
-
-Use clean bold outlines, simple shapes, open spaces for coloring, no heavy shading, no scary details, and a playful printable style.`;
-    }
-  },
-  findIt: {
-    title: 'Find-It Game',
-    build(values) {
-      return `Create a kid-friendly hidden-object activity page.
-
-Scene: ${promptValue(values.name)}, a ${promptValue(values.creatureMix)}, is playing in ${promptValue(values.home)}.
-Magic: ${promptValue(values.magic)}
-Colors/vibe: ${promptValue(values.colors)}
-Personality: ${promptValue(values.personality)}
-
-Things to find:
-${getFindItItems(values).map((item) => `- ${item}`).join('\n')}
-
-Make the page whimsical, readable, safe for young children, and full of fun details.`;
-    }
-  }
-};
 
 function buildSummary(values) {
   const name = values.name || 'This creature';
@@ -286,10 +179,10 @@ function escapeHtml(value) {
 }
 
 function generateOutputs() {
-  const values = getValues();
-  promptOutput.value = buildPrompt(values);
-  summaryOutput.textContent = buildSummary(values);
-  renderDetails(values);
+  const creatureData = getCreatureData();
+  promptOutput.value = promptBuilder.buildImagePrompt(creatureData);
+  summaryOutput.textContent = buildSummary(creatureData);
+  renderDetails(creatureData);
   copyButton.disabled = false;
   copyStatus.textContent = '';
 
@@ -299,14 +192,14 @@ function generateOutputs() {
 }
 
 function renderArtifact(type) {
-  const template = artifactTemplates[type];
-  if (!template) {
+  const artifact = promptBuilder.buildArtifactOutput(type, getCreatureData());
+  if (!artifact) {
     return;
   }
 
   currentArtifactType = type;
-  artifactTitle.textContent = template.title;
-  artifactOutput.value = template.build(getValues());
+  artifactTitle.textContent = artifact.title;
+  artifactOutput.value = artifact.output;
   artifactOutputPanel.hidden = false;
   artifactCopyStatus.textContent = '';
 

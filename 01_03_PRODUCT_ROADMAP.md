@@ -210,7 +210,21 @@ A parent can create a creature and generate a small set of reliable, kid-usable 
 
 ### Possible 4.X Sequence
 
-#### P4.0 — Activity Prompt Quality
+#### P4.0 — Architecture Runway
+
+Status:
+
+Complete.
+
+Focus:
+
+- separate prompt templates from UI behavior
+- add prompt builder helpers
+- make creature data contract explicit
+- keep app static and GitHub Pages compatible
+- promote durable architecture decisions into `05_ARCHITECTURE_SPEC.md`
+
+#### P4.1 — Coloring + Find-It Prompt Quality
 
 Focus:
 
@@ -219,7 +233,7 @@ Focus:
 - define printable prompt standard
 - test output quality
 
-#### P4.1 — Add Maze + Letter Tracing
+#### P4.2 — Add Maze + Letter Tracing
 
 Focus:
 
@@ -227,7 +241,7 @@ Focus:
 - keep prompt generation deterministic
 - test whether creature data maps well to new pages
 
-#### P4.2 — Small Activity Pack
+#### P4.3 — Small Activity Pack
 
 Focus:
 
@@ -496,15 +510,14 @@ Saved libraries, direct AI, printer connection, and books are powerful ideas, bu
 
 ## 8. Current Recommended Next Step
 
-Complete P3.2.
+Start P4.1 Coloring + Find-It prompt quality.
 
-P3.2 should:
+P4.0 is complete and created the architecture runway:
 
-- clarify prompt-only workflow
-- centralize editable text
-- rewrite field copy/suggestions
-- improve button color differentiation
-- fix header readability
-- update docs
+- editable UI content remains in `content.js`
+- prompt templates live in `promptTemplates.js`
+- prompt builder helpers live in `promptBuilder.js`
+- UI orchestration remains in `script.js`
+- durable architecture rules live in `05_ARCHITECTURE_SPEC.md`
 
-After P3.2, move into 4.X Activity Book planning.
+P4.1 should improve the existing Coloring Page and Find-It Game prompts without adding new output types.

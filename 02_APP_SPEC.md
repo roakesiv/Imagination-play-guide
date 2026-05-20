@@ -1,8 +1,8 @@
 # App Spec
 
 Status: Current  
-Last updated after: Prototype 3.2 UX refinement
-Last updated: 2026-05-17
+Last updated after: Prototype 4.0 architecture runway
+Last updated: 2026-05-19
 
 This is the living product and engineering spec for Magic Creature Card Maker. Prototype folders preserve history. This file captures the current truth: what the app is, what it needs to do, what has been decided, and what remains open.
 
@@ -11,6 +11,7 @@ Related source-of-truth docs:
 - `01_02_PRODUCT_INSIGHTS_DESIGN_SESSION.md` captures working product insights from design sessions and validation.
 - `01_03_PRODUCT_ROADMAP.md` captures staged product direction.
 - `03_UX_SPEC.md` captures the current UX, copy, layout, and interaction rules.
+- `05_ARCHITECTURE_SPEC.md` captures the current app architecture, data flow, prompt templates, and module boundaries.
 
 ## Product Intent
 
@@ -189,28 +190,32 @@ Accessibility basics:
 
 The current app is a small static web app:
 
-- `index.html` contains the app structure, form fields, output panels, and bridge choice buttons.
+- `index.html` contains the static app shell, output panels, bridge choice buttons, and script loading order.
 - `content.js` contains editable field text, suggestions, placeholders, markers, style chips, parent tips, and Fill Example values.
+- `promptTemplates.js` contains prompt/output templates and output-specific prompt-engineering text.
+- `promptBuilder.js` contains shared prompt rendering helpers, missing-value fallback, template lookup, and defensive template handling.
+- `script.js` contains UI rendering, DOM event handling, creature data gathering, summary/details rendering, copy/reset behavior, and selected output state.
 - `styles.css` contains mobile-first layout, visual styling, responsive rules, and component states.
-- `script.js` contains form behavior, prompt generation, summary rendering, details rendering, bridge templates, style chip behavior, copy behavior, and reset behavior.
 
 There is no build step and no package manager. The app runs by opening `index.html` in a browser.
 
 Current JavaScript/content shape:
 - `content.js` defines editable app content.
 - `parentTips` defines the expandable Parent Tips section.
-- `fields` defines the details/order mapping derived from `content.js`.
+- `promptTemplates.js` defines deterministic output templates.
+- `promptBuilder.js` defines shared output rendering helpers.
+- `creatureDataKeys` defines the explicit creature data contract.
+- `getCreatureData()` reads current form state into a structured creature data object.
+- `fields` defines the detail/order mapping derived from `content.js`.
 - `exampleValues` defines the Fill Example data from `content.js`.
-- `getValues()` reads current form state.
-- `buildPrompt()` creates the image prompt.
 - `buildSummary()` creates the readable creature summary.
 - `renderDetails()` renders the creature detail list.
-- `artifactTemplates` contains deterministic bridge output builders.
 - `renderArtifact()` updates selected bridge output.
 - `copyText()` handles Clipboard API copy with fallback behavior.
 
 Architecture direction:
-- Keep editable copy/content separate from logic-heavy behavior code while the app remains static and dependency-free.
+- Keep editable copy/content, prompt templates, prompt builder helpers, and UI orchestration separate while the app remains static and dependency-free.
+- Use `05_ARCHITECTURE_SPEC.md` as the canonical source for architecture boundaries and data contracts.
 
 Current state model:
 - Form fields are the source of truth.
@@ -280,6 +285,18 @@ Durable learning:
 - Add compact Parent Tips guidance for first-time adult facilitators.
 - Update prototype docs and durable source-of-truth docs.
 
+### Prototype 4.0
+
+Prototype 4.0 created an architecture runway for prompt-based creative outputs.
+
+Durable learning:
+- Keep the app static and dependency-free while architecture needs remain modest.
+- Separate editable UI content, prompt templates, prompt builder helpers, and UI orchestration.
+- Use an explicit creature data contract before adding more output types.
+- Keep missing-field fallback centralized.
+- Use prototype test matrices to preserve output behavior during internal refactors.
+- Promote durable architecture decisions into `05_ARCHITECTURE_SPEC.md`.
+
 ## Current Non-Goals
 
 The app is not currently:
@@ -310,8 +327,8 @@ Product and UX:
 Architecture:
 - How long can the app stay as plain HTML/CSS/JS before structure becomes a constraint?
 - Is `content.js` enough structure for editable field text, or should the app later use a more explicit content model?
-- Should output templates be separated from UI code if they grow?
-- Should creature data become an explicit object model with validation, defaults, and serialization?
+- Is one `promptTemplates.js` file enough, or should templates later be split by output category?
+- Should the creature data contract later gain validation, defaults, or serialization?
 - Is local storage useful, or would it add premature complexity?
 
 Testing:

@@ -123,10 +123,13 @@ Top-level docs describe what is true now:
 - `02_APP_SPEC.md` - current app requirements and architecture
 - `03_UX_SPEC.md` - current UX rules
 - `04_PROTOTYPE_STARTER.md` - reusable launch prompt for the next prototype
+- `05_ARCHITECTURE_SPEC.md` - current architecture, data flow, prompt templates, and module boundaries
 
 Prototype folders describe what was tried then.
 
 After each prototype, promote durable decisions into `02_APP_SPEC.md` and `03_UX_SPEC.md`.
+
+Promote durable architecture decisions into `05_ARCHITECTURE_SPEC.md`.
 
 ## ChatGPT To Codex Workflow
 
@@ -175,6 +178,7 @@ Read the top-level source-of-truth docs first:
 - 02_APP_SPEC.md
 - 03_UX_SPEC.md
 - 04_PROTOTYPE_STARTER.md
+- 05_ARCHITECTURE_SPEC.md
 
 Then review the most recent prototype folder:
 - Docs/Prototype [previous version]
@@ -203,6 +207,7 @@ Known constraints:
 - Avoid backend, accounts, auth, database, persistent storage, package dependencies, or AI API integration unless explicitly justified.
 - Promote durable requirements into 02_APP_SPEC.md.
 - Promote durable UX rules into 03_UX_SPEC.md.
+- Promote durable architecture decisions into 05_ARCHITECTURE_SPEC.md.
 
 Please act as a software engineering manager and product-minded implementation partner.
 
@@ -215,8 +220,9 @@ Then, unless I ask you to pause:
 4. Implement the scoped prototype changes.
 5. Update the prototype build log.
 6. Update 02_APP_SPEC.md and 03_UX_SPEC.md with durable changes.
-7. Run available verification.
-8. Summarize changed files, verification, and remaining risks.
+7. Update 05_ARCHITECTURE_SPEC.md if architecture changes.
+8. Run available verification.
+9. Summarize changed files, verification, and remaining risks.
 ```
 
 ## Prototype 4.0 Starter Notes

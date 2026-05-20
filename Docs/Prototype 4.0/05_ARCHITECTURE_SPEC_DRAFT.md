@@ -1,8 +1,14 @@
 # 05 Architecture Spec — Draft
 
 **Project:** Magic Creature Card Maker / Imagination Play Guide  
-**Status:** Draft for V4.0 review  
+**Status:** Historical draft; promoted to top-level `05_ARCHITECTURE_SPEC.md` during WP6
 **Purpose:** Capture current architecture truth and intended modular boundaries.
+
+Canonical current architecture spec:
+
+```text
+05_ARCHITECTURE_SPEC.md
+```
 
 ---
 
