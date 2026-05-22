@@ -177,7 +177,11 @@ This is sufficient for the current prototype. Local storage or saved creature li
 
 ## 11. Testing Approach
 
-Testing should cover:
+Testing should scale with the app's current non-functional requirements and architecture runway.
+
+The current app is static, dependency-free, and easy to run manually by opening `index.html`. For focused prompt-template or copy work packages, manual browser smoke testing is the expected baseline. Do not add package dependencies, browser automation, test runners, or developer-environment expansion only to verify small template changes.
+
+Manual smoke testing should cover:
 
 - app loads locally by opening `index.html`
 - creature creation
@@ -188,6 +192,8 @@ Testing should cover:
 - copy and reset behavior
 - selected bridge output refresh after regenerating
 - mobile sanity after publish
+
+Automated browser testing can be reconsidered later if a future NFR, larger runtime change, framework migration, or dedicated architecture work package justifies the tooling.
 
 Prototype-specific test matrices live in prototype folders. Durable architecture requirements live here.
 

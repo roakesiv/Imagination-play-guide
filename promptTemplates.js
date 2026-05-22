@@ -130,17 +130,53 @@ Make it feel like a cute children's coloring book page, not a detailed illustrat
     findIt: {
       title: 'Find-It Game',
       build(values, helpers) {
-        return `Create a kid-friendly hidden-object activity page.
+        const creatureName = values.name || 'the magic creature';
 
-Scene: ${helpers.promptValue(values.name)}, a ${helpers.promptValue(values.creatureMix)}, is playing in ${helpers.promptValue(values.home)}.
+        return `Create a black-and-white printable hidden-object activity page for a young child featuring a kid-friendly magical creature.
+
+Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}
+Home/background: ${helpers.promptValue(values.home)}
 Colors/vibe: ${helpers.promptValue(values.colors)}
 Personality: ${helpers.promptValue(values.personality)}
 
-Things to find:
-${getFindItItems(values).map((item) => `- ${item}`).join('\n')}
+Show ${creatureName} as the clear main focus of the page. Make ${creatureName}'s name very clear and easy to read at the top of the page so the child can clearly see the creature's name and feel excited about their creation.
 
-Make the page whimsical, readable, safe for young children, and full of fun details.`;
+Create a simple, playful scene of ${creatureName} playing in the home/background. Keep the scene readable, uncluttered, and easy for a young child to use. The page should work as both a hidden-object activity page and a coloring page.
+
+Hide these things in the scene:
+- books and toys
+- a storytime detail
+- an invisibility + water sparkle
+- a tiny gem
+- a small sign for the home/background
+
+At the bottom of the page, include a clear "Things to Find" row that shows:
+- a small picture icon of each item
+- the name of each item
+- the items arranged in a simple row across the bottom
+
+This bottom row should be designed for pre-reading children and children learning to read, so the pictures and words should be clear, simple, and easy to understand.
+
+Use:
+- clean black-and-white line art
+- bold, readable outlines
+- large, easy-to-recognize hidden objects
+- simple shapes and clean details
+- a playful whimsical style
+- moderate detail
+- objects that are hidden but still findable for a young child
+- a page layout that is easy to print and easy to color
+
+Avoid:
+- tiny hard-to-see objects
+- overly dense clutter
+- complex overlapping details
+- a very difficult puzzle style
+- heavy shading or grayscale
+- scary or intense elements
+
+Make it feel like a cute children's hidden-object worksheet and coloring page, not a complex puzzle page or an adult hidden-object illustration.`;
       }
     }
   };
