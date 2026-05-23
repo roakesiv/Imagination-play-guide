@@ -101,6 +101,9 @@ Current output types:
 - Count the Objects
 - Find the Letter
 - Draw the Missing Detail
+- Trace the Path
+- Matching Page
+- Finish the Pattern
 
 ## Functional Requirements
 

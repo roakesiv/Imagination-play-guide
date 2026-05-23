@@ -166,6 +166,9 @@ Current outputs:
 - Count the Objects
 - Find the Letter
 - Draw the Missing Detail
+- Trace the Path
+- Matching Page
+- Finish the Pattern
 
 Do not add new output types inside architecture work packages. New outputs belong in product-scoped prototypes.
 

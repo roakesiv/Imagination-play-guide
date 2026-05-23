@@ -451,6 +451,22 @@ dd {
   box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.16);
 }
 
+.choice-card:disabled {
+  border-color: #d0d0d8;
+  background: #f0eef3;
+  color: #7b7688;
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.choice-card:disabled span {
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.choice-card:disabled:hover {
+  box-shadow: none;
+}
+
 .choice-card:nth-child(1):hover,
 .choice-card:nth-child(1).is-selected {
   border-color: var(--rainbow-blue);

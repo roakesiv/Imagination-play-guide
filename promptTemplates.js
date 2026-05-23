@@ -359,6 +359,144 @@ Use:
 
 Make it feel like a cute preschool drawing-and-coloring activity page, not a finished illustration.`;
       }
+    },
+    tracePath: {
+      title: 'Trace the Path',
+      build(values, helpers) {
+        const creatureName = values.name || 'the magic creature';
+
+        return `Create a black-and-white printable tracing path worksheet for a young child featuring a kid-friendly magical creature.
+
+Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
+Magic: ${helpers.promptValue(values.magic)}
+Home/background: ${helpers.promptValue(values.home)}
+Personality: ${helpers.promptValue(values.personality)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
+
+Show ${creatureName} clearly on the page. Create a simple prewriting activity where the child helps ${creatureName} follow large dotted paths to reach the home/background.
+
+Include 3 to 5 large traceable paths. The paths should use simple prewriting shapes such as:
+- straight line
+- wavy line
+- zigzag line
+- loop-de-loop line
+- curved rainbow path
+
+Put ${creatureName} near the start of each path and a simple goal at the end, such as an object inspired by the home, magic, accessories, or extra detail.
+
+Use:
+- clean black-and-white line art
+- bold readable outlines
+- large dotted or dashed tracing paths
+- wide spacing between paths
+- simple shapes
+- open spaces for coloring
+- minimal detail
+- no shading or grayscale
+- no tiny patterns
+- no cluttered background
+- no scary details
+
+Make it feel like a cute preschool prewriting worksheet and coloring page, not a complex maze or adult activity page.`;
+      }
+    },
+    matchingPage: {
+      title: 'Matching Page',
+      build(values, helpers) {
+        const creatureName = values.name || 'the magic creature';
+
+        return `Create a black-and-white printable matching activity page for a young child featuring a kid-friendly magical creature.
+
+Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
+Magic: ${helpers.promptValue(values.magic)}
+Home/background: ${helpers.promptValue(values.home)}
+Personality: ${helpers.promptValue(values.personality)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
+
+Show ${creatureName} clearly on the page in a simple, cute black-and-white line art style.
+
+Create a simple matching activity where the child draws lines to match magical objects from ${creatureName}'s world.
+
+Use two clear columns of large objects. Put 4 to 6 objects on the left and matching objects on the right.
+
+Objects can include items inspired by the home, magic, accessories, extra detail, and creature world, such as:
+- book
+- toy
+- balloon
+- tiny gem
+- water sparkle
+- candy piece
+- storytime book
+- simple magical object
+
+Make the objects large, simple, and easy to recognize. Leave enough space between objects so the child can draw matching lines.
+
+Use:
+- clean black-and-white line art
+- bold readable outlines
+- large simple objects
+- two clear matching columns
+- open spaces for drawing lines
+- minimal detail
+- no shading or grayscale
+- no tiny patterns
+- no cluttered background
+- no scary details
+
+Make it feel like a cute preschool matching worksheet and coloring page, not a complex school worksheet.`;
+      }
+    },
+    finishPattern: {
+      title: 'Finish the Pattern',
+      build(values, helpers) {
+        const creatureName = values.name || 'the magic creature';
+
+        return `Create a black-and-white printable pattern activity page for a young child featuring a kid-friendly magical creature.
+
+Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
+Magic: ${helpers.promptValue(values.magic)}
+Home/background: ${helpers.promptValue(values.home)}
+Personality: ${helpers.promptValue(values.personality)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
+
+Show ${creatureName} clearly on the page in a simple, cute black-and-white line art style.
+
+Create a simple "finish the pattern" activity using magical objects from ${creatureName}'s world.
+
+Include 3 to 4 pattern rows. Each row should use large, easy-to-recognize objects inspired by the home, magic, accessories, extra detail, and creature world, such as:
+- balloon
+- book
+- tiny gem
+- water sparkle
+- candy piece
+- toy
+- storytime book
+- simple magical object
+
+Use simple preschool-friendly patterns such as:
+- balloon, gem, balloon, gem, blank
+- book, toy, book, toy, blank
+- candy, candy, sparkle, candy, candy, blank
+
+At the end of each pattern row, leave a clear blank space where the child can draw or choose the next object.
+
+Include a small prompt at the top:
+"Finish the magical patterns!"
+
+Use:
+- clean black-and-white line art
+- bold readable outlines
+- large simple objects
+- clear pattern rows
+- open blank spaces for answers
+- minimal detail
+- no shading or grayscale
+- no tiny patterns
+- no cluttered background
+- no scary details
+
+Make it feel like a cute preschool pattern worksheet and coloring page, not a complex math worksheet.`;
+      }
     }
   };
 

@@ -21,7 +21,7 @@ The app currently supports:
 - Picture style suggestion chips
 - Copy buttons for generated text
 - A lightweight "What do we make next?" bridge
-- Deterministic template outputs for Creature Card, Story, Adventure, Coloring Page, Find-It Game, Maze, Letter Tracing, Count the Objects, Find the Letter, and Draw the Missing Detail
+- Deterministic template outputs for Creature Card, Story, Adventure, Coloring Page, Find-It Game, Maze, Letter Tracing, Count the Objects, Find the Letter, Draw the Missing Detail, Trace the Path, Matching Page, and Finish the Pattern
 
 The app remains intentionally simple. It has no backend, accounts, auth, database, persistent storage, package manager, build step, or AI API integration.
 

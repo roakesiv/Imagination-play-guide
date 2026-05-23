@@ -45,6 +45,9 @@ Current output options:
 - Count the Objects
 - Find the Letter
 - Draw the Missing Detail
+- Trace the Path
+- Matching Page
+- Finish the Pattern
 
 Prototype 4.0 introduced no major runtime UX changes, so the P3.2 UX rules remain current.
 
