@@ -13,7 +13,7 @@ The current roadmap is:
 3.X — Foundation, UX, and Maintainability
 4.X — MVP Activity Book
 5.X — Story Mode
-Future — Persistence, printing, direct generation, richer books
+Future — Printing, direct generation, richer books
 ```
 
 The core product direction is:
@@ -241,7 +241,7 @@ Focus:
 
 Status:
 
-In progress.
+Complete enough for live play validation.
 
 Focus:
 
@@ -249,25 +249,32 @@ Focus:
 - keep prompt generation deterministic
 - test whether creature data maps well to new pages
 
-#### P4.3 — Small Activity Pack
+#### P4.3 — Save Creature + Session Continuity
+
+Status:
+
+Complete.
 
 Focus:
 
-- generate a small multi-page activity set from one creature
-- possibly 4 pages only:
-  1. coloring
-  2. find-it
-  3. maze
-  4. tracing
+- autosave and restore the current creature
+- protect live-session work from accidental overwrite
+- support a small local saved creature list
+- keep persistence local-only, with no accounts, backend, or cloud sync
 
-#### P4.3+ — Activity Book Refinement
+Result:
+
+- P4.3 successfully solved the immediate creature continuity problem.
+- Optional JSON export/import was deferred because it adds manual transfer friction and does not improve the desired automated post-creation workflow.
+
+#### P4.4 Candidate — Production / Print Workflow Discovery
 
 Only if needed:
 
-- simplify outputs by cohort
-- add difficulty setting
-- improve prompt isolation
-- improve downloadable/printable workflow notes
+- track which creature pages still need to be generated, downloaded, or printed
+- reduce parent memory burden after the fun creature-creation moment
+- clarify the phone-to-laptop production workflow
+- avoid building full print/PDF infrastructure until the workflow is better understood
 
 ---
 
@@ -518,7 +525,7 @@ Saved libraries, direct AI, printer connection, and books are powerful ideas, bu
 
 ## 8. Current Recommended Next Step
 
-Continue P4.2 rapid activity-page expansion and manual/product review.
+Close P4.3 and use the saved creature list in real play.
 
 P4.0 is complete and created the architecture runway:
 
@@ -528,4 +535,8 @@ P4.0 is complete and created the architecture runway:
 - UI orchestration remains in `script.js`
 - durable architecture rules live in `05_ARCHITECTURE_SPEC.md`
 
-P4.1 completed Coloring Page and Find-It Game prompt quality. P4.2 should continue adding validated activity-page outputs, preserve the current static architecture, defer bridge grouping until needed, and use manual browser smoke testing at the current NFR level.
+P4.1 completed Coloring Page and Find-It Game prompt quality. P4.2 expanded activity-page outputs and live play testing showed that the next blocker is continuity, not more page types.
+
+P4.3 successfully added local current-creature persistence, destructive-action protection, and simple saved creature management while preserving the static architecture.
+
+The next highest-friction area appears to be post-creation production: generating images/activity pages, downloading files, moving between phone and laptop, and printing. JSON export/import should remain deferred unless device transfer becomes a concrete blocker, because it adds another manual handoff rather than automating the workflow after creature creation.

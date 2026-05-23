@@ -1,8 +1,8 @@
 # Architecture Spec
 
 Status: Current
-Last updated after: Prototype 4.0 architecture runway
-Last updated: 2026-05-19
+Last updated after: Prototype 4.3 WP4 saved creature list
+Last updated: 2026-05-23
 
 This is the living architecture source of truth for Magic Creature Card Maker. Prototype folders preserve implementation history. This file captures the current app structure, module boundaries, data contract, prompt-output flow, and architecture constraints.
 
@@ -42,7 +42,7 @@ The app should remain:
 - understandable by a solo builder
 - simple enough for Codex to modify safely with good docs
 
-Do not add backend services, databases, accounts, auth, storage, package managers, build steps, frameworks, direct AI APIs, or image APIs until testing proves they are needed.
+Do not add backend services, databases, accounts, auth, package managers, build steps, frameworks, direct AI APIs, or image APIs until testing proves they are needed. Browser local storage is allowed for current creature continuity.
 
 ## 3. File Responsibilities
 
@@ -52,6 +52,7 @@ Do not add backend services, databases, accounts, auth, storage, package manager
 | `content.js` | Editable UI copy, field definitions, suggestions, style chips, parent tips, and example values |
 | `promptTemplates.js` | Prompt/output templates and output-specific prompt-engineering text |
 | `promptBuilder.js` | Shared prompt rendering helpers, missing-value fallback, template lookup, and defensive template handling |
+| `storage.js` | Browser localStorage helpers for current creature and saved creature list behavior |
 | `script.js` | UI rendering, DOM event handling, creature data gathering, summary/details rendering, copy/reset behavior, and selected output state |
 | `styles.css` | Visual styling, mobile-first layout, responsive behavior, and component states |
 
@@ -63,13 +64,16 @@ Do not add backend services, databases, accounts, auth, storage, package manager
 <script src="content.js"></script>
 <script src="promptTemplates.js"></script>
 <script src="promptBuilder.js"></script>
+<script src="storage.js"></script>
 <script src="script.js"></script>
 ```
 
 Reason:
 - `script.js` depends on editable content from `content.js`.
 - `promptBuilder.js` depends on templates from `promptTemplates.js`.
+- `storage.js` does not depend on app content or prompt helpers.
 - `script.js` depends on builder helpers from `promptBuilder.js`.
+- `script.js` optionally uses persistence helpers from `storage.js`.
 
 ## 5. Creature Data Contract
 
@@ -174,22 +178,29 @@ Do not add new output types inside architecture work packages. New outputs belon
 
 ## 10. State Model
 
-Current state is intentionally simple:
+Current state remains intentionally simple:
 
 - Form inputs are the source of truth for creature data.
 - `currentArtifactType` in `script.js` stores the selected bridge output type.
 - Generated outputs live in textareas and visible UI nodes.
-- No state is persisted across reloads.
+- Current creature form data is autosaved to browser local storage.
+- Current creature form data is restored on page load when saved data exists.
+- Reset clears the saved current creature.
+- Saved creature records are stored in a separate browser local storage list.
+- Saved creature records include an id, display name, creature data, and timestamps.
+- Generated image prompts and bridge outputs are not persisted; they can be regenerated from restored creature data.
 
-This is sufficient for the current prototype. Local storage or saved creature libraries should wait until testing proves they are useful enough to justify complexity.
+This is sufficient for P4.3 local persistence. Accounts, cloud sync, backend databases, and profiles remain out of scope.
 
 ## 11. Testing Approach
 
-Testing should scale with the app's current non-functional requirements and architecture runway.
+Testing should scale with the app's current non-functional requirements, risk, and architecture runway.
 
-The current app is static, dependency-free, and easy to run manually by opening `index.html`. For focused prompt-template or copy work packages, manual browser smoke testing is the expected baseline. Do not add package dependencies, browser automation, test runners, or developer-environment expansion only to verify small template changes.
+The current app is static, dependency-free, and easy to run manually by opening `index.html`. Browser smoke testing is not required for every work package. For narrow static-app changes, docs updates, prompt-template edits, or isolated UI wiring, static implementation review and file-reference checks are usually enough.
 
-Manual smoke testing should cover:
+Manual browser review is appropriate when a change affects broad runtime behavior, visual layout, touch ergonomics, clipboard behavior, local storage behavior that needs product-owner confidence, or final prototype acceptance. Do not add package dependencies, browser automation, test runners, or developer-environment expansion only to verify small changes.
+
+When manual browser review is used, it can cover:
 
 - app loads locally by opening `index.html`
 - creature creation
@@ -232,10 +243,26 @@ The project benefits from service-boundary thinking through simple file/module r
 Reason:
 The current app is small, static, and easy to run. Framework or build complexity should wait until repeated feature work proves plain HTML/CSS/JS is a constraint.
 
+### Decision: Use Browser Local Storage For Current Creature Continuity
+
+Reason:
+P4.2 live testing showed that interrupted family play can lose valuable creature data. Browser local storage solves reload recovery while preserving the static, dependency-free architecture and avoiding accounts, backend services, or cloud sync.
+
+### Decision: Keep Saved Creatures Local And Profile-Free
+
+Reason:
+Multiple children may each want a creature, but P4.3 does not need accounts or child profiles. A simple local saved creature list supports switching creatures while avoiding personal child data and backend complexity.
+
+### Decision: Defer JSON Export / Import
+
+Reason:
+Export/import can move creature data between devices, but it adds another manual transfer step. P4.3 solved the immediate local continuity need, while the larger product direction is to automate post-creation production work rather than add more handoffs.
+
 ## 13. Open Architecture Questions
 
 - Is one `promptTemplates.js` file enough, or should templates later be split by category?
 - Should `promptBuilder.js` stay generic, or should output categories eventually have specific builders?
 - When does the app need a fuller data model for creature, character, activity, and story?
-- When does local storage become useful enough to justify complexity?
+- When does saved creature management need export/import, device transfer, or sync rather than browser-local storage?
+- What architecture would support tracking generated images or print-production status without overbuilding?
 - When, if ever, should the app move beyond plain HTML/CSS/JS?

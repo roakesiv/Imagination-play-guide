@@ -1,8 +1,8 @@
 # App Spec
 
 Status: Current  
-Last updated after: Prototype 4.0 architecture runway
-Last updated: 2026-05-20
+Last updated after: Prototype 4.3 WP4 saved creature list
+Last updated: 2026-05-23
 
 This is the living product and engineering spec for Magic Creature Card Maker. Prototype folders preserve history. This file captures the current truth: what the app is, what it needs to do, what has been decided, and what remains open.
 
@@ -51,6 +51,8 @@ The adult facilitator needs:
 - No prompt-engineering knowledge required
 - Fast output so children do not lose attention
 - Copyable text for image generation, stories, or activities
+- Current creature data restored after accidental reloads or navigation
+- Ability to save, load, and delete multiple local creatures without accounts
 
 The child needs:
 - Simple questions
@@ -89,6 +91,21 @@ The child needs:
 2. Adult chooses an option under `What do we make next?`
 3. App generates deterministic text for that output type.
 4. Adult copies the output if useful.
+
+### Restore Current Creature
+
+1. Adult enters or edits creature details.
+2. App autosaves the current creature to browser local storage.
+3. If the page reloads, the app restores the last creature into the form.
+4. Adult can continue generating prompts and activity outputs from the restored creature.
+
+### Manage Saved Creatures
+
+1. Adult fills in creature details.
+2. Adult taps `Save Creature`.
+3. App adds the creature to a local saved creature list.
+4. Adult can load a saved creature back into the form.
+5. Adult can delete saved creatures.
 
 Current output types:
 - Creature Card
@@ -148,6 +165,24 @@ Copy behavior:
 
 Reset behavior:
 - Reset must clear fields, generated prompt, summary, details, selected bridge output, selected choice state, and copy status.
+- Reset must ask for confirmation before clearing non-empty creature data.
+- Canceling Reset must preserve current form data and local save.
+
+Fill Example behavior:
+- Fill Example may populate sample data for quick testing.
+- Fill Example must ask for confirmation before overwriting non-empty creature data.
+- Canceling Fill Example must preserve current form data and local save.
+
+Session continuity:
+- The current creature must autosave locally as fields change.
+- The last creature must restore into the form after reload.
+- Restore must not require accounts, cloud sync, backend services, or a database.
+- Reset must clear the locally saved current creature.
+- The app should show a compact local save/restore status.
+- The app must support saving, loading, and deleting multiple creatures locally.
+- Saved creature names should use the creature name when available.
+- Saved creatures without a name should display `Unnamed Creature`.
+- Saved creature management must not require child profiles or personal child names.
 
 ## Non-Functional Requirements
 
@@ -162,7 +197,7 @@ The app should be:
 - Safe for young children in generated prompt language
 - Simple enough to modify without a framework or build system
 
-The app should not add backend services, accounts, auth, storage, databases, package dependencies, or direct AI API integration until testing proves they are needed.
+The app should not add backend services, accounts, auth, databases, package dependencies, or direct AI API integration until testing proves they are needed. Current creature continuity uses browser local storage only.
 
 ## UX Principles
 
@@ -202,6 +237,7 @@ The current app is a small static web app:
 - `content.js` contains editable field text, suggestions, placeholders, markers, style chips, parent tips, and Fill Example values.
 - `promptTemplates.js` contains prompt/output templates and output-specific prompt-engineering text.
 - `promptBuilder.js` contains shared prompt rendering helpers, missing-value fallback, template lookup, and defensive template handling.
+- `storage.js` contains browser localStorage helpers for current creature continuity and saved creatures.
 - `script.js` contains UI rendering, DOM event handling, creature data gathering, summary/details rendering, copy/reset behavior, and selected output state.
 - `styles.css` contains mobile-first layout, visual styling, responsive rules, and component states.
 
@@ -220,6 +256,9 @@ Current JavaScript/content shape:
 - `renderDetails()` renders the creature detail list.
 - `renderArtifact()` updates selected bridge output.
 - `copyText()` handles Clipboard API copy with fallback behavior.
+- `storage.js` exposes save, load, and clear helpers for the current creature.
+- `storage.js` exposes list, add, and delete helpers for saved creatures.
+- `content.js` owns destructive-action confirmation copy.
 
 Architecture direction:
 - Keep editable copy/content, prompt templates, prompt builder helpers, and UI orchestration separate while the app remains static and dependency-free.
@@ -228,7 +267,9 @@ Architecture direction:
 Current state model:
 - Form fields are the source of truth.
 - `currentArtifactType` stores the selected bridge output type.
-- No state is persisted across page reloads.
+- Current creature form data is persisted to browser local storage and restored on page load.
+- Saved creatures are persisted to browser local storage as a local list.
+- Generated outputs are not persisted; they can be regenerated from the restored creature.
 
 ## Current Design System
 
@@ -305,6 +346,17 @@ Durable learning:
 - Use prototype test matrices to preserve output behavior during internal refactors.
 - Promote durable architecture decisions into `05_ARCHITECTURE_SPEC.md`.
 
+### Prototype 4.3
+
+Prototype 4.3 added local creature continuity after live play showed that losing creature data had become a major blocker.
+
+Durable learning:
+- Local autosave and reload restore are now part of the core app, not deferred complexity.
+- Destructive actions must protect live family-session work.
+- A simple local saved creature list is enough to support multiple creatures without accounts, profiles, backend services, or cloud sync.
+- JSON export/import is not worth adding only to move data between phone and laptop; it creates another manual handoff and does not advance the desired automated post-creation workflow.
+- The next workflow friction is production after creature creation: generating pages/images, downloading files, moving between phone and laptop, and printing.
+
 ## Current Non-Goals
 
 The app is not currently:
@@ -312,7 +364,6 @@ The app is not currently:
 - A full story engine
 - A game
 - A kid-independent app
-- A saved creature library
 - A multi-user product
 - A commercial product
 - A backend service
@@ -331,25 +382,28 @@ Product and UX:
 - Do rewritten field prompts reduce adult facilitation effort during live play?
 - Do distinct button colors help adults guide child participation?
 - Should a future prototype add lightweight step navigation, or keep the full-page form?
+- What lightweight production checklist would help a parent remember which creature pages still need to be generated, downloaded, or printed?
+- When does the app need to track generated images or activity outputs, not just creature data?
 
 Architecture:
 - How long can the app stay as plain HTML/CSS/JS before structure becomes a constraint?
 - Is `content.js` enough structure for editable field text, or should the app later use a more explicit content model?
 - Is one `promptTemplates.js` file enough, or should templates later be split by output category?
 - Should the creature data contract later gain validation, defaults, or serialization?
-- Is local storage useful, or would it add premature complexity?
+- When does saved creature management need export/import, device transfer, or sync rather than browser-local storage?
 
 Testing:
 - Does clipboard behavior work reliably on target mobile browsers?
 - Does one-handed phone use feel comfortable?
 - Can the adult understand the flow within a few seconds without reading every instruction?
+- Which work packages actually need browser/mobile review versus static implementation review?
 
 ## Deferred Ideas
 
 Possible future features:
 - Step-by-step mode for live play
-- Saved creature library
 - Printable creature cards
+- Production checklist per creature
 - Print-specific coloring page and find-it layouts
 - Story session guide
 - Parent DM assistant for simple adventures

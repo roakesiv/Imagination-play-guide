@@ -1,8 +1,8 @@
 # UX Spec
 
 Status: Current  
-Last updated after: Prototype 4.0 architecture runway
-Last updated: 2026-05-20
+Last updated after: Prototype 4.3 WP4 saved creature list
+Last updated: 2026-05-23
 
 This is the living UX source of truth for Magic Creature Card Maker. Prototype UX files are historical snapshots. When a prototype changes the durable UX direction, promote the current rules into this file.
 
@@ -147,6 +147,29 @@ After the form is submitted, the user should see:
 - Next-step bridge choices
 
 The app should clearly move from "we made a creature" to "now we can make something with it."
+
+### Protect Live Work
+
+Risky actions should not erase or replace an active creature without warning.
+
+Current rules:
+- Fill Example asks for confirmation before replacing non-empty creature data.
+- Reset asks for confirmation before clearing non-empty creature data.
+- Canceling a confirmation preserves the current creature.
+- Confirmations should stay short, plain, and understandable during live family use.
+
+### Saved Creatures
+
+Saved creature controls should stay compact and parent-facing.
+
+Current rules:
+- The saved creature list appears near the creature form.
+- The primary save action is `Save Creature`.
+- Saved rows show the fictional creature name when available.
+- Missing names display `Unnamed Creature`.
+- Loading a saved creature asks before replacing active creature data.
+- Deleting a saved creature asks for confirmation.
+- Do not ask for or display child profile names.
 
 ## Copy Style
 

@@ -6,9 +6,9 @@ The app helps an adult facilitator capture a child's magical creature idea, pres
 
 ## Current Status
 
-Current working version: Prototype 4.2 in progress.
+Current working version: Prototype 4.3 complete.
 
-Current validation focus: P4.2 rapid activity-page expansion.
+Current validation focus: post-creation production, download, and print workflow friction.
 
 The app currently supports:
 - Free-text creature creation prompts
@@ -22,8 +22,10 @@ The app currently supports:
 - Copy buttons for generated text
 - A lightweight "What do we make next?" bridge
 - Deterministic template outputs for Creature Card, Story, Adventure, Coloring Page, Find-It Game, Maze, Letter Tracing, Count the Objects, Find the Letter, Draw the Missing Detail, Trace the Path, Matching Page, and Finish the Pattern
+- Local autosave and reload restore for the current creature
+- Local saved creature list with save, load, and delete
 
-The app remains intentionally simple. It has no backend, accounts, auth, database, persistent storage, package manager, build step, or AI API integration.
+The app remains intentionally simple. It has no backend, accounts, auth, database, package manager, build step, or AI API integration. Current and saved creature data are stored locally in the browser only.
 
 ## How to Run
 
@@ -38,9 +40,10 @@ No build step is required.
 3. Use optional picture style chips if helpful.
 4. Tap `Make Creature`.
 5. Review the generated image prompt, summary, and details.
-6. Copy the prompt into ChatGPT or another image creator.
-7. Choose an output under `What do we make next?`
-8. Copy the selected output.
+6. Optionally save the creature locally for later.
+7. Copy the prompt into ChatGPT or another image creator.
+8. Choose an output under `What do we make next?`
+9. Copy the selected output.
 
 Use `Fill Example` to quickly populate sample creature data for testing.
 
@@ -84,12 +87,14 @@ Use top-level docs to understand the current app. Use prototype docs to understa
 - `styles.css` - visual styling and mobile layout
 - `promptTemplates.js` - prompt/output templates and output-specific prompt-engineering text
 - `promptBuilder.js` - shared prompt rendering helpers, missing-value fallback, and template lookup
+- `storage.js` - browser localStorage helpers for current creature continuity and saved creatures
 - `script.js` - UI rendering, form behavior, data gathering, summary/details, copy actions, reset behavior, and selected output state
 - `Docs/Prototype 1` - earlier project history
 - `Docs/Prototype 3.0` - prior prototype scope, testing, and implementation context
 - `Docs/Prototype 3.1` - historical handoff docs, UX spec, build log, and testing guide
 - `Docs/Prototype 3.2` - P3.2 plan, scope, build log, validation results, and implementation review
 - `Docs/Prototype 4.0` - P4.0 architecture runway scope, build log, test plan, implementation review, and architecture draft history
+- `Docs/Prototype 4.3` - P4.3 save creature, session continuity, saved creatures, and closeout docs
 
 ## Key Prototype 3.1 Docs
 
@@ -146,15 +151,18 @@ Recommended update loop:
 4. Update `02_APP_SPEC.md` and `03_UX_SPEC.md` with the current truth.
 5. Use `04_PROTOTYPE_STARTER.md` to launch the next prototype folder from the remaining open questions and highest-friction workflows.
 
-## Direction Toward Prototype 4.1
+## Direction After Prototype 4.3
 
-Prototype 4.0 created the architecture runway for prompt-based creative outputs and passed browser smoke testing.
+Prototype 4.3 successfully added browser-local creature continuity:
+
+- current creature autosave and reload restore
+- confirmation before risky overwrite/clear actions
+- local saved creature list with save, load, and delete
 
 Recommended next step:
 
-1. Use `05_ARCHITECTURE_SPEC.md` as the architecture source of truth.
-2. Start V4.1 Coloring + Find-It prompt quality work.
-3. Keep V4.1 focused on improving existing output quality, not adding new output types.
-4. Use the P4.0 prompt-output matrix to verify behavior stays stable.
+1. Use the saved creature list in real play.
+2. Treat post-creation production, downloading, and printing friction as the next workflow problem.
+3. Defer JSON export/import unless device transfer becomes a concrete blocker.
 
 Keep the product lightweight until testing shows which next feature is truly needed.

@@ -30,8 +30,17 @@
 
         <div class="action-row">
           <button class="primary-button" type="submit">Make Creature</button>
+          <p class="save-status" id="saveStatus" role="status"></p>
         </div>
       </form>
+
+      <div class="saved-creatures" aria-labelledby="saved-creatures-heading">
+        <div class="saved-creatures-heading">
+          <h3 id="saved-creatures-heading">Saved Creatures</h3>
+          <button class="secondary-button compact-button" type="button" id="saveCreatureButton">Save Creature</button>
+        </div>
+        <div class="saved-creature-list" id="savedCreatureList" aria-live="polite"></div>
+      </div>
     </section>
 
     <section class="output-grid" aria-live="polite">
@@ -163,6 +172,7 @@
   <script src="content.js"></script>
   <script src="promptTemplates.js"></script>
   <script src="promptBuilder.js"></script>
+  <script src="storage.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

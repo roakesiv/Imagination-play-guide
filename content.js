@@ -117,5 +117,19 @@ window.creatureAppContent = {
     extraDetail: 'loves storytime',
     creatureName: 'Amor',
     pictureStyle: 'cuddly storybook'
+  },
+  confirmations: {
+    fillExample: 'Fill Example will replace the creature you are working on. Continue?',
+    reset: 'Reset will clear this creature from the page and local save. Continue?',
+    loadSavedCreature: 'Loading this saved creature will replace the creature on the page. Continue?',
+    deleteSavedCreature: 'Delete this saved creature?'
+  },
+  savedCreatures: {
+    title: 'Saved Creatures',
+    saveButton: 'Save Creature',
+    empty: 'No saved creatures yet.',
+    unnamed: 'Unnamed Creature',
+    loadButton: 'Load',
+    deleteButton: 'Delete'
   }
 };

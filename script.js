@@ -1,5 +1,6 @@
 const appContent = window.creatureAppContent || {};
 const promptBuilder = window.creaturePromptBuilder || {};
+const creatureStorage = window.creatureStorage || {};
 const parentTips = appContent.parentTips || {};
 const fieldDefinitions = appContent.fields || [];
 const fieldMap = Object.fromEntries(fieldDefinitions.map((field) => [field.id, field]));
@@ -34,18 +35,24 @@ const fields = detailFieldOrder.map((id) => ({
   key: fieldMap[id].key
 }));
 const exampleValues = appContent.exampleValues || {};
+const confirmations = appContent.confirmations || {};
+const savedCreaturesContent = appContent.savedCreatures || {};
 const styleSuggestions = appContent.styleSuggestions || [];
 
 renderQuestionFields();
 renderParentTips();
 
 const form = document.querySelector('#creatureForm');
+const saveStatus = document.querySelector('#saveStatus');
 const promptOutput = document.querySelector('#promptOutput');
 const summaryOutput = document.querySelector('#summaryOutput');
 const detailsOutput = document.querySelector('#detailsOutput');
 const copyButton = document.querySelector('#copyButton');
 const resetButton = document.querySelector('#resetButton');
 const fillExampleButton = document.querySelector('#fillExampleButton');
+const saveCreatureButton = document.querySelector('#saveCreatureButton');
+const savedCreaturesHeading = document.querySelector('#saved-creatures-heading');
+const savedCreatureList = document.querySelector('#savedCreatureList');
 const copyStatus = document.querySelector('#copyStatus');
 const styleInput = document.querySelector('#pictureStyle');
 const artifactChoices = document.querySelector('#artifactChoices');
@@ -113,6 +120,187 @@ function getCreatureData() {
   });
 
   return creatureData;
+}
+
+function hasCreatureData(creatureData) {
+  return creatureDataKeys.some((key) => creatureData[key]);
+}
+
+function confirmIfCreatureHasData(message) {
+  if (!hasCreatureData(getCreatureData())) {
+    return true;
+  }
+
+  return window.confirm(message);
+}
+
+function getSavedCreatureLabel(savedCreature) {
+  return typeof savedCreature.name === 'string' && savedCreature.name
+    ? savedCreature.name
+    : savedCreaturesContent.unnamed || 'Unnamed Creature';
+}
+
+function getSavedCreatureData(savedCreature) {
+  const savedData = savedCreature && savedCreature.data ? savedCreature.data : {};
+  const creatureData = createEmptyCreatureData();
+
+  creatureDataKeys.forEach((key) => {
+    creatureData[key] = typeof savedData[key] === 'string' ? savedData[key] : '';
+  });
+
+  return creatureData;
+}
+
+function setCreatureData(creatureData) {
+  fields.forEach((field) => {
+    const input = document.querySelector(`#${field.id}`);
+    if (input) {
+      input.value = typeof creatureData[field.key] === 'string' ? creatureData[field.key] : '';
+    }
+  });
+}
+
+function setSaveStatus(message) {
+  if (saveStatus) {
+    saveStatus.textContent = message;
+  }
+}
+
+function saveCurrentCreature() {
+  if (typeof creatureStorage.saveCurrentCreature !== 'function') {
+    return;
+  }
+
+  const didSave = creatureStorage.saveCurrentCreature(getCreatureData());
+  setSaveStatus(didSave ? 'Saved locally' : 'Local save unavailable');
+}
+
+function restoreCurrentCreature() {
+  if (typeof creatureStorage.loadCurrentCreature !== 'function') {
+    return;
+  }
+
+  const savedCreature = creatureStorage.loadCurrentCreature();
+  if (!savedCreature) {
+    return;
+  }
+
+  const creatureData = createEmptyCreatureData();
+  creatureDataKeys.forEach((key) => {
+    creatureData[key] = typeof savedCreature[key] === 'string' ? savedCreature[key] : '';
+  });
+
+  if (!hasCreatureData(creatureData)) {
+    return;
+  }
+
+  setCreatureData(creatureData);
+  renderDetails(creatureData);
+  summaryOutput.textContent = buildSummary(creatureData);
+  setSaveStatus('Restored last creature');
+}
+
+function renderSavedCreatures() {
+  if (!savedCreatureList || typeof creatureStorage.loadSavedCreatures !== 'function') {
+    return;
+  }
+
+  if (savedCreaturesHeading) {
+    savedCreaturesHeading.textContent = savedCreaturesContent.title || 'Saved Creatures';
+  }
+
+  if (saveCreatureButton) {
+    saveCreatureButton.textContent = savedCreaturesContent.saveButton || 'Save Creature';
+  }
+
+  const savedCreatures = creatureStorage.loadSavedCreatures();
+  if (!savedCreatures.length) {
+    savedCreatureList.innerHTML = `<p class="saved-empty">${escapeHtml(savedCreaturesContent.empty || 'No saved creatures yet.')}</p>`;
+    return;
+  }
+
+  savedCreatureList.innerHTML = savedCreatures.map((savedCreature) => `
+    <div class="saved-creature-row" data-creature-id="${escapeHtml(savedCreature.id)}">
+      <span class="saved-creature-name">${escapeHtml(getSavedCreatureLabel(savedCreature))}</span>
+      <div class="saved-creature-actions">
+        <button class="secondary-button compact-button" type="button" data-action="load-saved">${escapeHtml(savedCreaturesContent.loadButton || 'Load')}</button>
+        <button class="secondary-button compact-button delete-button" type="button" data-action="delete-saved">${escapeHtml(savedCreaturesContent.deleteButton || 'Delete')}</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function saveCreatureToList() {
+  if (typeof creatureStorage.addSavedCreature !== 'function') {
+    setSaveStatus('Saved list unavailable');
+    return;
+  }
+
+  const creatureData = getCreatureData();
+  if (!hasCreatureData(creatureData)) {
+    setSaveStatus('Add creature details before saving');
+    return;
+  }
+
+  const savedCreature = creatureStorage.addSavedCreature(creatureData);
+  if (!savedCreature) {
+    setSaveStatus('Saved list unavailable');
+    return;
+  }
+
+  renderSavedCreatures();
+  saveCurrentCreature();
+  setSaveStatus(`${getSavedCreatureLabel(savedCreature)} saved`);
+}
+
+function loadSavedCreature(id) {
+  if (typeof creatureStorage.loadSavedCreatures !== 'function') {
+    return;
+  }
+
+  if (!confirmIfCreatureHasData(confirmations.loadSavedCreature || 'Loading this saved creature will replace the creature on the page. Continue?')) {
+    setSaveStatus('Load canceled');
+    return;
+  }
+
+  const savedCreature = creatureStorage.loadSavedCreatures().find((creature) => creature.id === id);
+  if (!savedCreature) {
+    setSaveStatus('Saved creature not found');
+    renderSavedCreatures();
+    return;
+  }
+
+  const creatureData = getSavedCreatureData(savedCreature);
+  setCreatureData(creatureData);
+  renderDetails(creatureData);
+  summaryOutput.textContent = buildSummary(creatureData);
+  promptOutput.value = '';
+  copyButton.disabled = true;
+  copyStatus.textContent = '';
+  artifactOutput.value = '';
+  artifactOutputPanel.hidden = true;
+  artifactCopyStatus.textContent = '';
+  currentArtifactType = '';
+  document.querySelectorAll('.choice-card').forEach((choice) => {
+    choice.classList.remove('is-selected');
+  });
+  saveCurrentCreature();
+  setSaveStatus(`${getSavedCreatureLabel(savedCreature)} loaded`);
+}
+
+function deleteSavedCreature(id) {
+  if (typeof creatureStorage.deleteSavedCreature !== 'function') {
+    return;
+  }
+
+  if (!window.confirm(confirmations.deleteSavedCreature || 'Delete this saved creature?')) {
+    setSaveStatus('Delete canceled');
+    return;
+  }
+
+  const didDelete = creatureStorage.deleteSavedCreature(id);
+  renderSavedCreatures();
+  setSaveStatus(didDelete ? 'Saved creature deleted' : 'Delete unavailable');
 }
 
 function promptValue(value) {
@@ -210,11 +398,22 @@ function renderArtifact(type) {
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
+  saveCurrentCreature();
   generateOutputs();
   promptOutput.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
-resetButton.addEventListener('click', () => {
+form.addEventListener('input', () => {
+  saveCurrentCreature();
+});
+
+resetButton.addEventListener('click', (event) => {
+  if (!confirmIfCreatureHasData(confirmations.reset || 'Reset will clear this creature. Continue?')) {
+    event.preventDefault();
+    setSaveStatus('Reset canceled');
+    return;
+  }
+
   window.setTimeout(() => {
     promptOutput.value = '';
     summaryOutput.textContent = 'Make a creature to see the summary.';
@@ -228,14 +427,45 @@ resetButton.addEventListener('click', () => {
     document.querySelectorAll('.choice-card').forEach((choice) => {
       choice.classList.remove('is-selected');
     });
+    if (typeof creatureStorage.clearCurrentCreature === 'function') {
+      creatureStorage.clearCurrentCreature();
+    }
+    setSaveStatus('');
   }, 0);
 });
 
 fillExampleButton.addEventListener('click', () => {
+  if (!confirmIfCreatureHasData(confirmations.fillExample || 'Fill Example will replace this creature. Continue?')) {
+    setSaveStatus('Example canceled');
+    return;
+  }
+
   Object.entries(exampleValues).forEach(([id, value]) => {
     document.querySelector(`#${id}`).value = value;
   });
   copyStatus.textContent = '';
+  saveCurrentCreature();
+});
+
+saveCreatureButton.addEventListener('click', () => {
+  saveCreatureToList();
+});
+
+savedCreatureList.addEventListener('click', (event) => {
+  const actionButton = event.target.closest('[data-action]');
+  const savedCreatureRow = event.target.closest('.saved-creature-row');
+  if (!actionButton || !savedCreatureRow) {
+    return;
+  }
+
+  const creatureId = savedCreatureRow.dataset.creatureId;
+  if (actionButton.dataset.action === 'load-saved') {
+    loadSavedCreature(creatureId);
+  }
+
+  if (actionButton.dataset.action === 'delete-saved') {
+    deleteSavedCreature(creatureId);
+  }
 });
 
 document.querySelectorAll('.chip').forEach((chip) => {
@@ -246,6 +476,7 @@ document.querySelectorAll('.chip').forEach((chip) => {
 
     if (!parts.includes(suggestion)) {
       styleInput.value = currentValue ? `${currentValue}, ${suggestion}` : suggestion;
+      saveCurrentCreature();
     }
 
     styleInput.focus();
@@ -281,6 +512,9 @@ copyArtifactButton.addEventListener('click', async () => {
 
   await copyText(artifactOutput, artifactCopyStatus, 'Output copied.');
 });
+
+restoreCurrentCreature();
+renderSavedCreatures();
 
 async function copyText(textarea, statusElement, message) {
   try {

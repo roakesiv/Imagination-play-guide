@@ -104,7 +104,7 @@ Each new prototype folder should stay lightweight. Start with only these unless 
 - `PX.X_README.md` - folder guide and prototype purpose
 - `PX.X_SCOPE.md` - goals, non-goals, acceptance criteria, and implementation plan
 - `PX.X_BUILD_LOG.md` - what changed, verification, and follow-up issues
-- `PX.X_IMPLEMENTATION_REVIEW.md` - smoke test, mobile review, live play notes, and acceptance review
+- `PX.X_IMPLEMENTATION_REVIEW.md` - implementation review, optional browser/mobile review, live play notes, and acceptance review
 
 Optional docs:
 - `PX.X_CODEX_BUILD_PROMPT.md` - only if you want to preserve a specific build prompt
@@ -226,6 +226,16 @@ Then, unless I ask you to pause:
 8. Run available verification.
 9. Summarize changed files, verification, and remaining risks.
 ```
+
+## Verification Guidance
+
+Use verification that matches the work package.
+
+For narrow static-app changes, docs updates, prompt-template edits, or isolated UI wiring, static review and file-reference checks are usually enough. Do not require browser smoke testing for every work package by default.
+
+Browser or mobile review is still useful when a change affects a broad runtime flow, visual layout, cross-browser behavior, touch ergonomics, clipboard behavior, local storage behavior that needs product-owner confidence, or final prototype acceptance.
+
+Avoid adding automated browser tooling, packages, or heavier test infrastructure unless a future non-functional requirement clearly justifies it.
 
 ## Prototype 4.1 Starter Notes
 
