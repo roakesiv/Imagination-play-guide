@@ -1,7 +1,7 @@
 # Architecture Spec
 
 Status: Current
-Last updated after: Prototype 4.3 WP4 saved creature list
+Last updated after: Prototype 4.4 WP3 Activity Book Packet
 Last updated: 2026-05-23
 
 This is the living architecture source of truth for Magic Creature Card Maker. Prototype folders preserve implementation history. This file captures the current app structure, module boundaries, data contract, prompt-output flow, and architecture constraints.
@@ -160,6 +160,7 @@ The builder should stay small. It should not become a framework, state manager, 
 Current outputs:
 
 - Image Prompt / Creature Profile Card
+- Activity Book Packet
 - Creature Card
 - Story
 - Adventure

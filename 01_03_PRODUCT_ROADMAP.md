@@ -267,14 +267,23 @@ Result:
 - P4.3 successfully solved the immediate creature continuity problem.
 - Optional JSON export/import was deferred because it adds manual transfer friction and does not improve the desired automated post-creation workflow.
 
-#### P4.4 Candidate — Production / Print Workflow Discovery
+#### P4.4 — Production / Print Workflow Discovery
 
-Only if needed:
+Status:
+
+WP3 implemented / ready for review.
+
+Focus:
 
 - track which creature pages still need to be generated, downloaded, or printed
 - reduce parent memory burden after the fun creature-creation moment
 - clarify the phone-to-laptop production workflow
 - avoid building full print/PDF infrastructure until the workflow is better understood
+
+Result so far:
+
+- WP2 validated a batch prompt pattern.
+- WP3 added an Activity Book Packet output that generates all current printable activity pages one at a time with page titles, order, NEXT instructions, and suggested filenames.
 
 ---
 

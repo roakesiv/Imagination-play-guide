@@ -42,7 +42,73 @@ Use a bright, kid-friendly magical creature profile card style with soft shapes,
     return uniqueItems.length ? uniqueItems : ['a tiny star', 'a smiley flower', 'a magic key', 'a little crown', 'a hidden heart'];
   }
 
+  function filenameSlug(value) {
+    const slug = (value || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '');
+
+    return slug || 'magic_creature';
+  }
+
+  function pageSection(pageNumber, filenamePart, title, prompt, slug) {
+    return `Page ${pageNumber} - ${title}
+Suggested filename: ${slug}_${pageNumber}_${filenamePart}.png
+${prompt}`;
+  }
+
   const artifacts = {
+    activityBookPacket: {
+      title: 'Activity Book Packet',
+      build(values, helpers) {
+        const slug = filenameSlug(values.name);
+        const activityPages = [
+          ['01', 'coloring_page', artifacts.coloring.title, artifacts.coloring.build(values, helpers)],
+          ['02', 'find_it_game', artifacts.findIt.title, artifacts.findIt.build(values, helpers)],
+          ['03', 'maze', artifacts.maze.title, artifacts.maze.build(values, helpers)],
+          ['04', 'letter_tracing', artifacts.letterTracing.title, artifacts.letterTracing.build(values, helpers)],
+          ['05', 'count_objects', artifacts.countObjects.title, artifacts.countObjects.build(values, helpers)],
+          ['06', 'find_letter', artifacts.findLetter.title, artifacts.findLetter.build(values, helpers)],
+          ['07', 'draw_missing_detail', artifacts.drawMissingDetail.title, artifacts.drawMissingDetail.build(values, helpers)],
+          ['08', 'trace_path', artifacts.tracePath.title, artifacts.tracePath.build(values, helpers)],
+          ['09', 'matching_page', artifacts.matchingPage.title, artifacts.matchingPage.build(values, helpers)],
+          ['10', 'finish_pattern', artifacts.finishPattern.title, artifacts.finishPattern.build(values, helpers)]
+        ];
+
+        return `I am creating a printable activity pack for young children.
+
+Use this creature:
+
+Name: ${helpers.promptValue(values.name)}
+Creature: ${helpers.promptValue(values.creatureMix)}
+Magic: ${helpers.promptValue(values.magic)}
+Colors: ${helpers.promptValue(values.colors)}
+Home/background: ${helpers.promptValue(values.home)}
+Personality: ${helpers.promptValue(values.personality)}
+Accessories: ${helpers.promptValue(values.accessories)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
+
+Task:
+Create the activity pages one at a time.
+
+Important:
+- Generate only one image at a time.
+- Start with Page 01.
+- After each image, stop and wait for me to say NEXT.
+- When I say NEXT, generate the next page.
+- Use black-and-white printable worksheet style.
+- Use bold clean outlines.
+- Keep pages simple for young children.
+- Avoid grayscale, shading, clutter, tiny details, scary elements, and adult worksheet complexity.
+- Before each image, show the page title and suggested filename.
+
+Activity Pack Order:
+
+${activityPages.map(([pageNumber, filenamePart, title, prompt]) => pageSection(pageNumber, filenamePart, title, prompt, slug)).join('\n\n')}
+
+Start now with Page 01 only.`;
+      }
+    },
     card: {
       title: 'Creature Card',
       build(values, helpers) {

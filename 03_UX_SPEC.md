@@ -1,7 +1,7 @@
 # UX Spec
 
 Status: Current  
-Last updated after: Prototype 4.3 WP4 saved creature list
+Last updated after: Prototype 4.4 WP3 Activity Book Packet
 Last updated: 2026-05-23
 
 This is the living UX source of truth for Magic Creature Card Maker. Prototype UX files are historical snapshots. When a prototype changes the durable UX direction, promote the current rules into this file.
@@ -31,10 +31,11 @@ The current flow is:
 1. Make a magic creature with free-text prompts.
 2. Generate an image prompt and creature summary.
 3. Review the creature details recap.
-4. Choose a next output from `What do we make next?`
+4. Choose the full `Activity Book Packet` or an individual next output from `What do we make next?`
 5. Copy a deterministic text output.
 
 Current output options:
+- Activity Book Packet
 - Creature Card
 - Story
 - Adventure
@@ -223,6 +224,8 @@ What do we make next?
 
 Bridge requirements:
 - Each choice is a large card.
+- The Activity Book Packet choice appears before individual output choices.
+- The Activity Book Packet helper copy should make the batching value obvious without adding a long explanation.
 - Choosing a card generates deterministic template text.
 - Output uses the creature data already entered.
 - Output preserves silly or unusual details.

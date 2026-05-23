@@ -1,7 +1,7 @@
 # App Spec
 
 Status: Current  
-Last updated after: Prototype 4.3 WP4 saved creature list
+Last updated after: Prototype 4.4 WP3 Activity Book Packet
 Last updated: 2026-05-23
 
 This is the living product and engineering spec for Magic Creature Card Maker. Prototype folders preserve history. This file captures the current truth: what the app is, what it needs to do, what has been decided, and what remains open.
@@ -88,7 +88,7 @@ The child needs:
 ### Choose a Next Output
 
 1. Adult generates a creature or taps an output choice, which generates the creature first if needed.
-2. Adult chooses an option under `What do we make next?`
+2. Adult chooses `Activity Book Packet` for a full printable activity set, or chooses an individual option under `What do we make next?`
 3. App generates deterministic text for that output type.
 4. Adult copies the output if useful.
 
@@ -108,6 +108,7 @@ The child needs:
 5. Adult can delete saved creatures.
 
 Current output types:
+- Activity Book Packet
 - Creature Card
 - Story
 - Adventure
@@ -154,6 +155,10 @@ Parent tips:
 
 Bridge outputs:
 - The app must show a visible next-step bridge after creature creation.
+- The bridge must offer a prominent Activity Book Packet option before individual output choices.
+- The Activity Book Packet must generate one copyable batch prompt for the current creature.
+- The Activity Book Packet must include the current printable activity pages in order, one-page-at-a-time instructions, `NEXT` instructions, and suggested filenames.
+- The Activity Book Packet must exclude Story and Adventure while those modes are paused.
 - Each output choice must generate copyable text using current creature data.
 - Bridge output must refresh if the user regenerates the creature after selecting an output type.
 - The bridge should remain deterministic and template-based for now.

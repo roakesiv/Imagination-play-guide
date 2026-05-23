@@ -86,72 +86,88 @@
         </div>
       </div>
 
-      <div class="choice-grid" id="artifactChoices" aria-label="Creative output choices">
-        <button class="choice-card" type="button" data-output="card">
-          <span aria-hidden="true">&#127183;</span>
-          <strong>Creature Card</strong>
-          <small>A tidy profile to keep or share.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="story" disabled>
-          <span aria-hidden="true">&#128214;</span>
-          <strong>Story</strong>
-          <small>Paused for V5 story work.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="adventure" disabled>
-          <span aria-hidden="true">&#129517;</span>
-          <strong>Adventure</strong>
-          <small>Paused for V5 story work.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="coloring">
-          <span aria-hidden="true">&#128397;</span>
-          <strong>Coloring Page</strong>
-          <small>A printable picture prompt.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="findIt">
-          <span aria-hidden="true">&#128269;</span>
-          <strong>Find-It Game</strong>
-          <small>A hidden-object activity.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="maze">
-          <span aria-hidden="true">&#128506;</span>
-          <strong>Maze</strong>
-          <small>A printable path puzzle.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="letterTracing">
-          <span aria-hidden="true">&#9999;</span>
-          <strong>Letter Tracing</strong>
-          <small>A name practice page.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="countObjects">
-          <span aria-hidden="true">&#128290;</span>
-          <strong>Count the Objects</strong>
-          <small>A simple counting page.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="findLetter">
-          <span aria-hidden="true">&#128270;</span>
-          <strong>Find the Letter</strong>
-          <small>A letter spotting page.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="drawMissingDetail">
-          <span aria-hidden="true">&#127912;</span>
-          <strong>Draw the Missing Detail</strong>
-          <small>An open drawing prompt.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="tracePath">
-          <span aria-hidden="true">&#10145;</span>
-          <strong>Trace the Path</strong>
-          <small>A prewriting path page.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="matchingPage">
-          <span aria-hidden="true">&#128279;</span>
-          <strong>Matching Page</strong>
-          <small>A draw-the-lines page.</small>
-        </button>
-        <button class="choice-card" type="button" data-output="finishPattern">
-          <span aria-hidden="true">&#128257;</span>
-          <strong>Finish the Pattern</strong>
-          <small>A simple pattern page.</small>
-        </button>
+      <div class="bridge-choice-sections" id="artifactChoices" aria-label="Creative output choices">
+        <div class="choice-section">
+          <p class="choice-section-label">Make the whole activity book:</p>
+          <div class="choice-grid featured-choice-grid">
+            <button class="choice-card packet-card" type="button" data-output="activityBookPacket">
+              <span aria-hidden="true">&#128218;</span>
+              <strong>Activity Book Packet</strong>
+              <small>Copy one big prompt to make all activity pages one at a time.</small>
+            </button>
+          </div>
+        </div>
+
+        <div class="choice-section">
+          <p class="choice-section-label">Or choose one page:</p>
+          <div class="choice-grid">
+            <button class="choice-card" type="button" data-output="card">
+              <span aria-hidden="true">&#127183;</span>
+              <strong>Creature Card</strong>
+              <small>A tidy profile to keep or share.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="story" disabled>
+              <span aria-hidden="true">&#128214;</span>
+              <strong>Story</strong>
+              <small>Paused for V5 story work.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="adventure" disabled>
+              <span aria-hidden="true">&#129517;</span>
+              <strong>Adventure</strong>
+              <small>Paused for V5 story work.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="coloring">
+              <span aria-hidden="true">&#128397;</span>
+              <strong>Coloring Page</strong>
+              <small>A printable picture prompt.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="findIt">
+              <span aria-hidden="true">&#128269;</span>
+              <strong>Find-It Game</strong>
+              <small>A hidden-object activity.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="maze">
+              <span aria-hidden="true">&#128506;</span>
+              <strong>Maze</strong>
+              <small>A printable path puzzle.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="letterTracing">
+              <span aria-hidden="true">&#9999;</span>
+              <strong>Letter Tracing</strong>
+              <small>A name practice page.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="countObjects">
+              <span aria-hidden="true">&#128290;</span>
+              <strong>Count the Objects</strong>
+              <small>A simple counting page.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="findLetter">
+              <span aria-hidden="true">&#128270;</span>
+              <strong>Find the Letter</strong>
+              <small>A letter spotting page.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="drawMissingDetail">
+              <span aria-hidden="true">&#127912;</span>
+              <strong>Draw the Missing Detail</strong>
+              <small>An open drawing prompt.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="tracePath">
+              <span aria-hidden="true">&#10145;</span>
+              <strong>Trace the Path</strong>
+              <small>A prewriting path page.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="matchingPage">
+              <span aria-hidden="true">&#128279;</span>
+              <strong>Matching Page</strong>
+              <small>A draw-the-lines page.</small>
+            </button>
+            <button class="choice-card" type="button" data-output="finishPattern">
+              <span aria-hidden="true">&#128257;</span>
+              <strong>Finish the Pattern</strong>
+              <small>A simple pattern page.</small>
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="artifact-output" id="artifactOutputPanel" hidden>

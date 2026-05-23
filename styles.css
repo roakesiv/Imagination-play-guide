@@ -453,6 +453,17 @@ dd {
   background: linear-gradient(180deg, #ffffff 0%, #fff9df 100%);
 }
 
+.bridge-choice-sections {
+  display: grid;
+  gap: 18px;
+}
+
+.choice-section-label {
+  margin: 0 0 8px;
+  color: var(--secondary-dark);
+  font-weight: 900;
+}
+
 .choice-grid {
   display: grid;
   gap: 12px;
@@ -496,6 +507,11 @@ dd {
 .choice-card:nth-child(5) {
   border-color: var(--rainbow-orange);
   background: #fff0dc;
+}
+
+.packet-card {
+  border-color: var(--rainbow-teal);
+  background: #e5f8f4;
 }
 
 .choice-card span {
@@ -567,6 +583,12 @@ dd {
 .choice-card:nth-child(5).is-selected {
   border-color: var(--rainbow-orange);
   box-shadow: 0 0 0 4px rgba(245, 124, 0, 0.18);
+}
+
+.packet-card:hover,
+.packet-card.is-selected {
+  border-color: var(--rainbow-teal);
+  box-shadow: 0 0 0 4px rgba(0, 137, 123, 0.18);
 }
 
 .artifact-output {

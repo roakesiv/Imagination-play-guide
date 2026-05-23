@@ -6,7 +6,7 @@ The app helps an adult facilitator capture a child's magical creature idea, pres
 
 ## Current Status
 
-Current working version: Prototype 4.3 complete.
+Current working version: Prototype 4.4 WP3 implemented / ready for review.
 
 Current validation focus: post-creation production, download, and print workflow friction.
 
@@ -21,6 +21,7 @@ The app currently supports:
 - Picture style suggestion chips
 - Copy buttons for generated text
 - A lightweight "What do we make next?" bridge
+- Activity Book Packet batch prompt for generating all current printable activity pages one at a time
 - Deterministic template outputs for Creature Card, Story, Adventure, Coloring Page, Find-It Game, Maze, Letter Tracing, Count the Objects, Find the Letter, Draw the Missing Detail, Trace the Path, Matching Page, and Finish the Pattern
 - Local autosave and reload restore for the current creature
 - Local saved creature list with save, load, and delete
@@ -42,7 +43,7 @@ No build step is required.
 5. Review the generated image prompt, summary, and details.
 6. Optionally save the creature locally for later.
 7. Copy the prompt into ChatGPT or another image creator.
-8. Choose an output under `What do we make next?`
+8. Choose `Activity Book Packet` to copy one prompt for the full printable activity set, or choose an individual output under `What do we make next?`
 9. Copy the selected output.
 
 Use `Fill Example` to quickly populate sample creature data for testing.
