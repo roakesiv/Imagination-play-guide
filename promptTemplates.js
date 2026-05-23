@@ -178,6 +178,187 @@ Avoid:
 
 Make it feel like a cute children's hidden-object worksheet and coloring page, not a complex puzzle page or an adult hidden-object illustration.`;
       }
+    },
+    maze: {
+      title: 'Maze',
+      build(values, helpers) {
+        const creatureName = values.name || 'the magic creature';
+
+        return `Create a black-and-white printable maze activity page for a young child featuring a kid-friendly magical creature.
+
+Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
+Magic: ${helpers.promptValue(values.magic)}
+Home/background: ${helpers.promptValue(values.home)}
+Personality: ${helpers.promptValue(values.personality)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
+
+Make ${creatureName} the clear starting character at the beginning of the maze. Put ${creatureName}'s home, a simple ${helpers.promptValue(values.home)}, as the clear goal at the end of the maze.
+
+Create a simple maze path that helps ${creatureName} travel from the start to the home. The maze should be easy enough for a young child, with thick readable lines, wide paths, and no tiny corridors.
+
+Include a few simple, easy-to-color decorations from ${creatureName}'s world, such as items related to the home, magic, accessories, or extra detail. Keep the page uncluttered and easy to use.
+
+Use:
+- clean black-and-white line art
+- bold, readable outlines
+- wide maze paths
+- simple shapes
+- open spaces for coloring
+- minimal detail
+- no shading or grayscale
+- no tiny patterns
+- no confusing overlapping paths
+- no scary details
+
+Make it feel like a cute children's maze worksheet and coloring page, not a difficult puzzle book page or an adult maze.`;
+      }
+    },
+    letterTracing: {
+      title: 'Letter Tracing',
+      build(values, helpers) {
+        const creatureName = values.name || 'the magic creature';
+        const tracingWord = values.name ? values.name.toUpperCase() : 'MAGIC';
+
+        return `Create a black-and-white printable letter tracing worksheet for a young child featuring a kid-friendly magical creature.
+
+Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
+Magic: ${helpers.promptValue(values.magic)}
+Home/background: ${helpers.promptValue(values.home)}
+Personality: ${helpers.promptValue(values.personality)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
+
+Make the worksheet focus on tracing the creature's name: ${tracingWord}.
+
+At the top of the page, show ${creatureName}'s name clearly in large friendly letters.
+
+Include large dotted or dashed traceable letters for:
+${tracingWord}
+
+Add a simple, cute black-and-white line art picture of ${creatureName} near the name. Keep the creature easy to color, with bold clean outlines, simple shapes, and minimal detail.
+
+Include a few simple decorations from ${creatureName}'s world, such as items related to the home, magic, accessories, or extra detail, but keep the page uncluttered and easy to use.
+
+Use:
+- clean black-and-white line art
+- large traceable letters
+- dotted or dashed letter guides
+- bold readable outlines
+- simple shapes
+- open spaces for coloring
+- minimal detail
+- no shading or grayscale
+- no tiny patterns
+- no cluttered background
+- no scary details
+
+Make it feel like a cute preschool handwriting worksheet and coloring page, not a complex school worksheet or adult coloring page.`;
+      }
+    },
+    countObjects: {
+      title: 'Count the Objects',
+      build(values, helpers) {
+        const creatureName = values.name || 'the magic creature';
+
+        return `Create a black-and-white printable counting activity page for a young child featuring a kid-friendly magical creature.
+
+Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
+Magic: ${helpers.promptValue(values.magic)}
+Home/background: ${helpers.promptValue(values.home)}
+Personality: ${helpers.promptValue(values.personality)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
+
+Show ${creatureName} in a simple, playful scene at the home/background. Add groups of easy-to-count objects from ${creatureName}'s world, such as magic sparkles, books, toys, tiny gems, balloons, candy pieces, snacks, or simple items inspired by the creature details.
+
+Make the page ask the child to count the objects.
+
+Include 3 to 5 counting groups. Each group should have large, clear objects and a simple blank answer space.
+
+Use:
+- clean black-and-white line art
+- bold readable outlines
+- large simple objects
+- open spaces for coloring
+- minimal detail
+- no shading or grayscale
+- no tiny patterns
+- no cluttered background
+- no scary details
+
+Make it feel like a cute preschool counting worksheet and coloring page, not a complex math worksheet.`;
+      }
+    },
+    findLetter: {
+      title: 'Find the Letter',
+      build(values, helpers) {
+        const creatureName = values.name || 'the magic creature';
+        const targetWord = values.name || 'MAGIC';
+        const firstLetter = values.name ? values.name.trim().charAt(0).toUpperCase() : 'M';
+
+        return `Create a black-and-white printable letter-finding worksheet for a young child featuring a kid-friendly magical creature.
+
+Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
+Magic: ${helpers.promptValue(values.magic)}
+Home/background: ${helpers.promptValue(values.home)}
+Personality: ${helpers.promptValue(values.personality)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
+
+Focus on the first letter of the creature's name: ${firstLetter}.
+
+If a creature name is needed as a word on the page, use: ${targetWord}.
+
+Show ${creatureName} clearly on the page with the big letter ${firstLetter} near the top.
+
+Create a simple activity where the child finds and circles all the letter ${firstLetter} hidden among other large friendly letters.
+
+Include a simple black-and-white picture of ${creatureName} and a few easy-to-color decorations from the creature's world, such as objects inspired by the home, magic, accessories, or extra detail.
+
+Use:
+- large readable letters
+- bold clean outlines
+- simple shapes
+- open spaces for coloring
+- minimal detail
+- no tiny letters
+- no cluttered background
+- no shading or grayscale
+- no scary details
+
+Make it feel like a cute preschool letter worksheet and coloring page.`;
+      }
+    },
+    drawMissingDetail: {
+      title: 'Draw the Missing Detail',
+      build(values, helpers) {
+        const creatureName = values.name || 'the magic creature';
+
+        return `Create a black-and-white printable drawing activity page for a young child featuring a kid-friendly magical creature.
+
+Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
+Magic: ${helpers.promptValue(values.magic)}
+Home/background: ${helpers.promptValue(values.home)}
+Personality: ${helpers.promptValue(values.personality)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
+
+Show ${creatureName} clearly on the page in simple black-and-white line art. Leave one large open blank area where the child can draw an extra magical detail, accessory, snack, toy, sparkle, book, water magic, balloon, candy, or friend for ${creatureName}.
+
+At the top, include a simple prompt:
+"Draw something magical for ${creatureName}!"
+
+Include a few simple decorations from ${creatureName}'s world, such as objects inspired by the home, magic, accessories, or extra detail, but keep most of the page open for drawing and coloring.
+
+Use:
+- clean black-and-white line art
+- bold readable outlines
+- large open drawing space
+- simple shapes
+- minimal detail
+- no shading or grayscale
+- no tiny patterns
+- no cluttered background
+- no scary details
+
+Make it feel like a cute preschool drawing-and-coloring activity page, not a finished illustration.`;
+      }
     }
   };
 

@@ -161,8 +161,13 @@ Current outputs:
 - Adventure
 - Coloring Page
 - Find-It Game
+- Maze
+- Letter Tracing
+- Count the Objects
+- Find the Letter
+- Draw the Missing Detail
 
-Do not add new output types inside architecture work packages. New outputs belong in future product-scoped prototypes.
+Do not add new output types inside architecture work packages. New outputs belong in product-scoped prototypes.
 
 ## 10. State Model
 

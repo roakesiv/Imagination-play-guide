@@ -109,14 +109,14 @@ Convert creature excitement into usable kid activity artifacts.
 
 Stay focused.
 
-Initial 4.X activity types:
+Initial 4.X core activity types:
 
 1. Coloring page
 2. Find-it page
 3. Maze
 4. Letter tracing
 
-No more activity types until these are reliable.
+After these core types are reliable, small additional preschool activity-page prompts can be tested through focused mockup-led work packages. Do not expand into larger workflows such as activity packs, print infrastructure, or story mode until the simple pages prove useful.
 
 ### Why This Comes Next
 
@@ -206,7 +206,7 @@ A parent can create a creature and generate a small set of reliable, kid-usable 
 - Direct image API.
 - Saved library.
 - Story mode.
-- New activity types beyond the four listed.
+- Large new workflows beyond focused printable activity-page prompts.
 
 ### Possible 4.X Sequence
 
@@ -226,6 +226,10 @@ Focus:
 
 #### P4.1 — Coloring + Find-It Prompt Quality
 
+Status:
+
+Complete.
+
 Focus:
 
 - improve coloring prompt
@@ -233,11 +237,15 @@ Focus:
 - define printable prompt standard
 - test output quality
 
-#### P4.2 — Add Maze + Letter Tracing
+#### P4.2 — Activity Page Expansion
+
+Status:
+
+In progress.
 
 Focus:
 
-- add two additional activity types
+- add additional activity-page prompt outputs
 - keep prompt generation deterministic
 - test whether creature data maps well to new pages
 
@@ -477,14 +485,14 @@ These are not near-term scope, but they define the long-term product imagination
 
 ### Rule 2 — Keep 4.X Activity Book Tight
 
-Only four activity types:
+Start with four core activity types:
 
 1. Coloring
 2. Find-it
 3. Maze
 4. Letter tracing
 
-No extra activity types until those work.
+Additional activity-page concepts can be added only through focused prompt mockups and small implementation passes. Do not let activity-page expansion become activity-pack generation, print workflow, story mode, or a broad feature grab.
 
 ### Rule 3 — Prompt Engineering Is Product Work
 
@@ -510,7 +518,7 @@ Saved libraries, direct AI, printer connection, and books are powerful ideas, bu
 
 ## 8. Current Recommended Next Step
 
-Start P4.1 Coloring + Find-It prompt quality.
+Continue P4.2 rapid activity-page expansion and manual/product review.
 
 P4.0 is complete and created the architecture runway:
 
@@ -520,4 +528,4 @@ P4.0 is complete and created the architecture runway:
 - UI orchestration remains in `script.js`
 - durable architecture rules live in `05_ARCHITECTURE_SPEC.md`
 
-P4.1 should improve the existing Coloring Page and Find-It Game prompts without adding new output types.
+P4.1 completed Coloring Page and Find-It Game prompt quality. P4.2 should continue adding validated activity-page outputs, preserve the current static architecture, defer bridge grouping until needed, and use manual browser smoke testing at the current NFR level.

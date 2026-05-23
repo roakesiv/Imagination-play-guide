@@ -6,9 +6,9 @@ The app helps an adult facilitator capture a child's magical creature idea, pres
 
 ## Current Status
 
-Current working version: Prototype 4.0 complete; V4.1 is the recommended next prototype.
+Current working version: Prototype 4.2 in progress.
 
-Current validation focus: V4.1 Coloring + Find-It prompt-quality work.
+Current validation focus: P4.2 rapid activity-page expansion.
 
 The app currently supports:
 - Free-text creature creation prompts
@@ -21,7 +21,7 @@ The app currently supports:
 - Picture style suggestion chips
 - Copy buttons for generated text
 - A lightweight "What do we make next?" bridge
-- Deterministic template outputs for Creature Card, Story, Adventure, Coloring Page, and Find-It Game
+- Deterministic template outputs for Creature Card, Story, Adventure, Coloring Page, Find-It Game, Maze, Letter Tracing, Count the Objects, Find the Letter, and Draw the Missing Detail
 
 The app remains intentionally simple. It has no backend, accounts, auth, database, persistent storage, package manager, build step, or AI API integration.
 

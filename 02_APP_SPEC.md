@@ -96,6 +96,11 @@ Current output types:
 - Adventure
 - Coloring Page
 - Find-It Game
+- Maze
+- Letter Tracing
+- Count the Objects
+- Find the Letter
+- Draw the Missing Detail
 
 ## Functional Requirements
 

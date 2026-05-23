@@ -40,6 +40,11 @@ Current output options:
 - Adventure
 - Coloring Page
 - Find-It Game
+- Maze
+- Letter Tracing
+- Count the Objects
+- Find the Letter
+- Draw the Missing Detail
 
 Prototype 4.0 introduced no major runtime UX changes, so the P3.2 UX rules remain current.
 
@@ -198,7 +203,7 @@ Bridge requirements:
 - Output has a Copy button.
 - The bridge remains lightweight and does not create new app state complexity.
 
-P3.1 validation showed that the bridge is useful discovery territory. P3.2 foundation refinements and P4.0 architecture work are complete, so V4.1 should focus on improving existing Coloring Page and Find-It Game prompt quality without adding new output types.
+P3.1 validation showed that the bridge is useful discovery territory. P3.2 foundation refinements and P4.0 architecture work are complete. V4.1 improved Coloring Page and Find-It Game prompt quality. P4.2 continues rapid activity-page expansion with minimal bridge changes; bridge grouping remains a future UX need if the choice list becomes too crowded.
 
 ## Accessibility Basics
 
