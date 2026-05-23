@@ -1,14 +1,15 @@
-# Product Insights — Imagination Play Guide / Magic Creature Card Maker
+# Product Insights - Imagination Play Guide / Magic Creature Card Maker
 
-**Purpose:** Capture detailed product insights from ideation, P3.1 validation, and early bridge discovery.  
+**Purpose:** Capture durable product insights from ideation, live play, validation, and prototype rounds through P4.3.  
 **Status:** Working insight log  
+**Last updated:** 2026-05-23 after P4.0-P4.3 insights  
 **Use:** Feed `01_01_PRODUCT_VISION.md`, `02_APP_SPEC.md`, `03_UX_SPEC.md`, prototype scope docs, and roadmap decisions.
 
 ---
 
 ## 1. Core Product Insight
 
-The app’s value is not that AI can create images or printable activities.
+The app's value is not that AI can create images or printable activities.
 
 The value is making parent-guided creative play **low-friction enough to actually happen**.
 
@@ -20,12 +21,16 @@ The app should reduce effort at specific pain points:
 - preserving absurd details
 - writing good prompts
 - generating useful image/activity/story outputs
+- remembering creature details across interrupted sessions
+- supporting multiple creatures without accounts or profiles
 - bridging from phone interaction into real play
 - eventually printing or saving artifacts
 
 Emerging principle:
 
 > Obsessively reduce parent friction.
+
+P4.2 and P4.3 sharpened this: once activity pages became exciting, the next blocker was not "more prompt types." It was continuity. The parent needs the app to remember creature data so the fun creation moment can happen live, while page production can happen later.
 
 ---
 
@@ -44,6 +49,7 @@ The parent:
 - copies generated prompts
 - uses ChatGPT or another AI tool
 - guides the transition into play
+- may return later to generate activity pages
 
 Design implication:
 
@@ -62,10 +68,12 @@ It can remove:
 - prompt-engineering burden
 - blank-page burden
 - output-formatting burden
+- data-loss anxiety
+- multi-child tracking burden
 
 Design implication:
 
-- The app succeeds when the parent can focus on play and facilitation instead of remembering fields or writing prompts.
+- The app succeeds when the parent can focus on play and facilitation instead of remembering fields, preserving state, or writing prompts.
 
 ### 2.3 Parent does not read full text during live play
 
@@ -76,7 +84,7 @@ During live play, the adult is often:
 - typing
 - improvising
 - managing excitement
-- physically holding or being climbed on by children
+- physically holding the phone in a distracting environment
 
 Design implication:
 
@@ -86,12 +94,23 @@ Design implication:
 
 ### 2.4 First-time parent workflow needs clarity
 
-External parent smoke test showed that a first-time user may think the app automatically creates the image.
+External parent smoke testing showed that a first-time user may think the app automatically creates the image.
 
 Design implication:
 
 - The app must clearly state:
   > This app makes a prompt. Copy it, then paste it into ChatGPT or your favorite AI image creator.
+
+### 2.5 Parent needs permission to pause production
+
+P4.2 live play showed that generating images is exciting for a few rounds, but children lose interest while waiting. Children can accept "I'll make your pages later" if the app can actually support that promise.
+
+Design implication:
+
+- Session continuity is product-critical.
+- The app should autosave current creature data.
+- Saved creatures should make later page generation easy.
+- Production workflows should move toward "create now, print later."
 
 ---
 
@@ -126,7 +145,7 @@ Design implication:
 
 The strongest question pattern is:
 
-> Let’s decide [attribute]. Do you want it to be [examples], or something else?
+> Let's decide [attribute]. Do you want it to be [examples], or something else?
 
 Design implication:
 
@@ -140,7 +159,7 @@ Children often create hybrids by default.
 
 Design implication:
 
-- Treat “creature mix” as a central field.
+- Treat "creature mix" as a central field.
 - Support `X + Y + Z` naturally.
 
 ### 3.5 Naming should come late
@@ -161,6 +180,15 @@ Design implication:
 - Make buttons large and colorful.
 - Use clear colors so adults can guide non-reading children.
 - Do not assume children will ignore the UI.
+
+### 3.7 Children expect their creature to persist
+
+P4.3 validation showed that once a child has made a creature, losing it feels like a real failure.
+
+Design implication:
+
+- The creature should survive reloads and accidental navigation.
+- Multiple saved creatures should support multiple children without collecting child profile data.
 
 ---
 
@@ -243,14 +271,32 @@ Design implication:
 - Rainbow-inspired ordering may help.
 - Color should support, not replace, text labels.
 
-### 5.5 Copy needs another pass
+### 5.5 Copy needs regular iteration
 
-Current wording is functional but not good enough.
+Current wording can work, but copy remains part of the product.
 
 Design implication:
 
-- Rewrite all field prompts and suggestion examples.
-- Store text in an editable structure so future iterations are easy.
+- Continue improving field prompts and suggestion examples.
+- Keep text in editable structures so future iterations are easy.
+
+### 5.6 Destructive actions need protection
+
+P4.3 showed that Fill Example and Reset can destroy real live-play data if left unprotected.
+
+Design implication:
+
+- Destructive actions should confirm before overwriting non-empty creature data.
+- Test/dev helper actions should be visually separated from the primary live flow.
+
+### 5.7 The bridge can be larger than expected, but organization will matter
+
+P4.2 added several activity-page options. Live play did not show the larger bridge as an immediate blocker, but growth will eventually require grouping.
+
+Design implication:
+
+- Do not prematurely split the bridge while users can still navigate it.
+- Plan for future grouping by activity category or workflow stage.
 
 ---
 
@@ -262,26 +308,51 @@ Question copy and suggestions need frequent iteration.
 
 Design implication:
 
-- Move field definitions into `content.js` or a clear `fieldDefinitions` structure.
+- Keep field definitions in `content.js` or another clear editable content structure.
 - Make copy editing low-risk and easy.
 
-### 6.2 Keep app static for now
+### 6.2 Prompt templates need their own architecture
+
+P4.0 confirmed that prompt-template work is easier and safer when templates are separated from UI/event code.
+
+Design implication:
+
+- Keep prompt templates in `promptTemplates.js`.
+- Keep prompt assembly helpers in `promptBuilder.js`.
+- Templates should consume creature data and shared fallback values.
+- Templates should not query the DOM directly.
+
+### 6.3 Keep app static for now
 
 The simple static app is still appropriate.
 
 Design implication:
 
-- Avoid backend, accounts, storage, package manager, framework, or AI API until testing justifies them.
+- Avoid backend, accounts, packages, frameworks, build steps, or direct AI APIs until testing justifies them.
+- Browser `localStorage` is enough for near-term continuity.
 
-### 6.3 Top-level docs are working
+### 6.4 Local persistence should stay small and isolated
+
+P4.3 added useful continuity without cloud sync.
+
+Design implication:
+
+- Keep persistence in `storage.js` or similarly isolated helpers.
+- Use simple JSON data.
+- Handle storage failures gracefully.
+- Do not put persistence concerns inside prompt templates.
+
+### 6.5 Top-level docs are working
 
 The current docs provide a useful source-of-truth structure:
 
 - README
 - Product Vision
+- Product Insights
 - App Spec
 - UX Spec
 - Prototype Starter
+- Architecture Spec
 - Prototype folders
 
 Design implication:
@@ -299,8 +370,8 @@ Codex added bridge functionality earlier than planned.
 
 Design implication:
 
-- Treat it as a discovery spike, not validated P4.
-- Use it to learn before designing deliberate P4 scope.
+- Treat early bridge functionality as discovery.
+- Promote only validated output patterns into the durable product direction.
 
 ### 7.2 Printed pages were highly exciting
 
@@ -316,30 +387,36 @@ Design implication:
 Current workflow requires:
 
 - generating image in ChatGPT
-- downloading/moving image
+- downloading or moving image
 - printing from laptop or another device
 - printer setup
 
 Design implication:
 
 - Printing friction is an important future infrastructure problem.
-- Not likely immediate 4.X scope, but must remain visible.
+- P4.3 showed that saving creature data should come before trying to automate print/PDF.
+- The long-term direction should reduce everything after the fun creation moment.
 
-### 7.4 Coloring/find-it prompts are not good enough yet
+### 7.4 Coloring/find-it prompts improved with explicit worksheet constraints
 
-Current prompts can generate overly complicated pages.
+P4.1 showed that activity prompts need strong, specific output constraints.
+
+For younger users, coloring and hidden-object pages need:
+
+- black and white
+- bold outlines
+- simple shapes
+- open coloring spaces
+- minimal detail
+- no heavy shading or grayscale
+- no tiny patterns
+- no adult coloring page style
+- readable names and labels when useful
 
 Design implication:
 
-- Activity prompts need stronger prompt engineering.
-- For younger users, coloring pages need:
-  - black and white
-  - bold outlines
-  - simple shapes
-  - open coloring spaces
-  - minimal detail
-  - no heavy shading
-  - age-appropriate simplicity
+- Activity prompt quality is a product feature.
+- Each activity type needs a designed prompt template, not a generic output request.
 
 ### 7.5 More output types require more embedded expertise
 
@@ -348,28 +425,37 @@ As output types increase, the parent cannot be expected to know prompt-engineeri
 Design implication:
 
 - Prompt engineering is part of the product.
-- Each activity type needs a designed prompt template.
+- Templates should encode the activity design requirements.
 
-### 7.6 Activity book opportunity is strong
+### 7.6 Activity book opportunity is validated enough to keep pursuing
 
-One creature may seed a small activity book.
-
-Potential pages:
+P4.2 expanded from the original narrow four-output plan into a broader set of validated worksheet prompts:
 
 - coloring page
 - find-it page
 - maze
 - letter tracing
-- number/counting page
+- count the objects
+- find the letter
+- draw the missing detail
+- trace the path
 - matching page
-- draw-the-accessory page
-- connect-the-dots
-- story sequencing
+- finish the pattern
 
 Design implication:
 
-- MVP activity book is a promising 4.X focus.
-- Keep initial scope tight.
+- The activity-book direction is strong.
+- Near-term work should shift from adding more page types to improving workflow, grouping, production, and real generated-output quality.
+
+### 7.7 Waiting changes the live-play shape
+
+Image generation can be fun briefly, but waiting interrupts child engagement.
+
+Design implication:
+
+- The app should support a two-phase workflow:
+  1. Live creature creation with the child.
+  2. Later parent production of pages.
 
 ---
 
@@ -382,6 +468,7 @@ The bridge Story prompt is not good enough yet.
 Design implication:
 
 - Story mode needs structure, not just a generic story prompt.
+- P4.2 intentionally disabled Story and Adventure buttons in the active bridge while preserving templates for future V5 work.
 
 ### 8.2 Parent-DM scaffold is the real story need
 
@@ -432,9 +519,9 @@ Design implication:
 
 ## 9. Roadmap Insights
 
-### 9.1 3.X should finish foundation
+### 9.1 3.X established the foundation
 
-3.X should focus on:
+3.X focused on:
 
 - UX improvements
 - editable text architecture
@@ -446,40 +533,60 @@ Design implication:
 - UX spec
 - prototype starter kit
 
-### 9.2 4.X should be MVP Activity Book
+### 9.2 4.0 created the architecture runway
 
-4.X should focus on four activity types only:
+P4.0 separated content, prompt templates, prompt building, and UI wiring enough to make later prompt work safer.
 
-1. Coloring page
-2. Find-it page
-3. Maze
-4. Letter tracing
+Design implication:
 
-Do not add more until these work.
+- Continue using the P4.0 boundaries.
+- Avoid introducing new architecture unless a workflow need forces it.
 
-### 9.3 5.X should be Story Mode
+### 9.3 4.1 and 4.2 validated activity-page breadth
+
+The early 4.X idea was a tight MVP Activity Book. P4.1 and P4.2 showed that several preschool-friendly activity prompts can be added safely within the template architecture.
+
+Design implication:
+
+- The app does not need more activity types immediately.
+- Next activity work should focus on generated-output review, prompt refinements, grouping, and production flow.
+
+### 9.4 4.3 made persistence a near-term requirement
+
+P4.3 showed that saved creature data is not a dream feature anymore. It supports the real workflow after live play.
+
+Design implication:
+
+- Local autosave, restore, and saved creature lists are part of the near-term product.
+- Cloud sync/accounts remain deferred.
+
+### 9.5 5.X should be Story Mode after activity workflow stabilizes
 
 5.X should focus on:
 
 - House Adventure
 - Bedtime Story
+- parent DM scaffolding
 
-### 9.4 Future features should stay deferred
+### 9.6 Future features should stay deferred
 
 Near-term future:
 
-- more stories
-- 10-page activity book
-- child adventurer / party creation
+- activity-page quality review
+- bridge organization
+- activity pack workflow
+- post-creation production workflow
+- print/download/PDF exploration
 
 Important infrastructure:
 
 - printing friction
 - export/download/print workflow
+- possible PDF generation
 
 Dream features:
 
-- saved info for reuse
+- saved info for reuse across devices
 - activity book plus story
 - personalized kids book
 - direct image generation
@@ -489,28 +596,30 @@ Dream features:
 
 ## 10. Backlog Candidates
 
-### Foundation / 3.X
-
-- Clarify prompt-only workflow.
-- Editable content structure.
-- Rewrite field questions/examples.
-- Distinct button colors.
-- Header/readability fix.
-- UX spec update.
-- App spec update.
-- Prototype starter improvements.
-
 ### Activity Book / 4.X
 
-- Improve coloring page prompt.
-- Improve find-it prompt.
-- Add maze prompt.
-- Add letter tracing prompt.
-- Define activity prompt standard.
-- Test same-thread prompt contamination.
-- Add “start fresh” instructions if needed.
-- Generate multi-page activity pack.
-- Decide if activity book is one prompt or multiple prompts.
+- Review generated outputs for all current activity prompts.
+- Refine activity templates based on actual generated image quality.
+- Decide whether bridge grouping is needed.
+- Explore activity-pack generation.
+- Decide if an activity book should be one prompt, multiple prompts, or a guided production workflow.
+- Keep same-thread prompt contamination visible as a testing concern.
+- Add "start fresh" instructions if needed.
+
+### Session Continuity / 4.X
+
+- Keep validating autosave and restore in real phone use.
+- Use saved creature list in live multi-child play.
+- Watch whether local-only storage is enough.
+- Reconsider export/import only if phone-to-laptop transfer becomes necessary.
+
+### Production / Print Workflow
+
+- Reduce prompt-to-image-to-download-to-print friction.
+- Explore PDF export.
+- Explore download workflow.
+- Explore print-friendly page grouping.
+- Consider parent batch-production mode.
 
 ### Story / 5.X
 
@@ -523,9 +632,7 @@ Dream features:
 
 ### Infrastructure / Future
 
-- Save/download outputs.
-- Print workflow.
-- PDF export.
-- Saved creature library.
+- Cross-device saved creature access.
 - Direct AI image integration.
 - Printer integration.
+- Saved creature library beyond local browser storage.
