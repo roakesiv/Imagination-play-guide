@@ -1,8 +1,8 @@
 # Architecture Spec
 
 Status: Current
-Last updated after: Prototype 4.4 WP3 Activity Book Packet
-Last updated: 2026-05-23
+Last updated after: Prototype 4.4 Activity Age Range Selector
+Last updated: 2026-05-24
 
 This is the living architecture source of truth for Magic Creature Card Maker. Prototype folders preserve implementation history. This file captures the current app structure, module boundaries, data contract, prompt-output flow, and architecture constraints.
 
@@ -91,6 +91,7 @@ Required keys:
 | `personality` | What the creature is like |
 | `accessories` | Worn or carried items |
 | `extraDetail` | Extra silly/magical detail |
+| `activityAgeRange` | Parent-facing age/school range for printable activity complexity |
 | `pictureStyle` | Visual style / vibe |
 
 Conceptual shape:
@@ -105,11 +106,14 @@ Conceptual shape:
   personality: "",
   accessories: "",
   extraDetail: "",
+  activityAgeRange: "Preschool — ages 3–4",
   pictureStyle: ""
 }
 ```
 
 `script.js` owns the DOM-to-data boundary through `getCreatureData()`.
+
+`activityAgeRange` defaults to `Preschool — ages 3–4` and is included in current and saved creature data. It is intentionally consumed only by printable activity outputs and the Activity Book Packet, not by the main creature image prompt, Creature Card, Story, or Adventure.
 
 ## 6. Missing Values
 

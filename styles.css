@@ -51,6 +51,7 @@ body {
 
 button,
 input,
+select,
 textarea {
   font: inherit;
 }
@@ -200,6 +201,7 @@ label {
 }
 
 input,
+select,
 textarea {
   width: 100%;
   border: 2px solid #dec9b0;
@@ -214,6 +216,12 @@ input {
   font-size: 1.04rem;
 }
 
+select {
+  min-height: 58px;
+  padding: 13px 42px 13px 14px;
+  font-size: 1.04rem;
+}
+
 textarea {
   min-height: 340px;
   padding: 14px;
@@ -222,6 +230,7 @@ textarea {
 }
 
 input:focus,
+select:focus,
 textarea:focus,
 button:focus-visible {
   outline: 4px solid rgba(42, 157, 143, 0.28);
@@ -422,6 +431,11 @@ button:focus-visible {
   color: var(--muted);
   font-size: 1rem;
   font-weight: 700;
+}
+
+.packet-helper {
+  margin-bottom: 12px;
+  max-width: 42rem;
 }
 
 .details-list {

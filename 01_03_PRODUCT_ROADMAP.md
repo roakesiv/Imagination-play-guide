@@ -271,7 +271,7 @@ Result:
 
 Status:
 
-WP3 implemented / ready for review.
+Complete / passed.
 
 Focus:
 
@@ -280,10 +280,39 @@ Focus:
 - clarify the phone-to-laptop production workflow
 - avoid building full print/PDF infrastructure until the workflow is better understood
 
-Result so far:
+Result:
 
 - WP2 validated a batch prompt pattern.
 - WP3 added an Activity Book Packet output that generates all current printable activity pages one at a time with page titles, order, NEXT instructions, and suggested filenames.
+- WP3.5 added short visible Activity Book Packet instructions near the button because users should not need to read the long generated prompt to understand the workflow.
+- WP4 added Activity age range so parents can choose concrete age/school-stage complexity instead of abstract difficulty labels.
+- P4.4 confirmed that batching reduced prompt-generation friction.
+- P4.4 also confirmed that local file production and printing are now the dominant blocker.
+
+#### P4.5 - Local Production Pipeline
+
+Status:
+
+Next recommended prototype.
+
+Goal:
+
+Reduce post-generation print friction by helping the parent organize downloaded images and combine them into one printable PDF.
+
+Possible work packages:
+
+- Image folder home / local workspace
+- Folder of images to multipage PDF script
+- Rename downloaded images from manifest
+- Manifest/file naming workflow
+- Print workflow notes
+
+Constraints:
+
+- Do not add new activity pages.
+- Do not add direct AI/image generation.
+- Do not add PDF generation to the web app yet.
+- Do not add backend, accounts, package dependencies, build step, or APIs.
 
 ---
 
@@ -447,7 +476,7 @@ Future directions:
 - direct printer integration
 - print-service integration
 
-Do not solve this too early, but keep it visible. Printable outputs create high child delight, so printing friction may become a major adoption blocker.
+P4.4 confirmed that printing friction is now the dominant blocker after batch prompting. P4.5 should explore a local production pipeline first: downloaded images -> organized folder -> renamed files if needed -> combined PDF -> print once.
 
 ---
 
@@ -534,7 +563,7 @@ Saved libraries, direct AI, printer connection, and books are powerful ideas, bu
 
 ## 8. Current Recommended Next Step
 
-Close P4.3 and use the saved creature list in real play.
+Start P4.5 Local Production Pipeline.
 
 P4.0 is complete and created the architecture runway:
 
@@ -544,8 +573,10 @@ P4.0 is complete and created the architecture runway:
 - UI orchestration remains in `script.js`
 - durable architecture rules live in `05_ARCHITECTURE_SPEC.md`
 
-P4.1 completed Coloring Page and Find-It Game prompt quality. P4.2 expanded activity-page outputs and live play testing showed that the next blocker is continuity, not more page types.
+P4.1 completed Coloring Page and Find-It Game prompt quality. P4.2 expanded activity-page outputs and live play testing showed that the next blocker was continuity, not more page types.
 
 P4.3 successfully added local current-creature persistence, destructive-action protection, and simple saved creature management while preserving the static architecture.
 
-The next highest-friction area appears to be post-creation production: generating images/activity pages, downloading files, moving between phone and laptop, and printing. JSON export/import should remain deferred unless device transfer becomes a concrete blocker, because it adds another manual handoff rather than automating the workflow after creature creation.
+P4.4 successfully reduced prompt-generation friction with the Activity Book Packet, visible packet instructions, and Activity age range support. The next highest-friction area is local production after generation: downloading images, organizing files, renaming if needed, combining pages into one printable PDF, and printing once.
+
+JSON export/import should remain deferred unless device transfer becomes a concrete blocker, because it adds another manual handoff and does not automate post-creation production.

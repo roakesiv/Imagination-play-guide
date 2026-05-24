@@ -1,8 +1,8 @@
 # UX Spec
 
 Status: Current  
-Last updated after: Prototype 4.4 WP3 Activity Book Packet
-Last updated: 2026-05-23
+Last updated after: Prototype 4.4 Activity Age Range Selector
+Last updated: 2026-05-24
 
 This is the living UX source of truth for Magic Creature Card Maker. Prototype UX files are historical snapshots. When a prototype changes the durable UX direction, promote the current rules into this file.
 
@@ -31,8 +31,9 @@ The current flow is:
 1. Make a magic creature with free-text prompts.
 2. Generate an image prompt and creature summary.
 3. Review the creature details recap.
-4. Choose the full `Activity Book Packet` or an individual next output from `What do we make next?`
-5. Copy a deterministic text output.
+4. Optionally choose `Activity age range` for printable activity pages.
+5. Choose the full `Activity Book Packet` or an individual next output from `What do we make next?`
+6. Copy a deterministic text output.
 
 Current output options:
 - Activity Book Packet
@@ -126,6 +127,28 @@ Current preferred labels:
 - What is the magic creature's name?
 
 Current field questions and suggestion examples live in `content.js` so they can be revised without editing behavior logic.
+
+### Activity Age Range
+
+The `Activity age range` selector is parent-facing and optional.
+
+Current label:
+
+```text
+Activity age range
+```
+
+Current helper:
+
+```text
+Choose the child’s age or school stage to make the pages easier or harder.
+```
+
+Rules:
+- Default to `Preschool — ages 3–4`.
+- Use concrete age/school-stage labels because they are faster for parents than abstract difficulty labels.
+- Apply the selected range to printable activity prompts and the Activity Book Packet only.
+- Do not apply this selector to Story, Adventure, the main creature image prompt, or Creature Card unless a later review finds a clear reason.
 
 ### Parent Tips
 
@@ -226,13 +249,17 @@ Bridge requirements:
 - Each choice is a large card.
 - The Activity Book Packet choice appears before individual output choices.
 - The Activity Book Packet helper copy should make the batching value obvious without adding a long explanation.
+- The Activity Book Packet helper copy should explain that the parent copies the packet prompt into ChatGPT or another image creator, then types `NEXT` after each generated page.
 - Choosing a card generates deterministic template text.
 - Output uses the creature data already entered.
+- Printable activity outputs use the selected `Activity age range`.
 - Output preserves silly or unusual details.
 - Output has a Copy button.
 - The bridge remains lightweight and does not create new app state complexity.
 
 P3.1 validation showed that the bridge is useful discovery territory. P3.2 foundation refinements and P4.0 architecture work are complete. V4.1 improved Coloring Page and Find-It Game prompt quality. P4.2 continues rapid activity-page expansion with minimal bridge changes; bridge grouping remains a future UX need if the choice list becomes too crowded.
+
+P4.4 added the durable UX rule that generated prompt text should not be required reading. The app should make prompt usage safe with short visible workflow instructions near the relevant action.
 
 ## Accessibility Basics
 

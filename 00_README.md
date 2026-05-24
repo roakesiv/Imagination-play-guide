@@ -6,7 +6,7 @@ The app helps an adult facilitator capture a child's magical creature idea, pres
 
 ## Current Status
 
-Current working version: Prototype 4.4 WP3 implemented / ready for review.
+Current working version: Prototype 4.4 activity age range selector implemented / ready for review.
 
 Current validation focus: post-creation production, download, and print workflow friction.
 
@@ -19,6 +19,7 @@ The app currently supports:
 - Shared prompt builder helpers in `promptBuilder.js`
 - Compact expandable parent tips near the top of the app
 - Picture style suggestion chips
+- Optional `Activity age range` selector for printable activity prompt complexity
 - Copy buttons for generated text
 - A lightweight "What do we make next?" bridge
 - Activity Book Packet batch prompt for generating all current printable activity pages one at a time
@@ -42,9 +43,10 @@ No build step is required.
 4. Tap `Make Creature`.
 5. Review the generated image prompt, summary, and details.
 6. Optionally save the creature locally for later.
-7. Copy the prompt into ChatGPT or another image creator.
-8. Choose `Activity Book Packet` to copy one prompt for the full printable activity set, or choose an individual output under `What do we make next?`
-9. Copy the selected output.
+7. Optionally choose `Activity age range` to tune printable activity page complexity.
+8. Copy the prompt into ChatGPT or another image creator.
+9. Choose `Activity Book Packet` to copy one prompt for the full printable activity set, or choose an individual output under `What do we make next?`
+10. Copy the selected output.
 
 Use `Fill Example` to quickly populate sample creature data for testing.
 

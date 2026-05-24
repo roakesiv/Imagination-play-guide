@@ -1,8 +1,8 @@
 # Product Insights - Imagination Play Guide / Magic Creature Card Maker
 
-**Purpose:** Capture durable product insights from ideation, live play, validation, and prototype rounds through P4.3.  
+**Purpose:** Capture durable product insights from ideation, live play, validation, and prototype rounds through P4.4.
 **Status:** Working insight log  
-**Last updated:** 2026-05-23 after P4.0-P4.3 insights  
+**Last updated:** 2026-05-24 after P4.4 closeout
 **Use:** Feed `01_01_PRODUCT_VISION.md`, `02_APP_SPEC.md`, `03_UX_SPEC.md`, prototype scope docs, and roadmap decisions.
 
 ---
@@ -111,6 +111,16 @@ Design implication:
 - The app should autosave current creature data.
 - Saved creatures should make later page generation easy.
 - Production workflows should move toward "create now, print later."
+
+### 2.6 Users should not need to read long generated prompts
+
+P4.4 showed that generated prompt text can contain important workflow instructions, but parents should not need to read the full prompt to use the app safely.
+
+Design implication:
+- Put short visible instructions near high-value actions such as Activity Book Packet.
+- Explain what to copy, where it goes, and what action comes next.
+- Treat visible workflow copy as part of prompt safety, not only UI polish.
+- Keep the generated prompt detailed for the AI tool, but make the parent workflow clear before copying.
 
 ---
 
@@ -396,6 +406,7 @@ Design implication:
 - Printing friction is an important future infrastructure problem.
 - P4.3 showed that saving creature data should come before trying to automate print/PDF.
 - The long-term direction should reduce everything after the fun creation moment.
+- P4.4 showed that batching solves prompt repetition, but the next blocker is local production: downloaded images, organized folders, renamed files if needed, combined PDF, and print-once workflow.
 
 ### 7.4 Coloring/find-it prompts improved with explicit worksheet constraints
 
@@ -427,7 +438,17 @@ Design implication:
 - Prompt engineering is part of the product.
 - Templates should encode the activity design requirements.
 
-### 7.6 Activity book opportunity is validated enough to keep pursuing
+### 7.6 Age / school range is clearer than abstract difficulty
+
+Live activity-page testing showed that the same page can feel too easy for older children and too intimidating for younger children.
+
+Durable insight:
+- Parents can choose concrete age or school-stage labels faster than abstract labels such as Beginner, Medium, or Advanced.
+- Grade/age anchoring also improves prompt engineering because it gives the generator a clearer target complexity.
+- Printable activity outputs should use the selected age range to adjust visual detail, task complexity, and worksheet challenge.
+- This should stay scoped to printable activities unless later testing shows value for stories or creature/profile prompts.
+
+### 7.7 Activity book opportunity is validated enough to keep pursuing
 
 P4.2 expanded from the original narrow four-output plan into a broader set of validated worksheet prompts:
 
@@ -568,7 +589,22 @@ Design implication:
 - Bedtime Story
 - parent DM scaffolding
 
-### 9.6 Future features should stay deferred
+### 9.6 P4.5 should be Local Production Pipeline
+
+P4.4 closed successfully on batching. The next activity-book blocker is local production and printing, not more prompt types.
+
+P4.5 should explore:
+- image folder home / local workspace
+- folder of images to multipage PDF script
+- rename downloaded images from manifest
+- manifest/file naming workflow
+- print workflow notes
+
+Design implication:
+- Keep P4.5 local and workflow-focused.
+- Do not add direct image generation, backend services, web-app PDF generation, or new activity pages yet.
+
+### 9.7 Future features should stay deferred
 
 Near-term future:
 
@@ -616,7 +652,7 @@ Dream features:
 ### Production / Print Workflow
 
 - Reduce prompt-to-image-to-download-to-print friction.
-- Explore PDF export.
+- Explore local folder-to-PDF workflow before adding PDF export to the web app.
 - Explore download workflow.
 - Explore print-friendly page grouping.
 - Consider parent batch-production mode.

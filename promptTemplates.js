@@ -42,6 +42,24 @@ Use a bright, kid-friendly magical creature profile card style with soft shapes,
     return uniqueItems.length ? uniqueItems : ['a tiny star', 'a smiley flower', 'a magic key', 'a little crown', 'a hidden heart'];
   }
 
+  const activityAgeRangeInstructions = {
+    'Toddler — ages 1–2': 'Design this activity for toddlers ages 1–2: keep it extremely simple, with very large shapes, very minimal detail, and easy visual interaction.',
+    'Daycare — ages 2–3': 'Design this activity for daycare-age children ages 2–3: keep it very simple, with large shapes, minimal detail, and easy-to-complete tasks.',
+    'Preschool — ages 3–4': 'Design this activity for preschool children ages 3–4: keep it simple, playful, easy to understand, and not visually overwhelming.',
+    'TK / Pre-K — ages 4–5': 'Design this activity for TK / Pre-K children ages 4–5: keep it clear and playful, with a little more structure and challenge than a preschool worksheet.',
+    'Kindergarten — ages 5–6': 'Design this activity for kindergarten children ages 5–6: keep it playful and clear, with a balanced amount of challenge appropriate for early learners.',
+    '1st Grade — ages 6–7': 'Design this activity for 1st grade children ages 6–7: make it slightly more challenging while keeping it kid-friendly, clear, and printable.',
+    '2nd Grade — ages 7–8': 'Design this activity for 2nd grade children ages 7–8: make it moderately challenging, readable, and engaging, while still simple enough for a printable activity page.',
+    '3rd Grade — ages 8–9': 'Design this activity for 3rd grade children ages 8–9: add a bit more challenge and detail, while keeping the page clear, kid-friendly, and printable.',
+    '4th Grade — ages 9–10': 'Design this activity for 4th grade children ages 9–10: make it more challenging and engaging, while remaining visually clear and easy to use as a printable page.',
+    '5th Grade — ages 10–11': 'Design this activity for 5th grade children ages 10–11: create a more advanced activity with increased challenge, while keeping it readable, printable, and age-appropriate.',
+    '6th Grade — ages 11–12': 'Design this activity for 6th grade children ages 11–12: make it meaningfully more challenging and age-appropriate, while keeping it clear, printable, and not overly cluttered.'
+  };
+
+  function getActivityAgeRangeInstruction(values) {
+    return activityAgeRangeInstructions[values.activityAgeRange] || activityAgeRangeInstructions['Preschool — ages 3–4'];
+  }
+
   function filenameSlug(value) {
     const slug = (value || '')
       .toLowerCase()
@@ -87,6 +105,8 @@ Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Accessories: ${helpers.promptValue(values.accessories)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
+
+${getActivityAgeRangeInstruction(values)}
 
 Task:
 Create the activity pages one at a time.
@@ -172,6 +192,8 @@ Reward: A cheerful celebration and a new badge for ${name}.`;
 
         return `Create a black-and-white printable coloring page for a young child featuring a kid-friendly magical creature.
 
+${getActivityAgeRangeInstruction(values)}
+
 Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
@@ -199,6 +221,8 @@ Make it feel like a cute children's coloring book page, not a detailed illustrat
         const creatureName = values.name || 'the magic creature';
 
         return `Create a black-and-white printable hidden-object activity page for a young child featuring a kid-friendly magical creature.
+
+${getActivityAgeRangeInstruction(values)}
 
 Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}
@@ -252,6 +276,8 @@ Make it feel like a cute children's hidden-object worksheet and coloring page, n
 
         return `Create a black-and-white printable maze activity page for a young child featuring a kid-friendly magical creature.
 
+${getActivityAgeRangeInstruction(values)}
+
 Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
@@ -286,6 +312,8 @@ Make it feel like a cute children's maze worksheet and coloring page, not a diff
         const tracingWord = values.name ? values.name.toUpperCase() : 'MAGIC';
 
         return `Create a black-and-white printable letter tracing worksheet for a young child featuring a kid-friendly magical creature.
+
+${getActivityAgeRangeInstruction(values)}
 
 Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}
@@ -327,6 +355,8 @@ Make it feel like a cute preschool handwriting worksheet and coloring page, not 
 
         return `Create a black-and-white printable counting activity page for a young child featuring a kid-friendly magical creature.
 
+${getActivityAgeRangeInstruction(values)}
+
 Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
@@ -361,6 +391,8 @@ Make it feel like a cute preschool counting worksheet and coloring page, not a c
         const firstLetter = values.name ? values.name.trim().charAt(0).toUpperCase() : 'M';
 
         return `Create a black-and-white printable letter-finding worksheet for a young child featuring a kid-friendly magical creature.
+
+${getActivityAgeRangeInstruction(values)}
 
 Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}
@@ -399,6 +431,8 @@ Make it feel like a cute preschool letter worksheet and coloring page.`;
 
         return `Create a black-and-white printable drawing activity page for a young child featuring a kid-friendly magical creature.
 
+${getActivityAgeRangeInstruction(values)}
+
 Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
@@ -432,6 +466,8 @@ Make it feel like a cute preschool drawing-and-coloring activity page, not a fin
         const creatureName = values.name || 'the magic creature';
 
         return `Create a black-and-white printable tracing path worksheet for a young child featuring a kid-friendly magical creature.
+
+${getActivityAgeRangeInstruction(values)}
 
 Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}
@@ -472,6 +508,8 @@ Make it feel like a cute preschool prewriting worksheet and coloring page, not a
         const creatureName = values.name || 'the magic creature';
 
         return `Create a black-and-white printable matching activity page for a young child featuring a kid-friendly magical creature.
+
+${getActivityAgeRangeInstruction(values)}
 
 Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}
@@ -518,6 +556,8 @@ Make it feel like a cute preschool matching worksheet and coloring page, not a c
         const creatureName = values.name || 'the magic creature';
 
         return `Create a black-and-white printable pattern activity page for a young child featuring a kid-friendly magical creature.
+
+${getActivityAgeRangeInstruction(values)}
 
 Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
 Magic: ${helpers.promptValue(values.magic)}

@@ -107,6 +107,24 @@ window.creatureAppContent = {
     'soft watercolor',
     'bright fantasy'
   ],
+  activityAgeRange: {
+    label: 'Activity age range',
+    helperText: 'Choose the child’s age or school stage to make the pages easier or harder.',
+    defaultValue: 'Preschool — ages 3–4',
+    options: [
+      'Toddler — ages 1–2',
+      'Daycare — ages 2–3',
+      'Preschool — ages 3–4',
+      'TK / Pre-K — ages 4–5',
+      'Kindergarten — ages 5–6',
+      '1st Grade — ages 6–7',
+      '2nd Grade — ages 7–8',
+      '3rd Grade — ages 8–9',
+      '4th Grade — ages 9–10',
+      '5th Grade — ages 10–11',
+      '6th Grade — ages 11–12'
+    ]
+  },
   exampleValues: {
     creatureMix: 'raccoon witch + pony',
     magic: 'invisibility + water',
@@ -116,7 +134,8 @@ window.creatureAppContent = {
     accessories: 'books and toys',
     extraDetail: 'loves storytime',
     creatureName: 'Amor',
-    pictureStyle: 'cuddly storybook'
+    pictureStyle: 'cuddly storybook',
+    activityAgeRange: 'Preschool — ages 3–4'
   },
   confirmations: {
     fillExample: 'Fill Example will replace the creature you are working on. Continue?',
@@ -131,5 +150,8 @@ window.creatureAppContent = {
     unnamed: 'Unnamed Creature',
     loadButton: 'Load',
     deleteButton: 'Delete'
+  },
+  bridge: {
+    activityBookPacketHelp: 'Copy this packet prompt into ChatGPT or another image creator. It will make one activity page at a time. After each page, type NEXT to keep going.'
   }
 };

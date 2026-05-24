@@ -4,6 +4,8 @@ const creatureStorage = window.creatureStorage || {};
 const parentTips = appContent.parentTips || {};
 const fieldDefinitions = appContent.fields || [];
 const fieldMap = Object.fromEntries(fieldDefinitions.map((field) => [field.id, field]));
+const activityAgeRangeContent = appContent.activityAgeRange || {};
+const defaultActivityAgeRange = activityAgeRangeContent.defaultValue || 'Preschool — ages 3–4';
 const detailFieldOrder = [
   'creatureName',
   'creatureMix',
@@ -13,6 +15,7 @@ const detailFieldOrder = [
   'personality',
   'accessories',
   'extraDetail',
+  'activityAgeRange',
   'pictureStyle'
 ];
 
@@ -26,21 +29,38 @@ const creatureDataKeys = [
   'personality',
   'accessories',
   'extraDetail',
+  'activityAgeRange',
   'pictureStyle'
 ];
+const creatureContentDataKeys = creatureDataKeys.filter((key) => key !== 'activityAgeRange');
 
-const fields = detailFieldOrder.map((id) => ({
-  id,
-  label: fieldMap[id].title,
-  key: fieldMap[id].key
-}));
+const fields = detailFieldOrder.map((id) => {
+  if (id === 'activityAgeRange') {
+    return {
+      id,
+      label: activityAgeRangeContent.label || 'Activity age range',
+      key: 'activityAgeRange',
+      inputType: 'select'
+    };
+  }
+
+  return {
+    id,
+    label: fieldMap[id].title,
+    key: fieldMap[id].key,
+    inputType: 'text'
+  };
+});
 const exampleValues = appContent.exampleValues || {};
 const confirmations = appContent.confirmations || {};
 const savedCreaturesContent = appContent.savedCreatures || {};
 const styleSuggestions = appContent.styleSuggestions || [];
+const bridgeContent = appContent.bridge || {};
 
 renderQuestionFields();
+renderActivityAgeRangeSelector();
 renderParentTips();
+renderBridgeContent();
 
 const form = document.querySelector('#creatureForm');
 const saveStatus = document.querySelector('#saveStatus');
@@ -105,9 +125,32 @@ function renderQuestionFields() {
   }).join('');
 }
 
+function renderActivityAgeRangeSelector() {
+  const container = document.querySelector('#activityAgeRangeMount');
+  if (!container) {
+    return;
+  }
+
+  const options = activityAgeRangeContent.options || [defaultActivityAgeRange];
+  container.innerHTML = `<div class="question-block">
+    <div class="prompt-label"><span aria-hidden="true">&#127891;</span><label for="activityAgeRange">${escapeHtml(activityAgeRangeContent.label || 'Activity age range')}</label></div>
+    <p class="parent-script">${escapeHtml(activityAgeRangeContent.helperText || '')}</p>
+    <select id="activityAgeRange" name="activityAgeRange">
+      ${options.map((option) => `<option value="${escapeHtml(option)}"${option === defaultActivityAgeRange ? ' selected' : ''}>${escapeHtml(option)}</option>`).join('')}
+    </select>
+  </div>`;
+}
+
+function renderBridgeContent() {
+  const activityBookPacketHelp = document.querySelector('#activityBookPacketHelp');
+  if (activityBookPacketHelp) {
+    activityBookPacketHelp.textContent = bridgeContent.activityBookPacketHelp || '';
+  }
+}
+
 function createEmptyCreatureData() {
   return creatureDataKeys.reduce((creatureData, key) => {
-    creatureData[key] = '';
+    creatureData[key] = key === 'activityAgeRange' ? defaultActivityAgeRange : '';
     return creatureData;
   }, {});
 }
@@ -116,6 +159,12 @@ function getCreatureData() {
   const creatureData = createEmptyCreatureData();
 
   fields.forEach((field) => {
+    if (field.inputType === 'select') {
+      const select = document.querySelector(`#${field.id}`);
+      creatureData[field.key] = select ? select.value : defaultActivityAgeRange;
+      return;
+    }
+
     creatureData[field.key] = document.querySelector(`#${field.id}`).value.trim();
   });
 
@@ -123,7 +172,7 @@ function getCreatureData() {
 }
 
 function hasCreatureData(creatureData) {
-  return creatureDataKeys.some((key) => creatureData[key]);
+  return creatureContentDataKeys.some((key) => creatureData[key]);
 }
 
 function confirmIfCreatureHasData(message) {
@@ -145,7 +194,7 @@ function getSavedCreatureData(savedCreature) {
   const creatureData = createEmptyCreatureData();
 
   creatureDataKeys.forEach((key) => {
-    creatureData[key] = typeof savedData[key] === 'string' ? savedData[key] : '';
+    creatureData[key] = typeof savedData[key] === 'string' ? savedData[key] : creatureData[key];
   });
 
   return creatureData;
@@ -155,7 +204,7 @@ function setCreatureData(creatureData) {
   fields.forEach((field) => {
     const input = document.querySelector(`#${field.id}`);
     if (input) {
-      input.value = typeof creatureData[field.key] === 'string' ? creatureData[field.key] : '';
+      input.value = typeof creatureData[field.key] === 'string' ? creatureData[field.key] : createEmptyCreatureData()[field.key];
     }
   });
 }
@@ -187,7 +236,7 @@ function restoreCurrentCreature() {
 
   const creatureData = createEmptyCreatureData();
   creatureDataKeys.forEach((key) => {
-    creatureData[key] = typeof savedCreature[key] === 'string' ? savedCreature[key] : '';
+    creatureData[key] = typeof savedCreature[key] === 'string' ? savedCreature[key] : creatureData[key];
   });
 
   if (!hasCreatureData(creatureData)) {
@@ -407,6 +456,10 @@ form.addEventListener('input', () => {
   saveCurrentCreature();
 });
 
+form.addEventListener('change', () => {
+  saveCurrentCreature();
+});
+
 resetButton.addEventListener('click', (event) => {
   if (!confirmIfCreatureHasData(confirmations.reset || 'Reset will clear this creature. Continue?')) {
     event.preventDefault();
@@ -417,7 +470,7 @@ resetButton.addEventListener('click', (event) => {
   window.setTimeout(() => {
     promptOutput.value = '';
     summaryOutput.textContent = 'Make a creature to see the summary.';
-    renderDetails({});
+    renderDetails(createEmptyCreatureData());
     copyButton.disabled = true;
     copyStatus.textContent = '';
     artifactOutput.value = '';

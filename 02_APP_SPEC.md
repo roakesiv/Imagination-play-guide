@@ -1,8 +1,8 @@
 # App Spec
 
 Status: Current  
-Last updated after: Prototype 4.4 WP3 Activity Book Packet
-Last updated: 2026-05-23
+Last updated after: Prototype 4.4 Closeout
+Last updated: 2026-05-24
 
 This is the living product and engineering spec for Magic Creature Card Maker. Prototype folders preserve history. This file captures the current truth: what the app is, what it needs to do, what has been decided, and what remains open.
 
@@ -88,9 +88,10 @@ The child needs:
 ### Choose a Next Output
 
 1. Adult generates a creature or taps an output choice, which generates the creature first if needed.
-2. Adult chooses `Activity Book Packet` for a full printable activity set, or chooses an individual option under `What do we make next?`
-3. App generates deterministic text for that output type.
-4. Adult copies the output if useful.
+2. Adult may choose an optional `Activity age range` for printable activity page complexity.
+3. Adult chooses `Activity Book Packet` for a full printable activity set, or chooses an individual option under `What do we make next?`
+4. App generates deterministic text for that output type.
+5. Adult copies the output if useful.
 
 ### Restore Current Creature
 
@@ -144,6 +145,7 @@ Input fields:
 - Extra silly detail
 - Creature name
 - Picture style
+- Activity age range, used only for printable activity output complexity
 
 Content maintainability:
 - Field titles, parent-facing questions, suggestion examples, placeholders, visual markers, style chips, parent tips, and example values live in `content.js`.
@@ -158,6 +160,8 @@ Bridge outputs:
 - The bridge must offer a prominent Activity Book Packet option before individual output choices.
 - The Activity Book Packet must generate one copyable batch prompt for the current creature.
 - The Activity Book Packet must include the current printable activity pages in order, one-page-at-a-time instructions, `NEXT` instructions, and suggested filenames.
+- The Activity Book Packet and individual printable activity outputs must include a short instruction derived from the selected `Activity age range`.
+- The Activity Book Packet UI must explain the copy/paste and `NEXT` workflow near the packet choice because users may not read the generated prompt closely.
 - The Activity Book Packet must exclude Story and Adventure while those modes are paused.
 - Each output choice must generate copyable text using current creature data.
 - Bridge output must refresh if the user regenerates the creature after selecting an output type.
@@ -181,6 +185,7 @@ Fill Example behavior:
 Session continuity:
 - The current creature must autosave locally as fields change.
 - The last creature must restore into the form after reload.
+- The selected activity age range must save and restore with current and saved creature data when available, defaulting to `Preschool — ages 3–4` for older saved data.
 - Restore must not require accounts, cloud sync, backend services, or a database.
 - Reset must clear the locally saved current creature.
 - The app should show a compact local save/restore status.
@@ -361,6 +366,28 @@ Durable learning:
 - A simple local saved creature list is enough to support multiple creatures without accounts, profiles, backend services, or cloud sync.
 - JSON export/import is not worth adding only to move data between phone and laptop; it creates another manual handoff and does not advance the desired automated post-creation workflow.
 - The next workflow friction is production after creature creation: generating pages/images, downloading files, moving between phone and laptop, and printing.
+- Users should not need to read generated prompts closely to use the app safely; short visible workflow instructions should explain what to copy, where it goes, and what action comes next.
+
+### Prototype 4.4 Activity Age Range
+
+Prototype 4.4 activity difficulty revision replaced abstract Beginner / Medium / Advanced thinking with a parent-facing `Activity age range` selector.
+
+Durable learning:
+- Age and school-stage labels are easier for parents to choose quickly than abstract difficulty labels.
+- Printable activity prompts need age/grade anchoring so generated pages can be simpler for younger children and more challenging for older children.
+- This selector should affect printable activity outputs only; Creature Card, Story, Adventure, and the main creature image prompt remain unchanged.
+
+### Prototype 4.4 Closeout
+
+P4.4 passed on batch prompt production workflow.
+
+Durable learning:
+- Activity Book Packet reduced repeated prompt copy/paste into ChatGPT.
+- The `NEXT` flow worked well for generating activity pages one at a time.
+- Page titles/names were a major improvement.
+- Users need short visible instructions near the Activity Book Packet button because many users will not read the generated prompt itself.
+- Printing/local file production is now the next blocker.
+- P4.5 should explore a local production pipeline before adding PDF generation to the web app.
 
 ## Current Non-Goals
 
@@ -387,7 +414,7 @@ Product and UX:
 - Do rewritten field prompts reduce adult facilitation effort during live play?
 - Do distinct button colors help adults guide child participation?
 - Should a future prototype add lightweight step navigation, or keep the full-page form?
-- What lightweight production checklist would help a parent remember which creature pages still need to be generated, downloaded, or printed?
+- What local production pipeline best helps a parent move from downloaded images to organized folder to combined PDF to one print job?
 - When does the app need to track generated images or activity outputs, not just creature data?
 
 Architecture:

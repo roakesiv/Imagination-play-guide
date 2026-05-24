@@ -27,6 +27,7 @@
 
       <form id="creatureForm">
         <div id="questionFields"></div>
+        <div id="activityAgeRangeMount"></div>
 
         <div class="action-row">
           <button class="primary-button" type="submit">Make Creature</button>
@@ -73,6 +74,7 @@
           <div><dt>What they are like</dt><dd>not specified</dd></div>
           <div><dt>Accessories</dt><dd>not specified</dd></div>
           <div><dt>Extra weird detail</dt><dd>not specified</dd></div>
+          <div><dt>Activity age range</dt><dd>Preschool — ages 3–4</dd></div>
           <div><dt>Picture style</dt><dd>not specified</dd></div>
         </dl>
       </div>
@@ -89,6 +91,7 @@
       <div class="bridge-choice-sections" id="artifactChoices" aria-label="Creative output choices">
         <div class="choice-section">
           <p class="choice-section-label">Make the whole activity book:</p>
+          <p class="prompt-helper packet-helper" id="activityBookPacketHelp"></p>
           <div class="choice-grid featured-choice-grid">
             <button class="choice-card packet-card" type="button" data-output="activityBookPacket">
               <span aria-hidden="true">&#128218;</span>
