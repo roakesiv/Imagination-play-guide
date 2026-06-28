@@ -93,23 +93,30 @@ Suggested filename: ${slug}_${pageNumber}_${filenamePart}.png
 ${prompt}`;
   }
 
+  function packetPagePlan(pageNumber, filenamePart, title, goal, mustInclude, mustAvoid, slug) {
+    return `Page ${pageNumber} of 10 - ${title}
+Suggested filename: ${slug}_${pageNumber}_${filenamePart}.png
+Goal: ${goal}
+Must include: ${mustInclude}
+Must avoid: ${mustAvoid}`;
+  }
+
   const artifacts = {
     activityBookPacket: {
       title: 'Activity Book Packet',
       build(values, helpers) {
         const slug = filenameSlug(values.name);
         const activityPages = [
-          ['01', 'coloring_page', artifacts.coloring.title, artifacts.coloring.build(values, helpers)],
-          ['02', 'find_it_game', artifacts.findIt.title, artifacts.findIt.build(values, helpers)],
-          ['03', 'maze', artifacts.maze.title, artifacts.maze.build(values, helpers)],
-          ['04', 'letter_tracing', artifacts.letterTracing.title, artifacts.letterTracing.build(values, helpers)],
-          ['05', 'count_objects', artifacts.countObjects.title, artifacts.countObjects.build(values, helpers)],
-          ['06', 'find_letter', artifacts.findLetter.title, artifacts.findLetter.build(values, helpers)],
-          ['07', 'draw_missing_detail', artifacts.drawMissingDetail.title, artifacts.drawMissingDetail.build(values, helpers)],
-          ['08', 'trace_path', artifacts.tracePath.title, artifacts.tracePath.build(values, helpers)],
-          ['09', 'matching_page', artifacts.matchingPage.title, artifacts.matchingPage.build(values, helpers)],
-          ['10', 'finish_pattern', artifacts.finishPattern.title, artifacts.finishPattern.build(values, helpers)],
-          ['11', 'adventure_journal', artifacts.journalPage.title, artifacts.journalPage.build(values, helpers)]
+          ['01', 'coloring_page', 'Coloring Page', 'A simple coloring-book scene with the character as the main focus.', 'large character, open coloring spaces, a few easy background details', 'hidden-object lists, maze paths, worksheet rows'],
+          ['02', 'find_it_game', 'Find-It Game', 'A hidden-object coloring page.', 'a clear Things to Find row at the bottom and 5 large findable objects in the scene', 'maze paths, tracing lines, matching columns'],
+          ['03', 'maze', 'Maze', 'The only maze page in the pack.', 'one clear start, one clear finish, wide maze paths, the character at the start', 'letter tracing, object matching, pattern rows'],
+          ['04', 'letter_tracing', 'Letter Tracing', `A name tracing worksheet for ${values.name || 'the character'}.`, 'large dotted or dashed letters for the character name and a small character picture', 'maze paths, hidden objects, counting groups'],
+          ['05', 'count_objects', 'Count the Objects', 'A counting worksheet.', '3 to 5 groups of large countable objects with blank answer spaces', 'maze paths, tracing lines, matching columns'],
+          ['06', 'find_letter', 'Find the Letter', 'A letter spotting worksheet.', 'one big target letter and many large friendly letters to circle', 'maze paths, object-counting groups, matching columns'],
+          ['07', 'draw_missing_detail', 'Draw the Missing Detail', 'An open drawing prompt page.', 'one large blank drawing area and the prompt "Draw something magical!"', 'maze paths, worksheet grids, dense hidden objects'],
+          ['08', 'trace_path', 'Trace the Path', 'A prewriting tracing worksheet, not a maze.', '3 to 5 separate dotted tracing strokes such as straight, wavy, zigzag, loop, and curved lines', 'maze walls, start/finish maze goal, branching paths'],
+          ['09', 'matching_page', 'Matching Page', 'A draw-the-lines matching worksheet, not a maze.', 'two clear columns with 4 to 6 large matching object pairs', 'maze paths, tracing strokes, pattern rows'],
+          ['10', 'finish_pattern', 'Finish the Pattern', 'A pattern completion worksheet, not a maze.', '3 to 4 simple AB or AAB pattern rows with blank spaces at the end', 'maze paths, matching columns, hidden-object lists']
         ];
 
         return `I am creating a printable activity pack for young children.
@@ -129,24 +136,35 @@ ${getStoryCharacterDetails(values)}
 ${getActivityAgeRangeInstruction(values)}
 
 Task:
-Create the activity pages one at a time.
+Create exactly 10 activity pages, one at a time, using the numbered page plan below.
 
 Important:
-- Generate only one image at a time.
-- Start with Page 01.
+- Generate only one image per response.
+- Start with Page 01 of 10.
 - After each image, stop and wait for me to say NEXT.
-- When I say NEXT, generate the next page.
+- When I say NEXT, generate the next numbered page only.
+- Do not skip a page.
+- Do not repeat a page type.
+- Do not combine two page types into one image.
+- Make only Page 03 a maze. Pages 08, 09, and 10 must not look like mazes.
+- Before each image, show exactly this line: "Creating Page NN of 10 - [Title]".
+- Also show the suggested filename before each image.
 - Use black-and-white printable worksheet style.
 - Use bold clean outlines.
 - Keep pages simple for young children.
 - Avoid grayscale, shading, clutter, tiny details, scary elements, and adult worksheet complexity.
-- Before each image, show the page title and suggested filename.
 
-Activity Pack Order:
+Quality check before each image:
+- Is this the correct page number?
+- Is this the correct activity type?
+- Is this visually different from the previous pages?
+- Is it preschool / early-child friendly?
 
-${activityPages.map(([pageNumber, filenamePart, title, prompt]) => pageSection(pageNumber, filenamePart, title, prompt, slug)).join('\n\n')}
+10-Page Activity Pack Order:
 
-Start now with Page 01 only.`;
+${activityPages.map(([pageNumber, filenamePart, title, goal, mustInclude, mustAvoid]) => packetPagePlan(pageNumber, filenamePart, title, goal, mustInclude, mustAvoid, slug)).join('\n\n')}
+
+Start now with Page 01 of 10 only.`;
       }
     },
     card: {
@@ -243,6 +261,7 @@ Make it feel like a cute children's coloring book page, not a detailed illustrat
       title: 'Find-It Game',
       build(values, helpers) {
         const creatureName = values.name || 'the magic creature';
+        const findItItems = getFindItItems(values).slice(0, 5);
 
         return `Create a black-and-white printable hidden-object activity page for a young child featuring a kid-friendly magical creature.
 
@@ -260,11 +279,7 @@ Show ${creatureName} as the clear main focus of the page. Make ${creatureName}'s
 Create a simple, playful scene of ${creatureName} playing in the home/background. Keep the scene readable, uncluttered, and easy for a young child to use. The page should work as both a hidden-object activity page and a coloring page.
 
 Hide these things in the scene:
-- books and toys
-- a storytime detail
-- an invisibility + water sparkle
-- a tiny gem
-- a small sign for the home/background
+${findItItems.map((item) => `- ${item}`).join('\n')}
 
 At the bottom of the page, include a clear "Things to Find" row that shows:
 - a small picture icon of each item
@@ -506,7 +521,7 @@ Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
 ${getStoryCharacterDetails(values)}
 
-Show ${creatureName} clearly on the page. Create a simple prewriting activity where the child helps ${creatureName} follow large dotted paths to reach the home/background.
+Show ${creatureName} clearly on the page. Create a simple prewriting activity with separate dotted tracing strokes. This is not a maze.
 
 Include 3 to 5 large traceable paths. The paths should use simple prewriting shapes such as:
 - straight line
@@ -515,7 +530,9 @@ Include 3 to 5 large traceable paths. The paths should use simple prewriting sha
 - loop-de-loop line
 - curved rainbow path
 
-Put ${creatureName} near the start of each path and a simple goal at the end, such as an object inspired by the home, magic, accessories, or extra detail.
+Put ${creatureName} or a small character icon near the start of each separate tracing stroke and a simple object at the end, such as an item inspired by the magic, accessories, or extra detail.
+
+Do not create maze walls, branching corridors, dead ends, start/finish maze labels, or a single route through a maze. The page should look like handwriting / prewriting practice, with separate dotted lines the child traces.
 
 Use:
 - clean black-and-white line art
@@ -530,7 +547,7 @@ Use:
 - no cluttered background
 - no scary details
 
-Make it feel like a cute preschool prewriting worksheet and coloring page, not a complex maze or adult activity page.`;
+Make it feel like a cute preschool prewriting worksheet and coloring page, not a maze, puzzle book, or adult activity page.`;
       }
     },
     matchingPage: {
@@ -549,7 +566,7 @@ Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
 ${getStoryCharacterDetails(values)}
 
-Show ${creatureName} clearly on the page in a simple, cute black-and-white line art style.
+Show ${creatureName} clearly on the page in a simple, cute black-and-white line art style. This is not a maze.
 
 Create a simple matching activity where the child draws lines to match magical objects from ${creatureName}'s world.
 
@@ -566,6 +583,8 @@ Objects can include items inspired by the home, magic, accessories, extra detail
 - simple magical object
 
 Make the objects large, simple, and easy to recognize. Leave enough space between objects so the child can draw matching lines.
+
+Do not create maze walls, corridors, start/finish labels, or path-finding routes. This page should be two-column matching only.
 
 Use:
 - clean black-and-white line art
@@ -598,7 +617,7 @@ Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
 ${getStoryCharacterDetails(values)}
 
-Show ${creatureName} clearly on the page in a simple, cute black-and-white line art style.
+Show ${creatureName} clearly on the page in a simple, cute black-and-white line art style. This is not a maze.
 
 Create a simple "finish the pattern" activity using magical objects from ${creatureName}'s world.
 
@@ -621,6 +640,8 @@ At the end of each pattern row, leave a clear blank space where the child can dr
 
 Include a small prompt at the top:
 "Finish the magical patterns!"
+
+Do not create maze walls, corridors, start/finish labels, or path-finding routes. This page should be pattern rows only.
 
 Use:
 - clean black-and-white line art

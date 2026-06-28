@@ -101,6 +101,40 @@ amor_03.png
 
 Use `--output-folder` if you want the renamed files to go directly into another input folder, such as a PDF engine source-pages folder.
 
+Finalize one activity book after the PDF Engine `Source Pages` folder has the renamed page images:
+
+```powershell
+python .\tools\finalize_activity_book.py --creature "Amor"
+```
+
+If the preview looks right, run it for real and clean the PDF Engine working files afterward:
+
+```powershell
+python .\tools\finalize_activity_book.py --creature "Amor" --clean --apply
+```
+
+This safe order is intentional:
+
+1. Copy renamed source images into `02_Finished_Library/[Creature]/Source Pages/`.
+2. Create the PDF from `01_PDF Engine/Source Pages/`.
+3. Copy the PDF into `02_Finished_Library/[Creature]/`.
+4. Only after those steps succeed, delete working images and PDFs from `01_PDF Engine/`.
+
+For the normal no-command-line workflow, double-click:
+
+```text
+02 - Activity Book/Finalize Activity Book.cmd
+```
+
+That launcher asks for the creature name, then runs the full pipeline:
+
+1. Read raw ChatGPT PNG files from `01_PDF Engine/`.
+2. Copy and rename them into `01_PDF Engine/Source Pages/`.
+3. Copy source pages to the finished library.
+4. Create the PDF.
+5. Copy the PDF to the finished library.
+6. Clean the PDF Engine working files.
+
 Make a PDF with a custom page margin:
 
 ```powershell

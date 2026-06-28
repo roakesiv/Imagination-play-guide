@@ -152,6 +152,6 @@ window.creatureAppContent = {
     deleteButton: 'Delete'
   },
   bridge: {
-    activityBookPacketHelp: 'Copy this packet prompt into ChatGPT or another image creator. It will make one activity page at a time. After each page, type NEXT to keep going.'
+    activityBookPacketHelp: 'Copy this packet prompt into ChatGPT or another image creator. It will make exactly 10 activity pages, one at a time. After each page, type NEXT to keep going.'
   }
 };
