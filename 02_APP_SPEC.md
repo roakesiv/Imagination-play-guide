@@ -1,8 +1,8 @@
 # App Spec
 
 Status: Current  
-Last updated after: Prototype 4.4 Closeout
-Last updated: 2026-05-24
+Last updated after: Prototype 4.5 Closeout
+Last updated: 2026-06-27
 
 This is the living product and engineering spec for Magic Creature Card Maker. Prototype folders preserve history. This file captures the current truth: what the app is, what it needs to do, what has been decided, and what remains open.
 
@@ -387,7 +387,19 @@ Durable learning:
 - Page titles/names were a major improvement.
 - Users need short visible instructions near the Activity Book Packet button because many users will not read the generated prompt itself.
 - Printing/local file production is now the next blocker.
-- P4.5 should explore a local production pipeline before adding PDF generation to the web app.
+- P4.5 explored and validated a local production pipeline before adding any PDF generation to the web app.
+
+### Prototype 4.5 Closeout
+
+P4.5 passed on local production pipeline validation.
+
+Durable learning:
+- A local desktop helper can convert a folder of downloaded activity-page images into one printable multipage PDF.
+- Scaling each image to the US Letter printable area with a default `0.25` inch margin produced acceptable page size and quality for simple coloring/activity pages.
+- The combination of folder-to-PDF helper and improved printer reduced the image-file-to-printed-pages step to about one minute for a 10-page activity set.
+- Generated activity images and PDFs should stay outside the repo in a sibling local workspace such as `02 - Activity Book`.
+- This workflow should remain a local helper for now, not a web app runtime feature.
+- Remaining friction is now earlier in the pipeline: repeated image generation, downloads, renaming/moving files, and scaling production across many characters.
 
 ## Current Non-Goals
 
@@ -401,6 +413,7 @@ The app is not currently:
 - A backend service
 - A database-backed application
 - A polished print-production tool
+- A browser-side PDF generator
 
 ## Open Questions
 
@@ -414,7 +427,10 @@ Product and UX:
 - Do rewritten field prompts reduce adult facilitation effort during live play?
 - Do distinct button colors help adults guide child participation?
 - Should a future prototype add lightweight step navigation, or keep the full-page form?
-- What local production pipeline best helps a parent move from downloaded images to organized folder to combined PDF to one print job?
+- What local production workflow best scales from one finished creature activity set to many?
+- How much friction remains around repeated image generation, downloading, and moving/renaming files?
+- Should future production work add a lower-effort desktop wrapper for the PDF helper?
+- Should future production work support local Markdown character profiles for keeper characters?
 - When does the app need to track generated images or activity outputs, not just creature data?
 
 Architecture:

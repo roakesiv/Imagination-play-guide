@@ -6,9 +6,9 @@ The app helps an adult facilitator capture a child's magical creature idea, pres
 
 ## Current Status
 
-Current working version: Prototype 4.4 activity age range selector implemented / ready for review.
+Current working version: Prototype 4.5 local production pipeline validated.
 
-Current validation focus: post-creation production, download, and print workflow friction.
+Current validation focus: repeatable multi-character activity book production and remaining image generation/download friction.
 
 The app currently supports:
 - Free-text creature creation prompts
@@ -26,6 +26,7 @@ The app currently supports:
 - Deterministic template outputs for Creature Card, Story, Adventure, Coloring Page, Find-It Game, Maze, Letter Tracing, Count the Objects, Find the Letter, Draw the Missing Detail, Trace the Path, Matching Page, and Finish the Pattern
 - Local autosave and reload restore for the current creature
 - Local saved creature list with save, load, and delete
+- Local desktop helper tools for converting downloaded activity-page images into one printable PDF
 
 The app remains intentionally simple. It has no backend, accounts, auth, database, package manager, build step, or AI API integration. Current and saved creature data are stored locally in the browser only.
 
@@ -92,6 +93,7 @@ Use top-level docs to understand the current app. Use prototype docs to understa
 - `promptBuilder.js` - shared prompt rendering helpers, missing-value fallback, and template lookup
 - `storage.js` - browser localStorage helpers for current creature continuity and saved creatures
 - `script.js` - UI rendering, form behavior, data gathering, summary/details, copy actions, reset behavior, and selected output state
+- `tools/` - local-only production helper scripts for activity-page image workspaces and folder-to-PDF conversion
 - `Docs/Prototype 1` - earlier project history
 - `Docs/Prototype 3.0` - prior prototype scope, testing, and implementation context
 - `Docs/Prototype 3.1` - historical handoff docs, UX spec, build log, and testing guide
@@ -169,3 +171,14 @@ Recommended next step:
 3. Defer JSON export/import unless device transfer becomes a concrete blocker.
 
 Keep the product lightweight until testing shows which next feature is truly needed.
+
+## Direction After Prototype 4.5
+
+Prototype 4.5 validated a local production helper workflow:
+
+- generated activity images stay outside the repo
+- a local folder of activity-page PNGs can become one multipage PDF
+- the PDF can be printed once instead of opening and printing each image separately
+- the tested 10-page flow reached printed activity pages in about one minute
+
+The helper should remain a desktop production tool for now. Do not add browser-side PDF generation, direct image generation, backend services, or web-app dependencies for this workflow yet.

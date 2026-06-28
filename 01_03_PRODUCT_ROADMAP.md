@@ -293,7 +293,7 @@ Result:
 
 Status:
 
-Next recommended prototype.
+Complete / validated.
 
 Goal:
 
@@ -306,6 +306,15 @@ Possible work packages:
 - Rename downloaded images from manifest
 - Manifest/file naming workflow
 - Print workflow notes
+
+Result:
+
+- Local activity-page production files were moved outside the repo.
+- A desktop helper converts a folder of downloaded PNG/JPG/JPEG/WEBP activity images into one US Letter multipage PDF.
+- The helper scales images to the printable area, preserves aspect ratio, and supports configurable margin with a default of `0.25` inches.
+- A real 10-page activity set was converted into one printable PDF and printed successfully.
+- The PDF plus improved printer reduced the image-file-to-printed-pages step to about one minute.
+- Rename/manifest automation was deferred because folder-to-PDF solved the immediate printing bottleneck.
 
 Constraints:
 
@@ -476,7 +485,9 @@ Future directions:
 - direct printer integration
 - print-service integration
 
-P4.4 confirmed that printing friction is now the dominant blocker after batch prompting. P4.5 should explore a local production pipeline first: downloaded images -> organized folder -> renamed files if needed -> combined PDF -> print once.
+P4.4 confirmed that printing friction was the dominant blocker after batch prompting. P4.5 explored and validated a local production pipeline: downloaded images -> organized folder outside the repo -> combined PDF -> print once.
+
+P4.5 validated the smallest useful local production pipeline: downloaded images -> local folder outside the repo -> combined PDF -> print once. The next production bottlenecks are earlier in the workflow: repeated image generation, downloading, renaming/moving files, and scaling the activity-book process across many characters.
 
 ---
 
@@ -563,7 +574,7 @@ Saved libraries, direct AI, printer connection, and books are powerful ideas, bu
 
 ## 8. Current Recommended Next Step
 
-Start P4.5 Local Production Pipeline.
+P4.5 Local Production Pipeline is complete.
 
 P4.0 is complete and created the architecture runway:
 
@@ -577,6 +588,10 @@ P4.1 completed Coloring Page and Find-It Game prompt quality. P4.2 expanded acti
 
 P4.3 successfully added local current-creature persistence, destructive-action protection, and simple saved creature management while preserving the static architecture.
 
-P4.4 successfully reduced prompt-generation friction with the Activity Book Packet, visible packet instructions, and Activity age range support. The next highest-friction area is local production after generation: downloading images, organizing files, renaming if needed, combining pages into one printable PDF, and printing once.
+P4.4 successfully reduced prompt-generation friction with the Activity Book Packet, visible packet instructions, and Activity age range support.
+
+P4.5 successfully reduced print-production friction with a local folder-to-PDF helper and an outside-repo Activity Book workspace. The immediate printing bottleneck is solved well enough for current testing.
+
+The next highest-friction areas are repeated image generation/download, moving or renaming files, and scaling from one finished creature set to many.
 
 JSON export/import should remain deferred unless device transfer becomes a concrete blocker, because it adds another manual handoff and does not automate post-creation production.

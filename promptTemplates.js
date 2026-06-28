@@ -1,4 +1,21 @@
 window.creaturePromptTemplates = (() => {
+  function getStoryCharacterDetails(values) {
+    if (!values.storyCharacterId) {
+      return '';
+    }
+
+    const details = [
+      `Story character: ${values.name || 'not specified'}`,
+      values.storyCharacterTitle ? `Title: ${values.storyCharacterTitle}` : '',
+      values.storyCharacterRole ? `Role: ${values.storyCharacterRole}` : '',
+      values.storyCharacterSymbol ? `Symbol: ${values.storyCharacterSymbol}` : '',
+      values.storyCharacterGlobalRule ? `Global visual rule: ${values.storyCharacterGlobalRule}` : '',
+      values.storyCharacterVisualLock ? `Locked visual details, preserve exactly: ${values.storyCharacterVisualLock}` : ''
+    ].filter(Boolean);
+
+    return details.length ? `\nStory character lock:\n${details.join('\n')}\n` : '';
+  }
+
   function buildImagePrompt(values, helpers) {
     return `Create a kid-friendly magical creature profile card image.
 
@@ -18,6 +35,7 @@ What they are like: ${helpers.promptValue(values.personality)}
 Accessories: ${helpers.promptValue(values.accessories)}
 Extra weird detail: ${helpers.promptValue(values.extraDetail)}
 Picture style: ${helpers.promptValue(values.pictureStyle)}
+${getStoryCharacterDetails(values)}
 
 Style instructions:
 Use a bright, kid-friendly magical creature profile card style with soft shapes, friendly expression, readable text, playful details, and a magical background.`;
@@ -90,7 +108,8 @@ ${prompt}`;
           ['07', 'draw_missing_detail', artifacts.drawMissingDetail.title, artifacts.drawMissingDetail.build(values, helpers)],
           ['08', 'trace_path', artifacts.tracePath.title, artifacts.tracePath.build(values, helpers)],
           ['09', 'matching_page', artifacts.matchingPage.title, artifacts.matchingPage.build(values, helpers)],
-          ['10', 'finish_pattern', artifacts.finishPattern.title, artifacts.finishPattern.build(values, helpers)]
+          ['10', 'finish_pattern', artifacts.finishPattern.title, artifacts.finishPattern.build(values, helpers)],
+          ['11', 'adventure_journal', artifacts.journalPage.title, artifacts.journalPage.build(values, helpers)]
         ];
 
         return `I am creating a printable activity pack for young children.
@@ -105,6 +124,7 @@ Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Accessories: ${helpers.promptValue(values.accessories)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
 ${getActivityAgeRangeInstruction(values)}
 
@@ -142,8 +162,9 @@ Home: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Carries or wears: ${helpers.promptValue(values.accessories)}
 Fun fact: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
-Make it cute, colorful, whimsical, and safe for young children. Preserve every specific silly detail.`;
+Make it a colorful kid-friendly character profile card layout with a readable name and simple traits. Make it cute, whimsical, and safe for young children. Preserve every specific silly detail.`;
       }
     },
     story: {
@@ -158,6 +179,7 @@ Home: ${helpers.promptValue(values.home)}
 Colors: ${helpers.promptValue(values.colors)}
 Personality: ${helpers.promptValue(values.personality)}
 Special detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
 Story shape:
 1. ${name} notices a tiny problem near ${helpers.promptValue(values.home)}.
@@ -177,6 +199,7 @@ Home base: ${helpers.promptValue(values.home)}
 Magic tool: ${helpers.promptValue(values.magic)}
 Personality: ${helpers.promptValue(values.personality)}
 Carries or wears: ${helpers.promptValue(values.accessories)}
+${getStoryCharacterDetails(values)}
 
 Quest: Help find a missing happy thing from ${helpers.promptValue(values.home)}.
 Friendly helper: A tiny glowing guide who likes ${helpers.promptValue(values.colors)} things.
@@ -199,6 +222,7 @@ Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
 Show ${creatureName} as the clear main focus of the page. Include a simple, playful background with a few easy-to-color elements inspired by the home/background, but keep the scene uncluttered and easy for a child to color.
 
@@ -229,6 +253,7 @@ Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
 Colors/vibe: ${helpers.promptValue(values.colors)}
 Personality: ${helpers.promptValue(values.personality)}
+${getStoryCharacterDetails(values)}
 
 Show ${creatureName} as the clear main focus of the page. Make ${creatureName}'s name very clear and easy to read at the top of the page so the child can clearly see the creature's name and feel excited about their creation.
 
@@ -283,6 +308,7 @@ Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
 Make ${creatureName} the clear starting character at the beginning of the maze. Put ${creatureName}'s home, a simple ${helpers.promptValue(values.home)}, as the clear goal at the end of the maze.
 
@@ -320,6 +346,7 @@ Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
 Make the worksheet focus on tracing the creature's name: ${tracingWord}.
 
@@ -362,6 +389,7 @@ Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
 Show ${creatureName} in a simple, playful scene at the home/background. Add groups of easy-to-count objects from ${creatureName}'s world, such as magic sparkles, books, toys, tiny gems, balloons, candy pieces, snacks, or simple items inspired by the creature details.
 
@@ -399,6 +427,7 @@ Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
 Focus on the first letter of the creature's name: ${firstLetter}.
 
@@ -438,6 +467,7 @@ Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
 Show ${creatureName} clearly on the page in simple black-and-white line art. Leave one large open blank area where the child can draw an extra magical detail, accessory, snack, toy, sparkle, book, water magic, balloon, candy, or friend for ${creatureName}.
 
@@ -474,6 +504,7 @@ Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
 Show ${creatureName} clearly on the page. Create a simple prewriting activity where the child helps ${creatureName} follow large dotted paths to reach the home/background.
 
@@ -516,6 +547,7 @@ Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
 Show ${creatureName} clearly on the page in a simple, cute black-and-white line art style.
 
@@ -564,6 +596,7 @@ Magic: ${helpers.promptValue(values.magic)}
 Home/background: ${helpers.promptValue(values.home)}
 Personality: ${helpers.promptValue(values.personality)}
 Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
 
 Show ${creatureName} clearly on the page in a simple, cute black-and-white line art style.
 
@@ -602,6 +635,27 @@ Use:
 - no scary details
 
 Make it feel like a cute preschool pattern worksheet and coloring page, not a complex math worksheet.`;
+      }
+    },
+    journalPage: {
+      title: 'Adventure Journal Page',
+      build(values, helpers) {
+        const creatureName = values.name || 'the magic creature';
+
+        return `Create a simple printable adventure journal page for a young child featuring a kid-friendly magical creature.
+
+${getActivityAgeRangeInstruction(values)}
+
+Main creature: ${creatureName}, a ${helpers.promptValue(values.creatureMix)}
+Magic: ${helpers.promptValue(values.magic)}
+Place/background: ${helpers.promptValue(values.home)}
+Personality: ${helpers.promptValue(values.personality)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
+
+Make a gentle place / adventure journal page where ${creatureName} explores a friendly magical place. Include a large simple picture area, a readable title, and a few simple child-friendly prompts such as "I saw:", "I found:", and "My favorite part:".
+
+Keep it preschool / early-child friendly. Use a clean printable worksheet layout with bold outlines, large simple shapes, open drawing space, and no clutter. Avoid scary, violent, adult, or overly complex details.`;
       }
     }
   };

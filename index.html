@@ -25,6 +25,19 @@
         <button class="secondary-button" type="button" id="fillExampleButton">Fill Example</button>
       </div>
 
+      <div class="story-character-picker" aria-labelledby="story-characters-heading">
+        <div>
+          <p class="eyebrow">Use existing character</p>
+          <h3 id="story-characters-heading">Story Characters</h3>
+          <p class="parent-script">Pick a saved Rhea / Children Tales character, then choose an activity below.</p>
+        </div>
+        <div class="story-character-controls">
+          <select id="storyCharacterSelect" aria-label="Story character"></select>
+          <button class="secondary-button compact-button" type="button" id="useStoryCharacterButton">Use Character</button>
+        </div>
+        <div class="story-character-preview" id="storyCharacterPreview" aria-live="polite"></div>
+      </div>
+
       <form id="creatureForm">
         <div id="questionFields"></div>
         <div id="activityAgeRangeMount"></div>
@@ -169,6 +182,11 @@
               <strong>Finish the Pattern</strong>
               <small>A simple pattern page.</small>
             </button>
+            <button class="choice-card" type="button" data-output="journalPage">
+              <span aria-hidden="true">&#128220;</span>
+              <strong>Adventure Journal</strong>
+              <small>A simple place page.</small>
+            </button>
           </div>
         </div>
       </div>
@@ -189,6 +207,7 @@
   </main>
 
   <script src="content.js"></script>
+  <script src="storyCharacters.js"></script>
   <script src="promptTemplates.js"></script>
   <script src="promptBuilder.js"></script>
   <script src="storage.js"></script>

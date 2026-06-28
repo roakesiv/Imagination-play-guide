@@ -1,8 +1,8 @@
 # Architecture Spec
 
 Status: Current
-Last updated after: Prototype 4.4 Activity Age Range Selector
-Last updated: 2026-05-24
+Last updated after: Prototype 4.5 Local Production Pipeline
+Last updated: 2026-06-27
 
 This is the living architecture source of truth for Magic Creature Card Maker. Prototype folders preserve implementation history. This file captures the current app structure, module boundaries, data contract, prompt-output flow, and architecture constraints.
 
@@ -55,6 +55,9 @@ Do not add backend services, databases, accounts, auth, package managers, build 
 | `storage.js` | Browser localStorage helpers for current creature and saved creature list behavior |
 | `script.js` | UI rendering, DOM event handling, creature data gathering, summary/details rendering, copy/reset behavior, and selected output state |
 | `styles.css` | Visual styling, mobile-first layout, responsive behavior, and component states |
+| `tools/` | Local-only desktop helper scripts for activity-page production workflows outside the web app |
+
+`tools/` is not part of the browser runtime. P4.5 uses it for local activity-page workspace setup and folder-to-PDF conversion after images have already been generated and downloaded. Helper dependencies such as Pillow are desktop-helper dependencies only; they are not web-app package dependencies.
 
 ## 4. Script Loading Order
 
@@ -263,11 +266,16 @@ Multiple children may each want a creature, but P4.3 does not need accounts or c
 Reason:
 Export/import can move creature data between devices, but it adds another manual transfer step. P4.3 solved the immediate local continuity need, while the larger product direction is to automate post-creation production work rather than add more handoffs.
 
+### Decision: Keep Folder-To-PDF As A Local Helper
+
+Reason:
+P4.5 validated that a local desktop helper can turn downloaded activity-page images into one printable PDF quickly, without changing the static app. Keeping this outside the browser preserves the no-backend, no-build-step web app architecture while still solving the immediate printing bottleneck.
+
 ## 13. Open Architecture Questions
 
 - Is one `promptTemplates.js` file enough, or should templates later be split by category?
 - Should `promptBuilder.js` stay generic, or should output categories eventually have specific builders?
 - When does the app need a fuller data model for creature, character, activity, and story?
 - When does saved creature management need export/import, device transfer, or sync rather than browser-local storage?
-- What architecture would support tracking generated images or print-production status without overbuilding?
+- What architecture would support tracking generated images, local character profiles, or print-production status without overbuilding?
 - When, if ever, should the app move beyond plain HTML/CSS/JS?

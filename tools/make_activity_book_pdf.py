@@ -17,6 +17,7 @@ except ImportError:  # pragma: no cover - exercised manually when Pillow is abse
 SUPPORTED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 LETTER_SIZE_PIXELS = (2550, 3300)
 PDF_RESOLUTION_DPI = 300
+DEFAULT_MARGIN_INCHES = 0.25
 
 
 def parse_args() -> argparse.Namespace:
@@ -34,6 +35,12 @@ def parse_args() -> argparse.Namespace:
         choices=["name", "modified"],
         default="name",
         help="Sort images by filename or modified time. Default: name.",
+    )
+    parser.add_argument(
+        "--margin-inches",
+        type=float,
+        default=DEFAULT_MARGIN_INCHES,
+        help="White margin around each page in inches. Default: 0.25.",
     )
     return parser.parse_args()
 
@@ -56,11 +63,30 @@ def default_output_path(input_folder: Path) -> Path:
     return input_folder.parent / f"{safe_name}_activity_book.pdf"
 
 
-def fit_image_to_letter_page(image_path: Path) -> Image.Image:
+def printable_area_pixels(margin_inches: float) -> tuple[int, int]:
+    margin_pixels = round(margin_inches * PDF_RESOLUTION_DPI)
+    printable_width = LETTER_SIZE_PIXELS[0] - (margin_pixels * 2)
+    printable_height = LETTER_SIZE_PIXELS[1] - (margin_pixels * 2)
+
+    if margin_inches < 0:
+        raise ValueError("margin must be 0 or greater")
+    if printable_width <= 0 or printable_height <= 0:
+        raise ValueError("margin is too large for a US Letter page")
+
+    return printable_width, printable_height
+
+
+def fit_image_to_letter_page(image_path: Path, margin_inches: float) -> Image.Image:
     try:
         with Image.open(image_path) as image:
             image = ImageOps.exif_transpose(image)
-            image.thumbnail(LETTER_SIZE_PIXELS, Image.Resampling.LANCZOS)
+            max_width, max_height = printable_area_pixels(margin_inches)
+            scale = min(max_width / image.width, max_height / image.height)
+            output_size = (
+                max(1, round(image.width * scale)),
+                max(1, round(image.height * scale)),
+            )
+            image = image.resize(output_size, Image.Resampling.LANCZOS)
             page = Image.new("RGB", LETTER_SIZE_PIXELS, "white")
             image = image.convert("RGB")
             x = (LETTER_SIZE_PIXELS[0] - image.width) // 2
@@ -127,12 +153,14 @@ def main() -> int:
             raise ValueError(f"no images found in: {input_folder}")
 
         ensure_output_writable(output_pdf)
-        pages = [fit_image_to_letter_page(path) for path in files]
+        printable_area_pixels(args.margin_inches)
+        pages = [fit_image_to_letter_page(path, args.margin_inches) for path in files]
         save_pdf(pages, output_pdf)
 
         print("Activity book PDF created")
         print(f"Images included: {len(files)}")
         print(f"Sort mode: {args.sort}")
+        print(f"Margin: {args.margin_inches:g} inches")
         print(f"Output PDF: {output_pdf}")
         return 0
     except ValueError as error:

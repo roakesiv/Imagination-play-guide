@@ -1,4 +1,5 @@
 const appContent = window.creatureAppContent || {};
+const storyCharacterContent = window.storyCharacterContent || {};
 const promptBuilder = window.creaturePromptBuilder || {};
 const creatureStorage = window.creatureStorage || {};
 const parentTips = appContent.parentTips || {};
@@ -30,7 +31,13 @@ const creatureDataKeys = [
   'accessories',
   'extraDetail',
   'activityAgeRange',
-  'pictureStyle'
+  'pictureStyle',
+  'storyCharacterId',
+  'storyCharacterTitle',
+  'storyCharacterRole',
+  'storyCharacterSymbol',
+  'storyCharacterVisualLock',
+  'storyCharacterGlobalRule'
 ];
 const creatureContentDataKeys = creatureDataKeys.filter((key) => key !== 'activityAgeRange');
 
@@ -56,11 +63,13 @@ const confirmations = appContent.confirmations || {};
 const savedCreaturesContent = appContent.savedCreatures || {};
 const styleSuggestions = appContent.styleSuggestions || [];
 const bridgeContent = appContent.bridge || {};
+const storyCharacters = storyCharacterContent.characters || [];
 
 renderQuestionFields();
 renderActivityAgeRangeSelector();
 renderParentTips();
 renderBridgeContent();
+renderStoryCharacterPicker();
 
 const form = document.querySelector('#creatureForm');
 const saveStatus = document.querySelector('#saveStatus');
@@ -73,6 +82,9 @@ const fillExampleButton = document.querySelector('#fillExampleButton');
 const saveCreatureButton = document.querySelector('#saveCreatureButton');
 const savedCreaturesHeading = document.querySelector('#saved-creatures-heading');
 const savedCreatureList = document.querySelector('#savedCreatureList');
+const storyCharacterSelect = document.querySelector('#storyCharacterSelect');
+const useStoryCharacterButton = document.querySelector('#useStoryCharacterButton');
+const storyCharacterPreview = document.querySelector('#storyCharacterPreview');
 const copyStatus = document.querySelector('#copyStatus');
 const styleInput = document.querySelector('#pictureStyle');
 const artifactChoices = document.querySelector('#artifactChoices');
@@ -82,6 +94,7 @@ const artifactOutput = document.querySelector('#artifactOutput');
 const copyArtifactButton = document.querySelector('#copyArtifactButton');
 const artifactCopyStatus = document.querySelector('#artifactCopyStatus');
 let currentArtifactType = '';
+let activeStoryCharacterData = {};
 
 function renderParentTips() {
   const container = document.querySelector('#parentTipsMount');
@@ -148,6 +161,53 @@ function renderBridgeContent() {
   }
 }
 
+function renderStoryCharacterPicker() {
+  const select = document.querySelector('#storyCharacterSelect');
+  if (!select) {
+    return;
+  }
+
+  select.innerHTML = storyCharacters.map((character) => (
+    `<option value="${escapeHtml(character.id)}">${escapeHtml(character.name)} - ${escapeHtml(character.title)}</option>`
+  )).join('');
+
+  renderStoryCharacterPreview(select.value);
+}
+
+function getStoryCharacter(id) {
+  return storyCharacters.find((character) => character.id === id) || storyCharacters[0] || null;
+}
+
+function createStoryCharacterData(character) {
+  const creatureData = createEmptyCreatureData();
+  Object.assign(creatureData, character.data || {});
+  creatureData.storyCharacterId = character.id;
+  creatureData.storyCharacterTitle = character.title || '';
+  creatureData.storyCharacterRole = character.role || '';
+  creatureData.storyCharacterSymbol = character.symbol || '';
+  creatureData.storyCharacterVisualLock = (character.visualLock || []).join('; ');
+  creatureData.storyCharacterGlobalRule = storyCharacterContent.globalVisualRule || '';
+
+  return creatureData;
+}
+
+function renderStoryCharacterPreview(id) {
+  const preview = document.querySelector('#storyCharacterPreview');
+  if (!preview) {
+    return;
+  }
+
+  const character = getStoryCharacter(id);
+  if (!character) {
+    preview.innerHTML = '<p class="saved-empty">No story characters available.</p>';
+    return;
+  }
+
+  preview.innerHTML = `<p><strong>${escapeHtml(character.name)}</strong> - ${escapeHtml(character.role)}</p>
+    <p>${escapeHtml(character.creatureType)} with ${escapeHtml(character.magic)}.</p>
+    <p>${escapeHtml(character.personality)}</p>`;
+}
+
 function createEmptyCreatureData() {
   return creatureDataKeys.reduce((creatureData, key) => {
     creatureData[key] = key === 'activityAgeRange' ? defaultActivityAgeRange : '';
@@ -168,7 +228,24 @@ function getCreatureData() {
     creatureData[field.key] = document.querySelector(`#${field.id}`).value.trim();
   });
 
+  Object.assign(creatureData, activeStoryCharacterData);
+
   return creatureData;
+}
+
+function getStoryCharacterMetadata(creatureData) {
+  const metadata = {};
+  creatureDataKeys.forEach((key) => {
+    if (key.startsWith('storyCharacter') && typeof creatureData[key] === 'string') {
+      metadata[key] = creatureData[key];
+    }
+  });
+
+  return metadata.storyCharacterId ? metadata : {};
+}
+
+function setActiveStoryCharacterData(creatureData) {
+  activeStoryCharacterData = getStoryCharacterMetadata(creatureData);
 }
 
 function hasCreatureData(creatureData) {
@@ -201,12 +278,48 @@ function getSavedCreatureData(savedCreature) {
 }
 
 function setCreatureData(creatureData) {
+  setActiveStoryCharacterData(creatureData);
+
   fields.forEach((field) => {
     const input = document.querySelector(`#${field.id}`);
     if (input) {
       input.value = typeof creatureData[field.key] === 'string' ? creatureData[field.key] : createEmptyCreatureData()[field.key];
     }
   });
+}
+
+function clearGeneratedOutputs() {
+  promptOutput.value = '';
+  copyButton.disabled = true;
+  copyStatus.textContent = '';
+  artifactOutput.value = '';
+  artifactOutputPanel.hidden = true;
+  artifactCopyStatus.textContent = '';
+  currentArtifactType = '';
+  document.querySelectorAll('.choice-card').forEach((choice) => {
+    choice.classList.remove('is-selected');
+  });
+}
+
+function useSelectedStoryCharacter() {
+  const character = getStoryCharacter(storyCharacterSelect.value);
+  if (!character) {
+    setSaveStatus('Story character unavailable');
+    return;
+  }
+
+  if (!confirmIfCreatureHasData(confirmations.loadSavedCreature || 'Loading this saved creature will replace the creature on the page. Continue?')) {
+    setSaveStatus('Load canceled');
+    return;
+  }
+
+  const creatureData = createStoryCharacterData(character);
+  setCreatureData(creatureData);
+  renderDetails(creatureData);
+  summaryOutput.textContent = buildSummary(creatureData);
+  clearGeneratedOutputs();
+  saveCurrentCreature();
+  setSaveStatus(`${character.name} loaded`);
 }
 
 function setSaveStatus(message) {
@@ -323,16 +436,7 @@ function loadSavedCreature(id) {
   setCreatureData(creatureData);
   renderDetails(creatureData);
   summaryOutput.textContent = buildSummary(creatureData);
-  promptOutput.value = '';
-  copyButton.disabled = true;
-  copyStatus.textContent = '';
-  artifactOutput.value = '';
-  artifactOutputPanel.hidden = true;
-  artifactCopyStatus.textContent = '';
-  currentArtifactType = '';
-  document.querySelectorAll('.choice-card').forEach((choice) => {
-    choice.classList.remove('is-selected');
-  });
+  clearGeneratedOutputs();
   saveCurrentCreature();
   setSaveStatus(`${getSavedCreatureLabel(savedCreature)} loaded`);
 }
@@ -468,18 +572,10 @@ resetButton.addEventListener('click', (event) => {
   }
 
   window.setTimeout(() => {
-    promptOutput.value = '';
+    activeStoryCharacterData = {};
     summaryOutput.textContent = 'Make a creature to see the summary.';
     renderDetails(createEmptyCreatureData());
-    copyButton.disabled = true;
-    copyStatus.textContent = '';
-    artifactOutput.value = '';
-    artifactOutputPanel.hidden = true;
-    artifactCopyStatus.textContent = '';
-    currentArtifactType = '';
-    document.querySelectorAll('.choice-card').forEach((choice) => {
-      choice.classList.remove('is-selected');
-    });
+    clearGeneratedOutputs();
     if (typeof creatureStorage.clearCurrentCreature === 'function') {
       creatureStorage.clearCurrentCreature();
     }
@@ -496,6 +592,7 @@ fillExampleButton.addEventListener('click', () => {
   Object.entries(exampleValues).forEach(([id, value]) => {
     document.querySelector(`#${id}`).value = value;
   });
+  activeStoryCharacterData = {};
   copyStatus.textContent = '';
   saveCurrentCreature();
 });
@@ -503,6 +600,18 @@ fillExampleButton.addEventListener('click', () => {
 saveCreatureButton.addEventListener('click', () => {
   saveCreatureToList();
 });
+
+if (storyCharacterSelect) {
+  storyCharacterSelect.addEventListener('change', () => {
+    renderStoryCharacterPreview(storyCharacterSelect.value);
+  });
+}
+
+if (useStoryCharacterButton) {
+  useStoryCharacterButton.addEventListener('click', () => {
+    useSelectedStoryCharacter();
+  });
+}
 
 savedCreatureList.addEventListener('click', (event) => {
   const actionButton = event.target.closest('[data-action]');
