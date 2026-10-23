@@ -80,6 +80,7 @@ const copyButton = document.querySelector('#copyButton');
 const resetButton = document.querySelector('#resetButton');
 const fillExampleButton = document.querySelector('#fillExampleButton');
 const saveCreatureButton = document.querySelector('#saveCreatureButton');
+const exportSavedDataButton = document.querySelector('#exportSavedDataButton');
 const savedCreaturesHeading = document.querySelector('#saved-creatures-heading');
 const savedCreatureList = document.querySelector('#savedCreatureList');
 const storyCharacterSelect = document.querySelector('#storyCharacterSelect');
@@ -415,6 +416,25 @@ function saveCreatureToList() {
   setSaveStatus(`${getSavedCreatureLabel(savedCreature)} saved`);
 }
 
+function exportSavedData() {
+  const backup = creatureStorage.getExportData?.();
+  if (!backup) {
+    setSaveStatus('Export unavailable. Check that browser storage is enabled.');
+    return;
+  }
+
+  const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `magic-creatures-backup-${backup.exportedAt.slice(0, 10)}.json`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+  setSaveStatus(`Exported ${backup.savedCreatures.length} saved creature(s).`);
+}
+
 function loadSavedCreature(id) {
   if (typeof creatureStorage.loadSavedCreatures !== 'function') {
     return;
@@ -600,6 +620,8 @@ fillExampleButton.addEventListener('click', () => {
 saveCreatureButton.addEventListener('click', () => {
   saveCreatureToList();
 });
+
+exportSavedDataButton.addEventListener('click', exportSavedData);
 
 if (storyCharacterSelect) {
   storyCharacterSelect.addEventListener('change', () => {

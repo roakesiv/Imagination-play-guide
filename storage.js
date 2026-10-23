@@ -112,12 +112,40 @@
     return saveSavedCreatures(nextSavedCreatures);
   }
 
+  function getExportData() {
+    const storage = getLocalStorage();
+    if (!storage) {
+      return null;
+    }
+
+    try {
+      const savedValue = storage.getItem(SAVED_CREATURES_KEY);
+      const currentValue = storage.getItem(CURRENT_CREATURE_KEY);
+      const savedCreatures = savedValue ? JSON.parse(savedValue) : [];
+      const currentCreature = currentValue ? JSON.parse(currentValue) : null;
+      if (!Array.isArray(savedCreatures)) {
+        return null;
+      }
+
+      return {
+        format: 'magic-creature-backup',
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        savedCreatures,
+        currentCreature
+      };
+    } catch (error) {
+      return null;
+    }
+  }
+
   window.creatureStorage = {
     saveCurrentCreature,
     loadCurrentCreature,
     clearCurrentCreature,
     loadSavedCreatures,
     addSavedCreature,
-    deleteSavedCreature
+    deleteSavedCreature,
+    getExportData
   };
 }());
