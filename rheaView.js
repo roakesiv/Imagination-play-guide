@@ -1,6 +1,5 @@
 (() => {
   const books = window.RHEA_BOOKS;
-  const booksFirst = [...books.filter(book => book.characterId), ...books.filter(book => !book.characterId)];
   const portraitIds = new Set(['amor', 'twinkle', 'bluebell', 'popstar', 'sara', 'libre', 'archimedes', 'nebula', 'princess']);
 
   function element(tag, text, className) {
@@ -27,8 +26,8 @@
     const card = element('article', '', 'book-card');
     const details = element('div');
     const age = book.age && (/age/i.test(book.age) ? book.age : 'Ages ' + book.age);
-    const meta = [age, book.pages && (book.pages + (book.pages === 1 ? ' page' : ' pages'))];
-    details.append(element('h3', book.title), element('p', meta.filter(Boolean).join(' · '), 'book-meta'));
+    const meta = [age, book.pages && (book.pages + (book.pages === 1 ? ' page' : ' pages')), book.downloadSize];
+    details.append(element('h4', book.title), element('p', meta.filter(Boolean).join(' · '), 'book-meta'));
     if (book.description) details.append(element('p', book.description, 'book-description'));
     card.append(details, bookLinks(book));
     return card;
@@ -91,7 +90,8 @@
     return group;
   }
 
-  document.getElementById('book-list').append(...booksFirst.map(bookCard));
+  document.getElementById('volume-list').append(...books.filter(book => book.kind === 'volume').map(bookCard));
+  document.getElementById('book-list').append(...books.filter(book => book.kind !== 'volume').map(bookCard));
   const cast = document.getElementById('character-list');
   cast.append(characterGroup('The party and their little helper', window.storyCharacterContent.characters.map(heroProfile)));
   cast.append(characterGroup('River Valley villagers', window.RHEA_VILLAGERS));

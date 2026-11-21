@@ -1,6 +1,16 @@
 // Finished books that parents can download directly from the Rhea library.
 window.RHEA_BOOKS = [
   {
+    id: "rhea-volume-1", kind: "volume", title: "Volume 1 · The River Party", characterId: null,
+    file: "printables/rhea-volume-1.pdf", pages: 67, age: "Age 6", downloadSize: "41.4 MB",
+    description: "Activities with Amor, Twinkle, Popstar, Bluebell, Dash and River Snow, plus the River Friends binder sheets."
+  },
+  {
+    id: "rhea-volume-2", kind: "volume", title: "Volume 2 · River Valley Villagers", characterId: null,
+    file: "printables/rhea-volume-2.pdf", pages: 56, age: "Age 6", downloadSize: "32.0 MB",
+    description: "Visit Sara, Princess, Libre, Archimedes and Nebula in five complete activity books."
+  },
+  {
     id: "amor", title: "Amor", characterId: "amor",
     file: "printables/amor.pdf", pages: 10, age: "5–6"
   },

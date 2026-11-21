@@ -52,13 +52,17 @@ body:not([data-route="create"]) {
 #book-shelf > h2, #world-cast > h2 { margin-bottom: 5px; }
 #book-shelf > p { color: var(--muted); }
 .book-list, .character-grid, .parent-guide { display: grid; gap: 10px; }
+.shelf-section { margin-top: 24px; }
+.shelf-section > h3 { margin: 0 0 10px; color: #3a5d4d; }
 .book-card, .character-card, .parent-guide section {
   border: 1px solid #d8d9c9;
   border-radius: 12px;
   background: #fffefa;
 }
 .book-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 15px 18px; }
-.book-card h3 { margin: 0; font-size: 1.13rem; }
+.book-card h4 { margin: 0; font-size: 1.13rem; }
+#volume-list .book-card { flex-direction: column; align-items: flex-start; background: #f2f7ee; border-color: #b6cab7; }
+#volume-list h4 { font-family: Georgia, serif; font-size: 1.4rem; color: #193f3b; }
 .book-meta { margin: 2px 0 0; color: #4c5f56; font-size: .9rem; }
 .book-description { margin: 5px 0 0; max-width: 50ch; }
 .book-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
@@ -88,6 +92,7 @@ body:not([data-route="create"]) {
 .parent-guide .guide-link { margin-top: 5px; }
 
 @media (min-width: 660px) {
+  #volume-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .starting-paths { grid-template-columns: 1.45fr 1fr; }
   .start-guide { grid-column: 1 / -1; }
   .start-rhea { padding: 26px; }
