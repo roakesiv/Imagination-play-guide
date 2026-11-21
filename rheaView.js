@@ -1,6 +1,6 @@
 (() => {
   const books = window.RHEA_BOOKS;
-  const portraitIds = new Set(['amor', 'twinkle', 'bluebell', 'popstar', 'sara', 'libre', 'archimedes', 'nebula', 'princess', 'spot']);
+  const portraitIds = new Set(['amor', 'twinkle', 'bluebell', 'popstar', 'dash', 'river-snow', 'sara', 'libre', 'archimedes', 'nebula', 'princess', 'spot']);
 
   function element(tag, text, className) {
     const node = document.createElement(tag);

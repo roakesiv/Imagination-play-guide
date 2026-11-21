@@ -2,7 +2,7 @@
 window.RHEA_BOOKS = [
   {
     id: "rhea-volume-1", kind: "volume", title: "Volume 1 · The River Party", characterId: null,
-    file: "printables/rhea-volume-1.pdf", pages: 67, age: "Age 6", downloadSize: "41.4 MB",
+    file: "printables/rhea-volume-1.pdf", pages: 69, age: "Age 6", downloadSize: "45.0 MB",
     description: "Activities with Amor, Twinkle, Popstar, Bluebell, Dash and River Snow, plus the River Friends binder sheets."
   },
   {
@@ -12,7 +12,7 @@ window.RHEA_BOOKS = [
   },
   {
     id: "amor", title: "Amor", characterId: "amor",
-    file: "printables/amor.pdf", pages: 10, age: "5–6"
+    file: "printables/amor.pdf", pages: 11, age: "5–6"
   },
   {
     id: "twinkle", title: "Twinkle", characterId: "twinkle",
@@ -24,7 +24,7 @@ window.RHEA_BOOKS = [
   },
   {
     id: "bluebell", title: "Bluebell", characterId: "bluebell",
-    file: "printables/bluebell.pdf", pages: 10, age: "5–6"
+    file: "printables/bluebell.pdf", pages: 11, age: "5–6"
   },
   {
     id: "dash", title: "Dash", characterId: "dash",
