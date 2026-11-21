@@ -5,12 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Magic Creature Card Maker</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="rhea.css">
 </head>
 <body>
   <main class="app-shell">
+    <section data-view="home" aria-labelledby="home-heading">
+      <header class="world-heading">
+        <p class="eyebrow">Magic Creature Card Maker</p>
+        <h1 id="home-heading" tabindex="-1">Where will you play today?</h1>
+      </header>
+      <nav class="starting-paths" aria-label="Choose how to start">
+        <a class="start-rhea" href="#rhea">
+          <div>
+            <h2>Join the World of Rhea</h2>
+            <p>Meet the characters and print their activity books.</p>
+            <span class="path-action">Explore Rhea <span aria-hidden="true">→</span></span>
+          </div>
+          <img class="home-preview" src="printables/river-friends-preview.webp" alt="" width="200" height="255">
+        </a>
+        <a class="start-create" href="#create">
+          <h2>Build your own</h2>
+          <p>Dream up a creature with your child and save its card.</p>
+          <span class="path-action">Make a creature <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="start-guide" href="#tutorial"><strong>Parent tutorial</strong><span>A quick guide to your first visit <span aria-hidden="true">→</span></span></a>
+      </nav>
+    </section>
+
+    <nav id="home-nav" hidden aria-label="Main navigation"><a class="return-link" href="#home"><span aria-hidden="true">←</span> Back to home</a></nav>
+
+    <section data-view="world" hidden aria-labelledby="world-heading">
+      <header class="world-heading">
+        <h1 id="world-heading" tabindex="-1">The World of Rhea</h1>
+      </header>
+      <nav class="world-menu" aria-label="Explore Rhea">
+        <a href="#rhea">Printable books</a>
+        <a href="#characters">Meet the characters</a>
+      </nav>
+      <section id="book-shelf" aria-labelledby="books-heading">
+        <h2 id="books-heading" tabindex="-1">Printable activity books</h2>
+        <p>Open a book to print all or just a few pages, or download it for later.</p>
+        <div id="book-list" class="book-list"></div>
+      </section>
+      <section id="world-cast" hidden aria-labelledby="characters-heading">
+        <h2 id="characters-heading" tabindex="-1">Meet the characters</h2>
+        <div id="character-list"></div>
+      </section>
+    </section>
+
+    <section data-view="tutorial" hidden aria-labelledby="tutorial-heading">
+      <header class="world-heading"><h1 id="tutorial-heading" tabindex="-1">Parent tutorial</h1></header>
+      <div class="parent-guide">
+        <section>
+          <h2>Print something for today</h2>
+          <ol>
+            <li>Open the printable books and let your child choose one.</li>
+            <li>Select <strong>Open PDF</strong>. In the PDF viewer, choose <strong>Print</strong>. On a phone, look in the Share or menu options.</li>
+            <li>Pick the pages you want and your printer. You can also use <strong>Download</strong> to keep the whole book for later.</li>
+          </ol>
+          <a class="guide-link" href="#rhea">Browse printable books →</a>
+        </section>
+        <section>
+          <h2>Meet a character first</h2>
+          <p>Choose a character’s name to find out who they are. When they have a book, you can open it right from their profile.</p>
+          <a class="guide-link" href="#characters">Meet the characters →</a>
+        </section>
+        <section>
+          <h2>Make a creature together</h2>
+          <ol>
+            <li>Ask what animals make up your creature and what magic it can do. Type your child’s words into the maker.</li>
+            <li>Select <strong>Make Creature</strong> for a summary and an image prompt. If you want a picture, copy the prompt into your image creator.</li>
+            <li>Select <strong>Save Creature</strong> to keep the card in this browser. Use <strong>Export Saved Data</strong> for a backup.</li>
+          </ol>
+          <a class="guide-link" href="#create">Build your own →</a>
+        </section>
+      </div>
+    </section>
+
+    <div data-view="create" hidden>
     <header class="hero">
       <p class="eyebrow">Grown-up guided play</p>
-      <h1>Magic Creature Card Maker</h1>
+      <h1 id="maker-heading" tabindex="-1">Magic Creature Card Maker</h1>
       <p>
         Ask a few playful questions, keep the exact silly answers, then make
         a prompt to copy into ChatGPT or your favorite AI image creator.
@@ -205,6 +280,7 @@
     <div class="reset-action">
       <button class="secondary-button" type="reset" id="resetButton" form="creatureForm">Reset</button>
     </div>
+    </div>
   </main>
 
   <script src="content.js"></script>
@@ -213,5 +289,9 @@
   <script src="promptBuilder.js"></script>
   <script src="storage.js"></script>
   <script src="script.js"></script>
+  <script src="rheaVillagers.js"></script>
+  <script src="rheaBooks.js"></script>
+  <script src="rheaStoryNotes.js"></script>
+  <script src="rheaView.js"></script>
 </body>
 </html>

@@ -4,3 +4,4 @@ Imagination-play-images/
 
 # Generated printable outputs
 *.pdf
+!/printables/*.pdf
