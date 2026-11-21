@@ -71,13 +71,17 @@ window.RHEA_VILLAGERS = [
     }
   },
   {
-    // Spot's existing guide entry identifies only the creature, pattern and role.
+    // The author chose the design printed on Spot's coloring and name-tracing pages.
     id: "spot",
     name: "Spot",
     role: "Doctor",
     details: {
-      Creature: "Leopard",
-      Pattern: "Tie-dye"
+      Creature: "Jaguar + Leaves",
+      Magic: "Element Magic",
+      Personality: "Kind and helpful",
+      Place: "Doctor’s office",
+      Appearance: "Leaves frame Spot’s face and line the tail.",
+      Accessories: "Doctor’s coat and stethoscope"
     }
   },
   {
