@@ -4,9 +4,6 @@
 
   function getLocalStorage() {
     try {
-      const testKey = 'magicCreature.storageTest';
-      window.localStorage.setItem(testKey, '1');
-      window.localStorage.removeItem(testKey);
       return window.localStorage;
     } catch (error) {
       return null;
