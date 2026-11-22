@@ -73,13 +73,14 @@ window.RHEA_VILLAGERS = [
     }
   },
   {
-    // The author chose the design printed on Spot's coloring and name-tracing pages.
+    // Spot's color profile card and age-six worksheets share this design.
     id: "spot",
     name: "Spot",
     role: "Doctor",
     details: {
       Creature: "Jaguar + Leaves",
       Magic: "Element Magic",
+      Colors: "Tie dye",
       Personality: "Kind and helpful",
       Place: "Doctor’s office",
       Appearance: "Leaves frame Spot’s face and line the tail.",
