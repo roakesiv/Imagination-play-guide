@@ -97,7 +97,8 @@
   cast.append(characterGroup('River Valley villagers', window.RHEA_VILLAGERS));
   const more = element('details', '', 'story-notes');
   const notes = element('div', '', 'character-grid');
-  notes.append(...window.RHEA_STORY_NOTES.map(profile));
+  const listedStories = window.RHEA_STORY_NOTES.filter(character => character.showInGallery !== false);
+  notes.append(...listedStories.map(profile));
   more.append(element('summary', 'More from the stories'), notes);
   cast.append(more);
 

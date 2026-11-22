@@ -18,12 +18,14 @@ window.RHEA_STORY_NOTES = [
   },
   {
     id: 'kitsune-guardian-1',
+    showInGallery: false,
     name: 'Kitsune Guardian 1',
     role: 'Meadow guardian',
     details: { Colors: 'White and blue.', Magic: 'Illusions, water and flowers.' }
   },
   {
     id: 'kitsune-guardian-2',
+    showInGallery: false,
     name: 'Kitsune Guardian 2',
     role: 'Story Orchards storyteller and baker',
     details: {
@@ -35,6 +37,7 @@ window.RHEA_STORY_NOTES = [
   },
   {
     id: 'chomp',
+    showInGallery: false,
     name: 'Chomp',
     role: 'Baby dino-dragon',
     details: { Story: 'Appears in the Orange Crystal story outline.' }
