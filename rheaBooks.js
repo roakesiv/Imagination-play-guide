@@ -65,6 +65,11 @@ window.RHEA_BOOKS = [
     description: "Color Rene the penguin scientist, find your way through his lab maze and finish his patterns."
   },
   {
+    id: "locke", title: "Locke’s Cloud Lab", characterId: "locke",
+    file: "printables/locke.pdf", pages: 10, age: "Age 6",
+    description: "Color Locke, cross the cloud maze and share her Moon and Sun Cookies."
+  },
+  {
     id: "river-friends", title: "River Friends binder pages", characterId: null,
     file: "printables/river-friends.pdf", pages: 3, age: "5–6",
     description: "Add a Volume 1 cover, a binder spine, and a Creature Keeper Notes sheet to your printed collection."

@@ -6,10 +6,14 @@ window.RHEA_STORY_NOTES = [
     name: 'Locke',
     role: 'Dragon alchemist',
     details: {
-      Appearance: 'Sky-blue scales with white streaks, a sun on one leg and a moon on the other.',
-      Workshop: 'A glow-in-the-dark laboratory.',
+      Creature: 'Dragon',
+      Appearance: 'Sky-blue scales with white streaks. Her moon leg glows in the dark, and her sun leg gives off bright sparkles.',
+      Workshop: 'Locke’s Cloud Lab, high in the clouds.',
+      Personality: 'Sneaky and mischievous. She wants to build the best playroom ever.',
       Accessories: 'A potion belt.',
-      Magic: 'Alchemy and rainbow slime.'
+      Magic: 'Alchemy, potions and sticky rainbow slime.',
+      Invention: 'The Moon and Sun Cookie.',
+      Story: 'Locke takes toys and treats for her playroom. She learns to ask if she can share them.'
     }
   },
   {
