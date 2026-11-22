@@ -22,6 +22,7 @@
     age.value = ageOptions.defaultValue;
 
     function clearPrompt() {
+      idea.setCustomValidity('');
       result.hidden = true;
       output.value = '';
       status.textContent = '';
@@ -32,7 +33,6 @@
       const existingArt = Boolean(item && item.id);
       const layout = form.elements['poster-layout'].value;
       ideaField.hidden = subject.value !== 'new';
-      idea.required = !ideaField.hidden;
       ready.hidden = !existingArt;
       preview.hidden = !existingArt;
       preview.replaceChildren();
@@ -95,10 +95,11 @@
           name, details: savedDescription(data), age: data.activityAgeRange
         });
       }
-      addSource(family, 'new', 'My own idea', {});
-      subject.replaceChildren(cast, family);
+      sources.set('new', {});
+      subject.replaceChildren(new Option('My child or my own idea', 'new'), cast);
+      if (family.childElementCount) subject.append(family);
       if (preferDraft) subject.value = sources.has('current') ? 'current' : 'new';
-      else if (sources.has(previous)) subject.value = previous;
+      else subject.value = sources.has(previous) ? previous : (characters[0]?.id || 'new');
       if (preferDraft && ageOptions.options.includes(current.activityAgeRange)) age.value = current.activityAgeRange;
       clearPrompt();
       refreshLayout();
@@ -119,27 +120,59 @@
       const item = sources.get(subject.value);
       if (!item) return;
       const ownIdea = subject.value === 'new';
-      if (ownIdea && !idea.value.trim()) { idea.focus(); return; }
-      const layout = form.elements['poster-layout'].value;
+      const answer = key => document.getElementById('poster-' + key).value.trim();
+      const withPhoto = answer('photo') === 'yes';
+      const theme = answer('theme');
+      const colors = answer('colors');
+      const setting = answer('setting');
+      const creatures = answer('creatures');
+      const extra = answer('extra');
+      const direction = answer('direction');
+      const words = answer('words');
+      const subjectText = ownIdea ? idea.value.trim() : (item.name || 'My creature');
+      if (ownIdea && !withPhoto && ![subjectText, theme, colors, setting, creatures, extra, direction, words].some(Boolean)) {
+        idea.setCustomValidity('Describe your idea, answer a picture question, or choose a reference picture.');
+        idea.reportValidity();
+        return;
+      }
+      const versions = document.getElementById('poster-versions').valueAsNumber;
+      const party = form.elements['poster-layout'].value === 'party';
       const ink = form.elements['poster-ink'].value;
-      const theme = document.getElementById('poster-theme').value.trim();
-      const words = document.getElementById('poster-words').value.trim();
+      const format = party ? 'party sheet' : 'wall poster';
+      const outputRequest = versions === 1
+        ? 'Generate one finished ' + format + ' image.'
+        : 'Generate ' + versions + ' separate finished ' + format + ' images. Deliver each version as its own printable image.';
+      const photoInstruction = ownIdea
+        ? 'Use my attached reference photo for the subject. Keep the person or subject recognizable.'
+        : 'Include the subject of my attached reference photo alongside ' + subjectText + '. Keep the subject of the photo recognizable.';
       const lines = [
-        layout === 'party'
-          ? 'Design one US Letter party sheet with four identical cut-apart pictures in a 2 by 2 grid. Leave cutting space and equal margins.'
-          : 'Design a single full-page US Letter wall poster with comfortable printable margins.',
+        outputRequest,
+        party
+          ? 'On each US Letter sheet repeat the same design four times in a 2 by 2 grid. Leave cutting space and equal margins.'
+          : 'Use one full-page composition per US Letter poster with comfortable printable margins.',
         'Audience: ' + age.value + '. Use a friendly, age-appropriate composition.',
         'Art treatment: ' + ink + '. Keep the subject fully inside the printable area.',
-        'Subject: ' + (ownIdea ? idea.value.trim() : item.name || 'My creature') + '.',
+        subjectText ? 'Subject: ' + subjectText : '',
         item.details,
         item.id ? 'Use the attached Rhea illustration as the appearance reference. Preserve the established silhouette, markings and accessories.' : '',
-        theme ? 'Theme or extra detail: ' + theme : '',
+        withPhoto ? photoInstruction : '',
+        theme ? 'Occasion or theme: ' + theme : '',
+        colors ? (ink === 'full color' ? 'Favorite colors: ' : 'Translate this palette into black-and-white line work and patterns: ') + colors : '',
+        setting ? 'Setting: ' + setting : '',
+        creatures ? 'Include these animals or creatures: ' + creatures : '',
+        extra ? 'Additional requests: ' + extra : '',
+        versions > 1 ? 'Keep all requested details in every version. Vary the composition or moment from one version to the next.' : '',
+        direction ? 'Art direction: ' + direction : '',
         words ? 'Include this exact lettering: ' + words : 'Picture only. Leave out lettering.'
       ];
       const reference = document.getElementById('poster-reference');
       reference.hidden = !item.id;
       if (item.id) reference.href = 'portraits/' + item.id + '.webp';
       else reference.removeAttribute('href');
+      const nextSteps = ['Copy the prompt into your image creator.'];
+      if (withPhoto) nextSteps.push('Attach your reference picture there.');
+      if (item.id) nextSteps.push('Download and attach the Rhea illustration for the character.');
+      document.getElementById('poster-next-step').textContent = nextSteps.join(' ');
       output.value = lines.filter(Boolean).join('\n\n');
       result.hidden = false;
       status.textContent = '';

@@ -111,7 +111,7 @@ body:not([data-route="create"]) {
 .poster-settings, .poster-custom-fields { display: grid; align-content: start; gap: 10px; min-width: 0; }
 .poster-settings > label, .poster-custom-fields > label, #poster-idea-field label, #poster-result label, .poster-options legend { display: block; font-weight: 750; color: #254b40; }
 .poster-form label span { font-weight: 400; }
-.poster-form input[type=text], .poster-form select { min-height: 44px; width: 100%; }
+.poster-form input[type=text], .poster-form input[type=number], .poster-form select { min-height: 44px; width: 100%; }
 .poster-form select { padding-right: 12px; }
 .poster-options { display: flex; flex-wrap: wrap; gap: 8px; margin: 5px 0; padding: 0; border: 0; min-width: 0; }
 .poster-options legend { padding: 0 0 6px; }

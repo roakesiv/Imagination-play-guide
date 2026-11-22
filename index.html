@@ -73,8 +73,8 @@
           <label for="poster-subject">Who’s in the picture?</label>
           <select id="poster-subject"></select>
           <div id="poster-idea-field" hidden>
-            <label for="poster-idea">Describe your character</label>
-            <input id="poster-idea" type="text" placeholder="A sleepy moon dragon">
+            <label for="poster-idea">Who or what should star? <span>(optional)</span></label>
+            <input id="poster-idea" type="text" placeholder="For example, a sleepy moon dragon">
           </div>
           <fieldset class="poster-options">
             <legend>What are you printing?</legend>
@@ -90,6 +90,23 @@
         <details class="poster-custom" id="poster-custom">
           <summary>Make a custom picture prompt</summary>
           <div class="poster-custom-fields">
+            <p class="poster-note">Answer whichever questions spark an idea.</p>
+            <label for="poster-theme">1. Is there a special event or theme?</label>
+            <input type="text" id="poster-theme" placeholder="A birthday, a season, or just for fun">
+            <label for="poster-colors">2. What colors do they like?</label>
+            <input type="text" id="poster-colors">
+            <label for="poster-setting">3. Where does the picture take place?</label>
+            <input type="text" id="poster-setting">
+            <label for="poster-creatures">4. Any animals or creatures to include?</label>
+            <input type="text" id="poster-creatures">
+            <label for="poster-photo">5. Will you add a picture to build from?</label>
+            <select id="poster-photo" aria-describedby="poster-photo-help">
+              <option value="no">No, use my description</option>
+              <option value="yes">Yes, I’ll attach a reference picture</option>
+            </select>
+            <p class="poster-note" id="poster-photo-help">Attach your picture in your image creator when you paste the prompt.</p>
+            <label for="poster-extra">6. Anything else to include or leave out?</label>
+            <input type="text" id="poster-extra" placeholder="An outfit, a tiny detail, or something to skip">
             <label for="poster-age">Child’s age or stage</label>
             <select id="poster-age"></select>
             <fieldset class="poster-options">
@@ -97,15 +114,17 @@
               <label><input type="radio" name="poster-ink" value="full color" checked> Full color</label>
               <label><input type="radio" name="poster-ink" value="black-and-white line art"> Black-and-white line art</label>
             </fieldset>
-            <label for="poster-theme">Party theme or extra detail <span>(optional)</span></label>
-            <input type="text" id="poster-theme" placeholder="Stars, balloons, a favorite color…">
             <label for="poster-words">Words to print <span>(optional)</span></label>
             <input type="text" id="poster-words" placeholder="Happy birthday!">
+            <label for="poster-versions">How many versions would you like?</label>
+            <input id="poster-versions" type="number" inputmode="numeric" min="1" step="1" value="1" required>
+            <label for="poster-direction">How should the versions feel or vary? <span>(optional)</span></label>
+            <input type="text" id="poster-direction" placeholder="Give each one a different magical moment">
             <button type="submit" class="poster-print">Make picture prompt</button>
             <div id="poster-result" hidden>
               <label for="poster-prompt">Your picture prompt</label>
-              <p class="poster-note">Copy this into your image creator. For a Rhea character, attach the gallery illustration as a reference.</p>
-              <a class="guide-link" id="poster-reference" download hidden>Download reference picture</a>
+              <p class="poster-note" id="poster-next-step"></p>
+              <a class="guide-link" id="poster-reference" download hidden>Download Rhea reference picture</a>
               <textarea id="poster-prompt" readonly></textarea>
               <button type="button" class="secondary-button" id="poster-copy">Copy prompt</button>
               <span role="status" id="poster-copy-status"></span>
