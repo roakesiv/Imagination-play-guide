@@ -1,3 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 printables/*.pdf binary
+printables/party/*.pdf binary

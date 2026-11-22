@@ -28,6 +28,7 @@
           <p>Dream up a creature with your child and save its card.</p>
           <span class="path-action">Make a creature <span aria-hidden="true">→</span></span>
         </a>
+        <a class="start-guide" href="#posters"><strong>Posters &amp; party pictures</strong><span>Print a character or make a custom design <span aria-hidden="true">→</span></span></a>
         <a class="start-guide" href="#tutorial"><strong>Parent tutorial</strong><span>A quick guide to your first visit <span aria-hidden="true">→</span></span></a>
       </nav>
     </section>
@@ -56,8 +57,63 @@
       </section>
       <section id="world-cast" hidden aria-labelledby="characters-heading">
         <h2 id="characters-heading" tabindex="-1">Meet the characters</h2>
+        <p>Open a character to print a full-page poster or four cut-apart pictures. Choose Print in the PDF viewer, or Share → Print on a phone.</p>
+        <a href="#posters" class="guide-link">Make a custom poster or party sheet</a>
         <div id="character-list"></div>
       </section>
+    </section>
+
+    <section data-view="posters" hidden aria-labelledby="posters-heading">
+      <header class="world-heading">
+        <h1 id="posters-heading" tabindex="-1">Posters &amp; party pictures</h1>
+        <p>Print a Rhea illustration today, or make a prompt for a custom picture.</p>
+      </header>
+      <form id="poster-form" class="poster-form">
+        <div class="poster-settings">
+          <label for="poster-subject">Who’s in the picture?</label>
+          <select id="poster-subject"></select>
+          <div id="poster-idea-field" hidden>
+            <label for="poster-idea">Describe your character</label>
+            <input id="poster-idea" type="text" placeholder="A sleepy moon dragon">
+          </div>
+          <fieldset class="poster-options">
+            <legend>What are you printing?</legend>
+            <label><input type="radio" name="poster-layout" value="poster" checked> One wall poster</label>
+            <label><input type="radio" name="poster-layout" value="party"> Four party pictures</label>
+          </fieldset>
+          <div id="poster-ready">
+            <a class="poster-print" id="poster-pdf">Open printable PDF</a>
+            <p class="poster-note">US Letter · 1 page. Choose Print in the PDF viewer, or Share → Print on a phone.</p>
+          </div>
+        </div>
+        <div id="poster-preview" class="poster-preview" aria-hidden="true"></div>
+        <details class="poster-custom" id="poster-custom">
+          <summary>Make a custom picture prompt</summary>
+          <div class="poster-custom-fields">
+            <label for="poster-age">Child’s age or stage</label>
+            <select id="poster-age"></select>
+            <fieldset class="poster-options">
+              <legend>Picture style</legend>
+              <label><input type="radio" name="poster-ink" value="full color" checked> Full color</label>
+              <label><input type="radio" name="poster-ink" value="black-and-white line art"> Black-and-white line art</label>
+            </fieldset>
+            <label for="poster-theme">Party theme or extra detail <span>(optional)</span></label>
+            <input type="text" id="poster-theme" placeholder="Stars, balloons, a favorite color…">
+            <label for="poster-words">Words to print <span>(optional)</span></label>
+            <input type="text" id="poster-words" placeholder="Happy birthday!">
+            <button type="submit" class="poster-print">Make picture prompt</button>
+            <div id="poster-result" hidden>
+              <label for="poster-prompt">Your picture prompt</label>
+              <p class="poster-note">Copy this into your image creator. For a Rhea character, attach the gallery illustration as a reference.</p>
+              <a class="guide-link" id="poster-reference" download hidden>Download reference picture</a>
+              <textarea id="poster-prompt" readonly></textarea>
+              <button type="button" class="secondary-button" id="poster-copy">Copy prompt</button>
+              <span role="status" id="poster-copy-status"></span>
+            </div>
+          </div>
+        </details>
+      </form>
+      <a class="guide-link" href="#characters">Browse the character gallery</a>
     </section>
 
     <section data-view="tutorial" hidden aria-labelledby="tutorial-heading">
@@ -184,6 +240,7 @@
         </div>
       </div>
 
+      <a class="guide-link" id="poster-from-draft" href="#posters">Make a poster or party sheet with this creature</a>
       <div class="bridge-choice-sections" id="artifactChoices" aria-label="Creative output choices">
         <div class="choice-section">
           <p class="choice-section-label">Make the whole activity book:</p>
@@ -289,6 +346,7 @@
   <script src="rheaVillagers.js"></script>
   <script src="rheaBooks.js"></script>
   <script src="rheaStoryNotes.js"></script>
+  <script src="rheaPartyPrint.js"></script>
   <script src="rheaView.js"></script>
 </body>
 </html>

@@ -58,7 +58,17 @@
       if (value) fields.append(element('dt', label), element('dd', value));
     }
     card.append(summary);
-    if (illustration) card.append(illustration);
+    if (illustration) {
+      const actions = element('div', '', 'character-print-actions');
+      const poster = element('a', 'Print this character', 'poster-print');
+      poster.href = window.rheaPartyPrint.printFile(character.id, 'poster');
+      poster.setAttribute('aria-label', 'Print this character: ' + character.name + ' poster');
+      const party = element('a', 'Four party pictures', 'party-secondary');
+      party.href = window.rheaPartyPrint.printFile(character.id, 'party');
+      party.setAttribute('aria-label', 'Print four party pictures of ' + character.name);
+      actions.append(poster, party, illustration);
+      card.append(actions);
+    }
     card.append(fields);
     for (const book of books.filter(item => item.characterId === character.id)) {
       const related = element('div', '', 'related-book');
@@ -93,7 +103,8 @@
   document.getElementById('volume-list').append(...books.filter(book => book.kind === 'volume').map(bookCard));
   document.getElementById('book-list').append(...books.filter(book => book.kind !== 'volume').map(bookCard));
   const cast = document.getElementById('character-list');
-  cast.append(characterGroup('The party and their little helper', window.storyCharacterContent.characters.map(heroProfile)));
+  const party = window.storyCharacterContent.characters.map(heroProfile);
+  cast.append(characterGroup('The party and their little helper', party));
   cast.append(characterGroup('River Valley villagers', window.RHEA_VILLAGERS));
   const more = element('details', '', 'story-notes');
   const notes = element('div', '', 'character-grid');
@@ -102,11 +113,20 @@
   more.append(element('summary', 'More from the stories'), notes);
   cast.append(more);
 
+  const printableCharacters = [...party, ...window.RHEA_VILLAGERS, ...listedStories]
+    .filter(character => portraitIds.has(character.id));
+  const openPosterMaker = window.rheaPartyPrint.setup(printableCharacters);
+  let useDraftForPoster = false;
+  document.getElementById('poster-from-draft').addEventListener('click', () => {
+    useDraftForPoster = true;
+  });
+
   const screens = {
     home: ['home', 'home-heading'],
     rhea: ['world', 'books-heading'],
     characters: ['world', 'characters-heading'],
     tutorial: ['tutorial', 'tutorial-heading'],
+    posters: ['posters', 'posters-heading'],
     create: ['create', 'maker-heading']
   };
 
@@ -124,6 +144,10 @@
     for (const link of document.querySelectorAll('.world-menu a')) {
       if (link.hash === '#' + route) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
+    }
+    if (route === 'posters') {
+      openPosterMaker(useDraftForPoster);
+      useDraftForPoster = false;
     }
     const heading = document.getElementById(headingId);
     document.title = route === 'home' || route === 'create' ? 'Magic Creature Card Maker' : heading.textContent + ' | Magic Creature Card Maker';
