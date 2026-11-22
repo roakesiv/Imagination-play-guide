@@ -7,8 +7,8 @@ window.RHEA_BOOKS = [
   },
   {
     id: "rhea-volume-2", kind: "volume", title: "Volume 2 · River Valley Villagers", characterId: null,
-    file: "printables/rhea-volume-2.pdf", pages: 66, age: "Age 6", downloadSize: "39.2 MB",
-    description: "Visit Sara, Princess, Libre, Archimedes, Nebula and Spot in six complete activity books."
+    file: "printables/rhea-volume-2.pdf", pages: 76, age: "Age 6", downloadSize: "40.8 MB",
+    description: "Visit Sara, Princess, Libre, Archimedes, Nebula, Spot and Rene in seven complete activity books."
   },
   {
     id: "amor", title: "Amor", characterId: "amor",
@@ -58,6 +58,11 @@ window.RHEA_BOOKS = [
     id: "spot", title: "Spot", characterId: "spot",
     file: "printables/spot.pdf", pages: 10, age: "Age 6",
     description: "Find the clinic supplies, guide Spot to a patient and trace the leafy jaguar’s name."
+  },
+  {
+    id: "rene", title: "Rene", characterId: "rene",
+    file: "printables/rene.pdf", pages: 10, age: "Age 6",
+    description: "Color Rene the penguin scientist, find your way through his lab maze and finish his patterns."
   },
   {
     id: "river-friends", title: "River Friends binder pages", characterId: null,

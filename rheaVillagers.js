@@ -66,8 +66,10 @@ window.RHEA_VILLAGERS = [
       Magic: "Cosmic",
       Colors: "Brown, yellow, green, orange and white",
       Place: "Science laboratory",
-      Personality: "Happy reader and scientist",
-      Accessories: "Beakers and notebook"
+        Personality: "Happy reader",
+        Accessories: "Science beakers and notebook",
+        "Extra detail": "Scientist",
+        "Picture style": "Bright fantasy"
     }
   },
   {
