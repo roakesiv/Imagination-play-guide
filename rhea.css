@@ -118,6 +118,9 @@ body:not([data-route="create"]) {
 .directory-list li:first-child a { background: #f0f6ed; border-inline-start: 4px solid #44705b; padding-inline-start: 11px; }
 .directory-list strong { display: block; color: #205449; text-decoration: underline; text-underline-offset: 3px; }
 .directory-list span { display: block; margin-top: 3px; font-size: .95rem; line-height: 1.4; }
+.directory-with-collection { display: flex; flex-direction: column; }
+.directory-with-collection a:first-child { flex: 1; height: auto; border-radius: 9px 9px 0 0; }
+.directory-with-collection a.directory-collection-link { height: auto; padding-block: 12px; border-top: 0; border-radius: 0 0 9px 9px; font-size: .9rem; text-decoration: underline; text-underline-offset: 3px; }
 .directory-list a::after { content: ""; position: absolute; right: 14px; top: 17px; width: 6px; height: 6px; border: solid #477264; border-width: 2px 2px 0 0; transform: rotate(45deg); }
 .directory-list a:hover, .directory-jumps a:hover { border-color: #356551; }
 .activity-directory a:focus-visible { outline: 3px solid #205449; outline-offset: 2px; }
