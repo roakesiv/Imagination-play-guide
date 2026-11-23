@@ -13,6 +13,8 @@
     const pdf = document.getElementById('poster-pdf');
     const preview = document.getElementById('poster-preview');
     const custom = document.getElementById('poster-custom');
+    const customTitle = custom.querySelector('summary');
+    const useOwnIdea = document.getElementById('poster-use-own');
     const result = document.getElementById('poster-result');
     const output = document.getElementById('poster-prompt');
     const status = document.getElementById('poster-copy-status');
@@ -32,7 +34,10 @@
       const item = sources.get(subject.value);
       const existingArt = Boolean(item && item.id);
       const layout = form.elements['poster-layout'].value;
-      ideaField.hidden = subject.value !== 'new';
+      const personal = subject.value === 'new';
+      ideaField.hidden = !personal;
+      customTitle.textContent = personal ? 'Make a custom picture prompt' : 'Make a custom picture with ' + (item.name || 'your creature');
+      if (useOwnIdea) useOwnIdea.hidden = personal;
       ready.hidden = !existingArt;
       preview.hidden = !existingArt;
       preview.replaceChildren();
@@ -70,7 +75,6 @@
     }
 
     function open(preferDraft) {
-      const previous = subject.value;
       const cast = document.createElement('optgroup');
       cast.label = 'The world of Rhea';
       const family = document.createElement('optgroup');
@@ -98,13 +102,17 @@
       sources.set('new', {});
       subject.replaceChildren(new Option('My child or my own idea', 'new'), cast);
       if (family.childElementCount) subject.append(family);
-      if (preferDraft) subject.value = sources.has('current') ? 'current' : 'new';
-      else subject.value = sources.has(previous) ? previous : (characters[0]?.id || 'new');
+      subject.value = preferDraft && sources.has('current') ? 'current' : 'new';
       if (preferDraft && ageOptions.options.includes(current.activityAgeRange)) age.value = current.activityAgeRange;
       clearPrompt();
       refreshLayout();
     }
 
+    useOwnIdea?.addEventListener('click', () => {
+      subject.value = 'new';
+      subject.dispatchEvent(new Event('change', { bubbles: true }));
+      idea.focus();
+    });
     subject.addEventListener('change', () => {
       const selected = sources.get(subject.value);
       if (selected && ageOptions.options.includes(selected.age)) age.value = selected.age;
