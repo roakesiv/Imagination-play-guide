@@ -123,6 +123,7 @@
 
   const screens = {
     home: ['home', 'home-heading'],
+    easy: ['easy', 'easy-heading'],
     rhea: ['world', 'books-heading'],
     characters: ['world', 'characters-heading'],
     tutorial: ['tutorial', 'tutorial-heading'],

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Magic Creature Card Maker</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="rhea.css">
+  <link rel="stylesheet" href="rhea.css?v=easy-mode">
 </head>
 <body>
   <main class="app-shell">
@@ -15,6 +15,10 @@
         <h1 id="home-heading" tabindex="-1">Where will you play today?</h1>
       </header>
       <nav class="starting-paths" aria-label="Choose how to start">
+        <a class="start-easy" href="#easy">
+          <div><h2>Easy mode – make for me</h2><p>Pick what to make. We’ll dream up the details.</p></div>
+          <span aria-hidden="true">→</span>
+        </a>
         <a class="start-rhea" href="#rhea">
           <div>
             <h2>Join the World of Rhea</h2>
@@ -34,6 +38,36 @@
     </section>
 
     <nav id="home-nav" hidden aria-label="Main navigation"><a class="return-link" href="#home"><span aria-hidden="true">←</span> Back to home</a></nav>
+
+    <section data-view="easy" hidden aria-labelledby="easy-heading">
+      <header class="world-heading"><h1 id="easy-heading" tabindex="-1">Easy mode</h1></header>
+      <div class="easy-panel">
+        <label for="easy-type">What would you like to make?</label>
+        <select id="easy-type">
+          <option value="poster">Wall poster</option>
+          <option value="party">Party pictures · four to a sheet</option>
+          <option value="creature">Magic creature card</option>
+          <option value="coloring">Coloring page</option>
+          <option value="activity">Surprise activity page</option>
+          <option value="packet">10-page activity pack</option>
+        </select>
+        <button class="poster-print" type="button" id="easy-generate">Generate random</button>
+        <span id="easy-announcement" class="easy-sr-only" role="status"></span>
+        <section id="easy-result" hidden aria-labelledby="easy-title">
+          <h2 id="easy-title"></h2>
+          <p id="easy-summary"></p>
+          <p id="easy-hint"></p>
+          <button class="poster-print" type="button" id="easy-copy">Copy prompt</button>
+          <span role="status" id="easy-status"></span>
+          <details id="easy-edit">
+            <summary>Change the details</summary>
+            <div id="easy-fields"></div>
+          </details>
+          <label for="easy-prompt">Your prompt</label>
+          <textarea id="easy-prompt" readonly></textarea>
+        </section>
+      </div>
+    </section>
 
     <section data-view="world" hidden aria-labelledby="world-heading">
       <header class="world-heading">
@@ -366,7 +400,9 @@
   <script src="rheaVillagers.js"></script>
   <script src="rheaBooks.js"></script>
   <script src="rheaStoryNotes.js"></script>
-  <script src="rheaPartyPrint.js?v=personal-default"></script>
-  <script src="rheaView.js"></script>
+  <script src="rheaPartyPrint.js?v=easy-mode"></script>
+  <script src="rheaView.js?v=easy-mode"></script>
+  <script src="easyIdeas.js"></script>
+  <script src="easyMode.js"></script>
 </body>
 </html>

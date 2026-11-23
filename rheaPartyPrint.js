@@ -3,6 +3,40 @@
     return 'printables/party/' + id + '-' + layout + '.pdf';
   }
 
+  function buildPrompt({
+    subjectText, age, party, ink, versions, ownIdea, withPhoto, item,
+    theme, colors, setting, creatures, extra, direction, words
+  }) {
+    const format = party ? 'party sheet' : 'wall poster';
+    const outputRequest = versions === 1
+      ? 'Generate one finished ' + format + ' image.'
+      : 'Generate ' + versions + ' separate finished ' + format + ' images. Deliver each version as its own printable image.';
+    const photoInstruction = ownIdea
+      ? 'Use my attached reference photo for the subject. Keep the person or subject recognizable.'
+      : 'Include the subject of my attached reference photo alongside ' + subjectText + '. Keep the subject of the photo recognizable.';
+    const lines = [
+      outputRequest,
+      party
+        ? 'On each US Letter sheet repeat the same design four times in a 2 by 2 grid. Leave cutting space and equal margins.'
+        : 'Use one full-page composition per US Letter poster with comfortable printable margins.',
+      'Audience: ' + age + '. Use a friendly, age-appropriate composition.',
+      'Art treatment: ' + ink + '. Keep the subject fully inside the printable area.',
+      subjectText ? 'Subject: ' + subjectText : '',
+      item.details,
+      item.id ? 'Use the attached Rhea illustration as the appearance reference. Preserve the established silhouette, markings and accessories.' : '',
+      withPhoto ? photoInstruction : '',
+      theme ? 'Occasion or theme: ' + theme : '',
+      colors ? (ink === 'full color' ? 'Favorite colors: ' : 'Translate this palette into black-and-white line work and patterns: ') + colors : '',
+      setting ? 'Setting: ' + setting : '',
+      creatures ? 'Include these animals or creatures: ' + creatures : '',
+      extra ? 'Additional requests: ' + extra : '',
+      versions > 1 ? 'Keep all requested details in every version. Vary the composition or moment from one version to the next.' : '',
+      direction ? 'Art direction: ' + direction : '',
+      words ? 'Include this exact lettering: ' + words : 'Picture only. Leave out lettering.'
+    ];
+    return lines.filter(Boolean).join('\n\n');
+  }
+
   function setup(characters) {
     const form = document.getElementById('poster-form');
     const subject = document.getElementById('poster-subject');
@@ -146,33 +180,6 @@
       const versions = document.getElementById('poster-versions').valueAsNumber;
       const party = form.elements['poster-layout'].value === 'party';
       const ink = form.elements['poster-ink'].value;
-      const format = party ? 'party sheet' : 'wall poster';
-      const outputRequest = versions === 1
-        ? 'Generate one finished ' + format + ' image.'
-        : 'Generate ' + versions + ' separate finished ' + format + ' images. Deliver each version as its own printable image.';
-      const photoInstruction = ownIdea
-        ? 'Use my attached reference photo for the subject. Keep the person or subject recognizable.'
-        : 'Include the subject of my attached reference photo alongside ' + subjectText + '. Keep the subject of the photo recognizable.';
-      const lines = [
-        outputRequest,
-        party
-          ? 'On each US Letter sheet repeat the same design four times in a 2 by 2 grid. Leave cutting space and equal margins.'
-          : 'Use one full-page composition per US Letter poster with comfortable printable margins.',
-        'Audience: ' + age.value + '. Use a friendly, age-appropriate composition.',
-        'Art treatment: ' + ink + '. Keep the subject fully inside the printable area.',
-        subjectText ? 'Subject: ' + subjectText : '',
-        item.details,
-        item.id ? 'Use the attached Rhea illustration as the appearance reference. Preserve the established silhouette, markings and accessories.' : '',
-        withPhoto ? photoInstruction : '',
-        theme ? 'Occasion or theme: ' + theme : '',
-        colors ? (ink === 'full color' ? 'Favorite colors: ' : 'Translate this palette into black-and-white line work and patterns: ') + colors : '',
-        setting ? 'Setting: ' + setting : '',
-        creatures ? 'Include these animals or creatures: ' + creatures : '',
-        extra ? 'Additional requests: ' + extra : '',
-        versions > 1 ? 'Keep all requested details in every version. Vary the composition or moment from one version to the next.' : '',
-        direction ? 'Art direction: ' + direction : '',
-        words ? 'Include this exact lettering: ' + words : 'Picture only. Leave out lettering.'
-      ];
       const reference = document.getElementById('poster-reference');
       reference.hidden = !item.id;
       if (item.id) reference.href = 'portraits/' + item.id + '.webp';
@@ -181,7 +188,10 @@
       if (withPhoto) nextSteps.push('Attach your reference picture there.');
       if (item.id) nextSteps.push('Download and attach the Rhea illustration for the character.');
       document.getElementById('poster-next-step').textContent = nextSteps.join(' ');
-      output.value = lines.filter(Boolean).join('\n\n');
+      output.value = buildPrompt({
+        subjectText, age: age.value, party, ink, versions, ownIdea, withPhoto, item,
+        theme, colors, setting, creatures, extra, direction, words
+      });
       result.hidden = false;
       status.textContent = '';
       document.getElementById('poster-copy').focus();
@@ -191,5 +201,5 @@
     });
     return open;
   }
-  window.rheaPartyPrint = { printFile, setup };
+  window.rheaPartyPrint = { printFile, setup, buildPrompt };
 })();

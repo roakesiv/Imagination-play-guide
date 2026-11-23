@@ -131,3 +131,27 @@ body:not([data-route="create"]) {
 @media (min-width: 660px) {
   .poster-form { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
 }
+
+.start-easy {
+  grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: 14px;
+  padding: clamp(18px, 3vw, 26px); background: #ffebba; color: #503714; border: 2px solid #ba852e;
+}
+.start-easy h2 { margin-bottom: 5px; }
+.start-easy > span { font-size: 1.65rem; }
+.start-easy:hover h2 { text-decoration: underline; }
+.easy-panel { max-width: 43rem; display: grid; gap: 12px; padding: clamp(16px, 4vw, 28px); border: 1px solid #ccd8c9; border-radius: 16px; background: #fffefa; }
+.easy-panel label { display: block; font-weight: 750; color: #254b40; }
+.easy-panel select, .easy-panel input { width: 100%; min-height: 44px; }
+.easy-panel > button { justify-self: start; }
+#easy-result { min-width: 0; border-top: 1px solid #d6dfd4; padding-top: 16px; }
+#easy-title { margin: 0; font-family: Georgia, serif; color: #193f3b; overflow-wrap: anywhere; }
+#easy-title::first-letter, #easy-summary::first-letter { text-transform: uppercase; }
+#easy-summary { margin: 5px 0 12px; overflow-wrap: anywhere; }
+#easy-hint { margin: 0 0 10px; }
+#easy-edit { margin: 12px 0; }
+#easy-edit summary { padding: 12px 0; font-weight: 750; color: #205c4e; cursor: pointer; }
+#easy-fields { display: grid; gap: 10px; }
+#easy-fields label { margin-bottom: 4px; }
+#easy-prompt { min-height: 5rem; height: 6rem; width: 100%; margin: 4px 0 0; }
+#easy-status { margin-inline-start: 5px; }
+.easy-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
