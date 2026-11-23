@@ -100,6 +100,16 @@ body:not([data-route="create"]) {
   .character-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+.print-picks { display: grid; gap: 22px; }
+.print-picks h2 { margin: 0 0 8px; font-family: Georgia, serif; color: #193f3b; }
+.print-pick { display: block; padding: 13px 16px; margin-bottom: 8px; border: 1px solid #ccd8c9; border-radius: 12px; background: #fffefa; color: #263f38; text-decoration: none; }
+.print-pick h3 { margin: 0; font-size: 1.15rem; }
+.print-pick p { margin: 5px 0; }
+.pick-action { display: inline-block; margin-top: 4px; color: #205c4e; font-weight: 750; text-decoration: underline; }
+.print-pick:hover { border-color: #205c4e; }
+.pick-footer { display: grid; justify-items: start; margin-top: 10px; }
+@media (min-width: 660px) { .print-picks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 /* Printable portrait links and the parent-facing poster maker. */
 .character-print-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 2px 16px 12px; }
 .character-print-actions .portrait-link { margin: 0; }

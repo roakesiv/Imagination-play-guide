@@ -124,6 +124,7 @@
   const screens = {
     home: ['home', 'home-heading'],
     easy: ['easy', 'easy-heading'],
+    'more-to-try': ['more-to-try', 'more-heading'],
     rhea: ['world', 'books-heading'],
     characters: ['world', 'characters-heading'],
     tutorial: ['tutorial', 'tutorial-heading'],
