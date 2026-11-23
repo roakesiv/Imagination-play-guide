@@ -1,16 +1,20 @@
-# WP3 · Free printables for ages four and six
+# WP3 · Free activities for ages four and six
 
-From Home or Printable books, choose **More interesting stuff to try**, then select any card to open the publisher’s one-page PDF. The age groups are editorial suggestions for families. Each card identifies the publisher, the activity, and its ink use. [Open the page](https://roakesiv.github.io/Imagination-play-guide/#more-to-try)
+From Home or the Rhea printable book shelf, choose **More interesting stuff to try**. Four category links jump down a single page. Each source name links to the publisher’s own collection, with one short description to help families choose. [Open the directory](https://roakesiv.github.io/Imagination-play-guide/#more-to-try)
 
-| Suggested age | Activity | Publisher and printable |
-| --- | --- | --- |
-| 4 | Color Daniel Tiger | [PBS KIDS](https://cms-tc.pbskids.org/daniel-tiger-website/printables/DTN_Daniel-Tiger.pdf) |
-| 4 | Find Telly’s triangles | [Sesame Workshop](https://sesameworkshop.org/wp-content/uploads/2023/03/Math_PRINT_TellysTriangles.pdf) |
-| 6 | Find Suki in the maze | [PBS KIDS · Molly of Denali](https://cms-assets.prod.pbskids.org/global/mezzanines/printables/MoD_Maze_vert_vFIN4_190719_105243.pdf) |
-| 6 | Roll and tally | [PBS KIDS · Odd Squad](https://cms-assets.prod.pbskids.org/parents/Odd-Squad_Dice-Roll-Record-Sheet.pdf) |
+| Category | Sources | Start here |
+| --- | ---: | --- |
+| Favorite shows | 7 | PBS KIDS for Parents |
+| Puzzles, drawing & stories | 4 | Highlights |
+| Math & reading | 3 | The Math Learning Center |
+| Science, animals & exploring | 4 | Boston Children’s Museum |
 
-The separate [Math Learning Center directory](https://www.mathlearningcenter.org/educators/free-resources/lessons-publications/practice-books) offers more practice books by grade. External activities stay with their publishers. To refresh a pick, check its PDF in a signed-out browser, its page count and ink use, then update the link in the page and this record.
+The original four worksheet links were replaced with collection links. Families can still print Kindergarten and Grade 1 books in English or Spanish from the [Math Learning Center practice-book directory](https://www.mathlearningcenter.org/educators/free-resources/lessons-publications/practice-books).
+
+## Maintaining the directory
+
+Edit the source links and descriptions in the directory section of `index.html`. Link to the official activity collection and mention any free account or preparation a family needs. Before publishing a change, check the publisher destination, the two entry points, category jumps, phone and desktop layouts, and the return to the Rhea shelf.
 
 ## Release checks
 
-On 22 November 2026, all four publisher links returned PDFs without an account. Each file rendered as a single page. The Math Learning Center directory listed Kindergarten and Grade 1 practice books. At phone and desktop widths, the home and shelf shortcuts, direct route, external destinations, return navigation, maker draft and saved-card export were checked. Physical printing was not tested.
+On 22 November 2026, all 18 collection URLs responded. Browser checks at 320, 390 and 1280 pixels covered the Home and Rhea shelf entrances, source counts, category jumps, keyboard focus, reload, Back and touch-target sizes. At 390 and 1280 pixels the Math Learning Center link opened the Kindergarten and Grade 1 practice books page.

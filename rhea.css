@@ -100,15 +100,28 @@ body:not([data-route="create"]) {
   .character-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-.print-picks { display: grid; gap: 22px; }
-.print-picks h2 { margin: 0 0 8px; font-family: Georgia, serif; color: #193f3b; }
-.print-pick { display: block; padding: 13px 16px; margin-bottom: 8px; border: 1px solid #ccd8c9; border-radius: 12px; background: #fffefa; color: #263f38; text-decoration: none; }
-.print-pick h3 { margin: 0; font-size: 1.15rem; }
-.print-pick p { margin: 5px 0; }
-.pick-action { display: inline-block; margin-top: 4px; color: #205c4e; font-weight: 750; text-decoration: underline; }
-.print-pick:hover { border-color: #205c4e; }
-.pick-footer { display: grid; justify-items: start; margin-top: 10px; }
-@media (min-width: 660px) { .print-picks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.directory-jumps { display: flex; flex-wrap: wrap; gap: 6px 10px; margin: 0 0 22px; }
+.directory-jumps a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 6px 12px;
+  border: 1px solid #abc5b8; border-radius: 10px; background: #f2f7ef; color: #245348;
+  font-weight: 650; text-underline-offset: 3px;
+}
+.activity-directory h2 { margin: 0 0 8px; color: #193f3b; font-family: Georgia, serif; scroll-margin-block-start: 12px; }
+.activity-directory > section { margin-bottom: 24px; }
+.directory-list {
+  display: grid; gap: 6px; margin: 0; padding: 0; list-style: none;
+}
+.directory-list a {
+  display: block; position: relative; height: 100%; min-height: 44px; padding: 10px 32px 10px 14px;
+  border: 1px solid #cbd8cb; border-radius: 9px; background: #fffefa; color: #263f38; text-decoration: none;
+}
+.directory-list li:first-child a { background: #f0f6ed; border-inline-start: 4px solid #44705b; padding-inline-start: 11px; }
+.directory-list strong { display: block; color: #205449; text-decoration: underline; text-underline-offset: 3px; }
+.directory-list span { display: block; margin-top: 3px; font-size: .95rem; line-height: 1.4; }
+.directory-list a::after { content: ""; position: absolute; right: 14px; top: 17px; width: 6px; height: 6px; border: solid #477264; border-width: 2px 2px 0 0; transform: rotate(45deg); }
+.directory-list a:hover, .directory-jumps a:hover { border-color: #356551; }
+.activity-directory a:focus-visible { outline: 3px solid #205449; outline-offset: 2px; }
+@media (min-width: 760px) { .directory-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* Printable portrait links and the parent-facing poster maker. */
 .character-print-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 2px 16px 12px; }

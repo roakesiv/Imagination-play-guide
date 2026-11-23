@@ -134,7 +134,9 @@
 
   function showView(moveFocus) {
     const hash = window.location.hash.slice(1);
-    const route = Object.hasOwn(screens, hash) ? hash : 'home';
+    const target = document.getElementById(hash);
+    const isDirectoryCategory = target?.matches('.activity-directory h2[id]');
+    const route = isDirectoryCategory ? 'more-to-try' : Object.hasOwn(screens, hash) ? hash : 'home';
     const [view, headingId] = screens[route];
     document.body.dataset.route = route;
     for (const section of document.querySelectorAll('[data-view]')) {
@@ -153,7 +155,10 @@
     }
     const heading = document.getElementById(headingId);
     document.title = route === 'home' || route === 'create' ? 'Magic Creature Card Maker' : heading.textContent + ' | Magic Creature Card Maker';
-    if (moveFocus) {
+    if (isDirectoryCategory) {
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ block: 'start' });
+    } else if (moveFocus) {
       heading.focus({ preventScroll: true });
       window.scrollTo(0, 0);
     }
