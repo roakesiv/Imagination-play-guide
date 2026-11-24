@@ -37,17 +37,31 @@
     return lines.filter(Boolean).join('\n\n');
   }
 
+  function setupReadyPrint(characters) {
+    const picker = document.getElementById('rhea-print-character');
+    const actions = document.getElementById('rhea-print-links');
+    const poster = document.getElementById('rhea-poster-pdf');
+    const party = document.getElementById('rhea-party-pdf');
+    const preview = document.getElementById('rhea-print-preview');
+    picker.append(...characters.map(character => new Option(character.name, character.id)));
+
+    picker.addEventListener('change', () => {
+      const id = picker.value;
+      actions.hidden = preview.hidden = !id;
+      if (!id) return;
+      poster.href = printFile(id, 'poster');
+      party.href = printFile(id, 'party');
+      preview.src = 'portraits/' + id + '.webp';
+    });
+  }
+
   function setup(characters) {
+    setupReadyPrint(characters);
     const form = document.getElementById('poster-form');
     const subject = document.getElementById('poster-subject');
     const ideaField = document.getElementById('poster-idea-field');
     const idea = document.getElementById('poster-idea');
     const age = document.getElementById('poster-age');
-    const ready = document.getElementById('poster-ready');
-    const pdf = document.getElementById('poster-pdf');
-    const preview = document.getElementById('poster-preview');
-    const custom = document.getElementById('poster-custom');
-    const customTitle = custom.querySelector('summary');
     const useOwnIdea = document.getElementById('poster-use-own');
     const result = document.getElementById('poster-result');
     const output = document.getElementById('poster-prompt');
@@ -64,35 +78,10 @@
       status.textContent = '';
     }
 
-    function refreshLayout() {
-      const item = sources.get(subject.value);
-      const existingArt = Boolean(item && item.id);
-      const layout = form.elements['poster-layout'].value;
+    function updateSubjectFields() {
       const personal = subject.value === 'new';
       ideaField.hidden = !personal;
-      customTitle.textContent = personal ? 'Make a custom picture prompt' : 'Make a custom picture with ' + (item.name || 'your creature');
-      if (useOwnIdea) useOwnIdea.hidden = personal;
-      ready.hidden = !existingArt;
-      preview.hidden = !existingArt;
-      preview.replaceChildren();
-      if (existingArt) {
-        pdf.href = printFile(item.id, layout);
-        pdf.textContent = layout === 'party' ? 'Open four-picture party sheet' : 'Open full-page poster';
-        preview.dataset.layout = layout;
-        const count = layout === 'party' ? 4 : 1;
-        for (let i = 0; i < count; i++) {
-          const img = document.createElement('img');
-          img.src = 'portraits/' + item.id + '.webp';
-          img.alt = '';
-          if (i === 0) img.addEventListener('load', () => {
-            if (preview.firstElementChild === img) preview.style.aspectRatio = img.naturalWidth > img.naturalHeight ? '11 / 8.5' : '8.5 / 11';
-          });
-          preview.append(img);
-        }
-      } else {
-        pdf.removeAttribute('href');
-        custom.open = true;
-      }
+      useOwnIdea.hidden = personal;
     }
 
     function addSource(group, key, label, item) {
@@ -139,7 +128,7 @@
       subject.value = preferDraft && sources.has('current') ? 'current' : 'new';
       if (preferDraft && ageOptions.options.includes(current.activityAgeRange)) age.value = current.activityAgeRange;
       clearPrompt();
-      refreshLayout();
+      updateSubjectFields();
     }
 
     useOwnIdea?.addEventListener('click', () => {
@@ -150,13 +139,10 @@
     subject.addEventListener('change', () => {
       const selected = sources.get(subject.value);
       if (selected && ageOptions.options.includes(selected.age)) age.value = selected.age;
-      refreshLayout();
+      updateSubjectFields();
     });
     form.addEventListener('input', clearPrompt);
-    form.addEventListener('change', event => {
-      clearPrompt();
-      if (event.target.name === 'poster-layout') refreshLayout();
-    });
+    form.addEventListener('change', clearPrompt);
     form.addEventListener('submit', event => {
       event.preventDefault();
       const item = sources.get(subject.value);

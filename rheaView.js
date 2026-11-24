@@ -156,6 +156,11 @@
   const printableCharacters = [...party, ...window.RHEA_VILLAGERS, ...listedStories]
     .filter(character => portraitIds.has(character.id));
   const openPosterMaker = window.rheaPartyPrint.setup(printableCharacters);
+  const posterPanels = {
+    'print-poster': document.getElementById('rhea-print-panel'),
+    'custom-picture': document.getElementById('poster-form')
+  };
+  const posterLinks = document.querySelectorAll('.poster-paths a');
   let useDraftForPoster = false;
   document.getElementById('poster-from-draft').addEventListener('click', () => {
     useDraftForPoster = true;
@@ -169,6 +174,8 @@
     characters: ['world', 'characters-heading'],
     tutorial: ['tutorial', 'tutorial-heading'],
     posters: ['posters', 'posters-heading'],
+    'print-poster': ['posters', 'posters-heading'],
+    'custom-picture': ['posters', 'posters-heading'],
     create: ['create', 'maker-heading']
   };
 
@@ -178,6 +185,7 @@
     const isDirectoryCategory = target?.matches('.activity-directory h2[id]');
     const route = isDirectoryCategory ? 'more-to-try' : Object.hasOwn(screens, hash) ? hash : 'home';
     const [view, headingId] = screens[route];
+    const previousRoute = document.body.dataset.route;
     document.body.dataset.route = route;
     for (const section of document.querySelectorAll('[data-view]')) {
       section.hidden = section.dataset.view !== view;
@@ -189,8 +197,13 @@
       if (link.hash === '#' + route) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     }
-    if (route === 'posters') {
-      openPosterMaker(useDraftForPoster);
+    if (view === 'posters') {
+      for (const [mode, panel] of Object.entries(posterPanels)) panel.hidden = mode !== route;
+      for (const link of posterLinks) {
+        if (link.hash === '#' + route) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
+      }
+      if (screens[previousRoute]?.[0] !== view || useDraftForPoster) openPosterMaker(useDraftForPoster);
       useDraftForPoster = false;
     }
     const heading = document.getElementById(headingId);
