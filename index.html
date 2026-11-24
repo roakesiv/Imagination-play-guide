@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Magic Creature Card Maker</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="rhea.css?v=directory-26">
+  <link rel="stylesheet" href="rhea.css?v=rhea-age-levels">
 </head>
 <body>
   <main class="app-shell">
@@ -272,15 +272,22 @@
       <section id="book-shelf" aria-labelledby="books-heading">
         <h2 id="books-heading" tabindex="-1">Printable activity books</h2>
         <p>Open a PDF to print the whole book or a few favorite pages. Choose Download to save it for later.</p>
-        <a class="guide-link" href="#more-to-try">More interesting stuff to try <span aria-hidden="true">→</span></a>
         <section class="shelf-section" aria-labelledby="volumes-heading">
           <h3 id="volumes-heading">Complete volumes</h3>
+          <div class="volume-age-field">
+            <label for="volume-age">Age range</label>
+            <select id="volume-age" aria-controls="volume-list">
+              <option value="">Choose an age</option>
+            </select>
+          </div>
+          <p id="volume-status" class="visually-hidden" role="status"></p>
           <div id="volume-list" class="book-list"></div>
         </section>
-        <section class="shelf-section" aria-labelledby="individual-books-heading">
-          <h3 id="individual-books-heading">Individual books and binder pages</h3>
+        <details class="individual-books">
+          <summary>Individual books and binder pages</summary>
           <div id="book-list" class="book-list"></div>
-        </section>
+        </details>
+        <a class="guide-link" href="#more-to-try">More interesting stuff to try <span aria-hidden="true">→</span></a>
       </section>
       <section id="world-cast" hidden aria-labelledby="characters-heading">
         <h2 id="characters-heading" tabindex="-1">Meet the characters</h2>
@@ -369,7 +376,7 @@
         <section>
           <h2>Print something for today</h2>
           <ol>
-            <li>Open the printable books. Choose Volume 1 or Volume 2 for a collection, or scroll down to pick a single character’s book.</li>
+            <li>Open the printable books and choose an age to see its volumes. Expand <strong>Individual books and binder pages</strong> for a single character’s book.</li>
             <li>Select <strong>Open PDF</strong>. In the PDF viewer, choose <strong>Print</strong>. On a phone, look in the Share or menu options.</li>
             <li>Pick the pages you want and your printer. You can also use <strong>Download</strong> to keep the whole book for later.</li>
           </ol>
@@ -586,15 +593,15 @@
 
   <script src="content.js?v=toddler-pictures"></script>
   <script src="storyCharacters.js"></script>
-  <script src="promptTemplates.js?v=toddler-pictures"></script>
+  <script src="promptTemplates.js?v=rhea-age-levels"></script>
   <script src="promptBuilder.js"></script>
   <script src="storage.js"></script>
   <script src="script.js"></script>
   <script src="rheaVillagers.js"></script>
-  <script src="rheaBooks.js?v=toddler-pictures"></script>
+  <script src="rheaBooks.js?v=rhea-age-levels"></script>
   <script src="rheaStoryNotes.js"></script>
   <script src="rheaPartyPrint.js?v=easy-mode"></script>
-  <script src="rheaView.js?v=activity-directory"></script>
+  <script src="rheaView.js?v=rhea-age-levels"></script>
   <script src="easyIdeas.js"></script>
   <script src="easyMode.js"></script>
 </body>

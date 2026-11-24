@@ -16,7 +16,7 @@
     open.setAttribute('aria-label', 'Open PDF for ' + book.title);
     const download = element('a', 'Download');
     download.href = book.file;
-    download.download = '';
+    download.download = book.kind === 'volume' ? book.title + '.pdf' : '';
     download.setAttribute('aria-label', 'Download ' + book.title);
     row.append(open, download);
     return row;
@@ -31,6 +31,58 @@
     if (book.description) details.append(element('p', book.description, 'book-description'));
     card.append(details, bookLinks(book));
     return card;
+  }
+
+  function setupVolumePicker() {
+    const picker = document.getElementById('volume-age');
+    const results = document.getElementById('volume-list');
+    const status = document.getElementById('volume-status');
+    const volumesByAge = new Map();
+
+    for (const book of books.filter(book => book.kind === 'volume')) {
+      const age = book.age || 'Other volumes';
+      if (!volumesByAge.has(age)) volumesByAge.set(age, []);
+      volumesByAge.get(age).push(book);
+    }
+
+    const ageRanges = element('optgroup');
+    ageRanges.label = 'Age ranges';
+    const earlier = element('optgroup');
+    earlier.label = 'Earlier editions';
+    const levels = new Map(window.creatureAppContent.activityAgeRange.options.map(option => {
+      const [level, range] = option.split(' — ');
+      return [range.replace(/^ages/i, 'Ages'), level];
+    }));
+
+    for (const [age, level] of levels) {
+      if (volumesByAge.has(age)) {
+        const option = element('option', age + ' · ' + level);
+        option.value = age;
+        ageRanges.append(option);
+      }
+    }
+    for (const age of volumesByAge.keys()) {
+      if (!levels.has(age)) {
+        const option = element('option', age);
+        option.value = age;
+        earlier.append(option);
+      }
+    }
+    if (ageRanges.childElementCount) picker.append(ageRanges);
+    if (earlier.childElementCount) picker.append(earlier);
+
+    function showVolumes() {
+      const visible = volumesByAge.get(picker.value) || [];
+      results.replaceChildren(...visible.map(bookCard));
+      const unit = visible.length === 1 ? 'volume' : 'volumes';
+      status.textContent = visible.length
+        ? visible.length + ' ' + unit + ' for ' + picker.value.toLowerCase() + '.'
+        : '';
+    }
+
+    picker.addEventListener('change', showVolumes);
+    window.addEventListener('pageshow', showVolumes);
+    showVolumes();
   }
 
   function profile(character) {
@@ -100,7 +152,7 @@
     return group;
   }
 
-  document.getElementById('volume-list').append(...books.filter(book => book.kind === 'volume').map(bookCard));
+  setupVolumePicker();
   document.getElementById('book-list').append(...books.filter(book => book.kind !== 'volume').map(bookCard));
   const cast = document.getElementById('character-list');
   const party = window.storyCharacterContent.characters.map(heroProfile);
