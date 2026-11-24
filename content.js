@@ -109,7 +109,7 @@ window.creatureAppContent = {
   ],
   activityAgeRange: {
     label: 'Activity age range',
-    helperText: 'Choose the child’s age or school stage to make the pages easier or harder.',
+    helperText: 'Choose the child’s age or school stage. Toddler makes simple pictures and shapes to look at or color.',
     defaultValue: 'Preschool — ages 3–4',
     options: [
       'Toddler — ages 1–2',

@@ -60,8 +60,56 @@ Use a bright, kid-friendly magical creature profile card style with soft shapes,
     return uniqueItems.length ? uniqueItems : ['a tiny star', 'a smiley flower', 'a magic key', 'a little crown', 'a hidden heart'];
   }
 
+  const toddlerAgeRange = 'Toddler — ages 1–2';
+  const toddlerGuidance = 'Make simple picture pages for ages 1–2. Put one very large shape or familiar object on each US Letter sheet. Use bold black outlines on white, generous empty space, and plenty of room for free scribbles. An occasional page can show two big shapes. Keep the creature recognizable with a large face and a few clear features. Use at most one short picture label. Leave the page free of directions, questions, letters to trace, mazes, matching tasks, counting tasks, and answer blanks.';
+
+  const toddlerPages = [
+    ['creature_face', 'Creature Face', 'One large friendly face with a few recognizable features'],
+    ['familiar_object', 'Familiar Object', 'One large, familiar object from the creature’s world'],
+    ['another_object', 'Another Object', 'One different familiar object, with a bold open outline'],
+    ['circle', 'Circle', 'One large empty circle'],
+    ['square', 'Square', 'One large square with slightly rounded corners and a white interior'],
+    ['triangle', 'Triangle', 'One large outlined triangle with a white interior'],
+    ['big_and_small', 'Big and Small', 'Two copies of one shape at different sizes with plenty of space between'],
+    ['waves', 'Waves', 'Two wide, smooth curves with generous white space'],
+    ['picture_in_circle', 'Picture in a Circle', 'One very large circle around a familiar simple picture'],
+    ['moon', 'Moon', 'One large crescent moon with room to color'],
+  ];
+
+  const toddlerSinglePage = {
+    coloring: 0,
+    findIt: 1,
+    maze: 7,
+    letterTracing: 3,
+    countObjects: 6,
+    findLetter: 1,
+    drawMissingDetail: 4,
+    tracePath: 7,
+    matchingPage: 6,
+    finishPattern: 6,
+    journalPage: 0
+  };
+
+  function buildToddlerPage(values, helpers, pageIndex) {
+    const [, title, layout] = toddlerPages[pageIndex];
+    return `Create one printable page titled "${title}".
+
+${toddlerGuidance}
+
+Main creature: ${helpers.promptValue(values.name)}, a ${helpers.promptValue(values.creatureMix)}
+Magic: ${helpers.promptValue(values.magic)}
+Home/background: ${helpers.promptValue(values.home)}
+What they are like: ${helpers.promptValue(values.personality)}
+Accessories: ${helpers.promptValue(values.accessories)}
+Extra detail: ${helpers.promptValue(values.extraDetail)}
+${getStoryCharacterDetails(values)}
+
+Picture layout: ${layout}.`;
+  }
+
+
   const activityAgeRangeInstructions = {
-    'Toddler — ages 1–2': 'Design this activity for toddlers ages 1–2: keep it extremely simple, with very large shapes, very minimal detail, and easy visual interaction.',
+    [toddlerAgeRange]: toddlerGuidance,
     'Daycare — ages 2–3': 'Design this activity for ages 2–3 with a grown-up reading one short direction aloud. Use one action per page, bold black outlines, large pictures, generous white space, and at most two choices for pointing or matching. Let the child point, touch, name, color, or make a mark. If counting, model one or two objects. If tracing, use a short, wide finger path with a clear start. Adapt any later instructions to this age: replace letter work, narrow mazes, complex patterns, and precision tasks with a simple picture or finger activity. Keep the page black and white and leave plenty of room for chunky crayons.',
     'Preschool — ages 3–4': 'Design this activity for preschool children ages 3–4: keep it simple, playful, easy to understand, and not visually overwhelming.',
     'TK / Pre-K — ages 4–5': 'Design this activity for TK / Pre-K children ages 4–5: keep it clear and playful, with a little more structure and challenge than a preschool worksheet.',
@@ -106,7 +154,11 @@ Must avoid: ${mustAvoid}`;
       title: 'Activity Book Packet',
       build(values, helpers) {
         const slug = filenameSlug(values.name);
-        const activityPages = [
+        const isToddler = values.activityAgeRange === toddlerAgeRange;
+        const activityPages = isToddler ? toddlerPages.map(([part, title, layout], index) => [
+          String(index + 1).padStart(2, '0'), part, title, 'A simple picture to look at or color.', layout,
+          'instructions, worksheet tasks, tiny details, or answer spaces'
+        ]) : [
           ['01', 'coloring_page', 'Coloring Page', 'A simple coloring-book scene with the character as the main focus.', 'large character, open coloring spaces, a few easy background details', 'hidden-object lists, maze paths, worksheet rows'],
           ['02', 'find_it_game', 'Find-It Game', 'A hidden-object coloring page.', 'a clear Things to Find row at the bottom and 5 large findable objects in the scene', 'maze paths, tracing lines, matching columns'],
           ['03', 'maze', 'Maze', 'The only maze page in the pack.', 'one clear start, one clear finish, wide maze paths, the character at the start', 'letter tracing, object matching, pattern rows'],
@@ -146,7 +198,7 @@ Important:
 - Do not skip a page.
 - Do not repeat a page type.
 - Do not combine two page types into one image.
-- Make only Page 03 a maze. Pages 08, 09, and 10 must not look like mazes.
+${isToddler ? '- Make each page a large picture or simple shape with plenty of white space.' : '- Make only Page 03 a maze. Pages 08, 09, and 10 must not look like mazes.'}
 - Before each image, show exactly this line: "Creating Page NN of 10 - [Title]".
 - Also show the suggested filename before each image.
 - Use black-and-white printable worksheet style.
@@ -158,7 +210,7 @@ Quality check before each image:
 - Is this the correct page number?
 - Is this the correct activity type?
 - Is this visually different from the previous pages?
-- Is it preschool / early-child friendly?
+${isToddler ? '- Is the main picture large and clear, with enough room for scribbling?' : '- Is it preschool / early-child friendly?'}
 
 10-Page Activity Pack Order:
 
@@ -680,6 +732,13 @@ Keep it preschool / early-child friendly. Use a clean printable worksheet layout
       }
     }
   };
+
+  for (const [key, pageIndex] of Object.entries(toddlerSinglePage)) {
+    const build = artifacts[key].build;
+    artifacts[key].build = (values, helpers) => values.activityAgeRange === toddlerAgeRange
+      ? buildToddlerPage(values, helpers, pageIndex)
+      : build(values, helpers);
+  }
 
   return {
     buildImagePrompt,
