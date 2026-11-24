@@ -1,6 +1,16 @@
 // Finished books that parents can download directly from the Rhea library.
 window.RHEA_BOOKS = [
   {
+    id: "rhea-daycare-volume-1", kind: "volume", title: "Volume 1 · Little River Play", characterId: null,
+    file: "printables/rhea-daycare-volume-1.pdf", pages: 91, age: "Ages 2–3", downloadSize: "1.6 MB",
+    description: "Nine friends, ten pages each. Point, play and make marks in this Daycare family-review edition."
+  },
+  {
+    id: "rhea-daycare-volume-2", kind: "volume", title: "Volume 2 · Little River Pals", characterId: null,
+    file: "printables/rhea-daycare-volume-2.pdf", pages: 51, age: "Ages 2–3", downloadSize: "0.8 MB",
+    description: "Five friends, ten pages each. Point, play and make marks in this Daycare family-review edition."
+  },
+  {
     id: "rhea-age-4-volume-1", kind: "volume", title: "Volume 1 · Little River Adventures", characterId: null,
     file: "printables/rhea-age-4-volume-1.pdf", pages: 91, age: "Age 4", downloadSize: "2.4 MB",
     description: "Nine friends, ten activities each. Print the whole black-and-white book or use the contents to print one chapter."

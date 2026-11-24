@@ -62,7 +62,7 @@ Use a bright, kid-friendly magical creature profile card style with soft shapes,
 
   const activityAgeRangeInstructions = {
     'Toddler — ages 1–2': 'Design this activity for toddlers ages 1–2: keep it extremely simple, with very large shapes, very minimal detail, and easy visual interaction.',
-    'Daycare — ages 2–3': 'Design this activity for daycare-age children ages 2–3: keep it very simple, with large shapes, minimal detail, and easy-to-complete tasks.',
+    'Daycare — ages 2–3': 'Design this activity for ages 2–3 with a grown-up reading one short direction aloud. Use one action per page, bold black outlines, large pictures, generous white space, and at most two choices for pointing or matching. Let the child point, touch, name, color, or make a mark. If counting, model one or two objects. If tracing, use a short, wide finger path with a clear start. Adapt any later instructions to this age: replace letter work, narrow mazes, complex patterns, and precision tasks with a simple picture or finger activity. Keep the page black and white and leave plenty of room for chunky crayons.',
     'Preschool — ages 3–4': 'Design this activity for preschool children ages 3–4: keep it simple, playful, easy to understand, and not visually overwhelming.',
     'TK / Pre-K — ages 4–5': 'Design this activity for TK / Pre-K children ages 4–5: keep it clear and playful, with a little more structure and challenge than a preschool worksheet.',
     'Kindergarten — ages 5–6': 'Design this activity for kindergarten children ages 5–6: keep it playful and clear, with a balanced amount of challenge appropriate for early learners.',
