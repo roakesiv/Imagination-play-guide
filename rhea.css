@@ -30,6 +30,12 @@ body:not([data-route="create"]) {
 }
 .starting-paths h2 { margin: 0 0 8px; font-family: Georgia, serif; font-size: clamp(1.5rem, 4.8vw, 2.3rem); line-height: 1.12; }
 .starting-paths p { margin: 0; }
+.start-print {
+  grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 52px; padding: 12px 18px; background: #205c4e; color: #fffdf2;
+  font-size: 1.1rem;
+}
+.start-print:hover strong { text-decoration: underline; }
 .start-rhea, .start-create { padding: clamp(18px, 4vw, 34px); }
 .start-rhea { align-items: center; gap: 12px; justify-content: space-between; background: #194e45; color: #fffdf2; }
 .start-rhea > div { flex: 1; min-width: 0; }
@@ -52,9 +58,7 @@ body:not([data-route="create"]) {
 #book-shelf > h2, #world-cast > h2 { margin-bottom: 5px; }
 #book-shelf > p { color: var(--muted); }
 .book-list, .character-grid, .parent-guide { display: grid; gap: 10px; }
-.shelf-section { margin-top: 24px; }
-.shelf-section > h3 { margin: 0 0 10px; color: #3a5d4d; }
-.volume-age-field { display: grid; gap: 6px; max-width: 25rem; margin-bottom: 12px; }
+.volume-age-field { display: grid; gap: 6px; max-width: 25rem; margin: 16px 0 12px; }
 .volume-age-field label { color: #245346; font-weight: 750; }
 .volume-age-field select {
   min-height: 48px; padding: 9px 12px; border: 1px solid #9db9aa; background: #fffefa;
@@ -62,22 +66,27 @@ body:not([data-route="create"]) {
 .volume-age-field select:focus-visible {
   outline: 3px solid #115fb0; outline-offset: 3px;
 }
-.individual-books {
-  margin: 18px 0 6px; border: 1px solid #b8cfc2; border-radius: 10px; background: #fffefa;
-}
-.individual-books summary {
-  min-height: 44px; padding: 11px 14px; color: #245346; font-weight: 750; cursor: pointer;
-}
-.individual-books[open] .book-list { padding: 0 10px 10px; }
-.book-card, .character-card, .parent-guide section {
+.character-card, .parent-guide section {
   border: 1px solid #d8d9c9;
   border-radius: 12px;
   background: #fffefa;
 }
-.book-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 15px 18px; }
-.book-card h4 { margin: 0; font-size: 1.13rem; }
-#volume-list .book-card { flex-direction: column; align-items: flex-start; background: #f2f7ee; border-color: #b6cab7; }
-#volume-list h4 { font-family: Georgia, serif; font-size: 1.4rem; color: #193f3b; }
+.book-card {
+  display: grid; align-content: start; gap: 10px; min-width: 0; padding: 15px 18px;
+  border: 1px solid #b6cab7; border-radius: 12px; background: #f2f7ee;
+}
+.book-card h3 { margin: 0; font-family: Georgia, serif; font-size: 1.4rem; color: #193f3b; }
+.volume-contents { border-top: 1px solid #cad9c9; padding-top: 8px; }
+.volume-contents p { margin: 0 0 4px; color: #245346; font-size: .9rem; font-weight: 750; }
+.volume-chapters {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 14px;
+  margin: 0; font-size: .875rem; line-height: 1.35;
+}
+.volume-chapters > div { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 5px; }
+.volume-chapters dd { margin: 0; color: #4c5f56; font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 375px) {
+  .volume-chapters { grid-template-columns: minmax(0, 1fr); }
+}
 .book-meta { margin: 2px 0 0; color: #4c5f56; font-size: .9rem; }
 .book-description { margin: 5px 0 0; max-width: 50ch; }
 .book-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
@@ -96,7 +105,6 @@ body:not([data-route="create"]) {
 .character-caption span { font-size: .88rem; color: var(--muted); }
 .world-facts { margin: 0; padding: 4px 16px 15px; overflow-wrap: anywhere; }
 .world-facts dt { margin-top: 9px; font-size: .85rem; }
-.related-book { display: grid; gap: 8px; padding: 13px 16px; border-top: 1px solid #e4e6db; }
 .story-notes { margin-top: 16px; }
 .story-notes > summary { padding: 12px 0; color: var(--secondary-dark); font-weight: 800; cursor: pointer; }
 .parent-guide section { padding: 18px 22px; }
@@ -107,7 +115,7 @@ body:not([data-route="create"]) {
 .parent-guide .guide-link { margin-top: 5px; }
 
 @media (min-width: 660px) {
-  #volume-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #volume-list { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
   .starting-paths { grid-template-columns: 1.45fr 1fr; }
   .start-guide { grid-column: 1 / -1; }
   .start-rhea { padding: 26px; }

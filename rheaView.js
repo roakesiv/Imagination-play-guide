@@ -16,20 +16,31 @@
     open.setAttribute('aria-label', 'Open PDF for ' + book.title);
     const download = element('a', 'Download');
     download.href = book.file;
-    download.download = book.kind === 'volume' ? book.title + '.pdf' : '';
+    download.download = book.title + '.pdf';
     download.setAttribute('aria-label', 'Download ' + book.title);
     row.append(open, download);
     return row;
   }
 
+  function chapterList(chapters) {
+    const section = element('div', '', 'volume-contents');
+    const list = element('dl', '', 'volume-chapters');
+    for (const [name, firstPage, lastPage] of chapters) {
+      const chapter = element('div');
+      chapter.append(element('dt', name), element('dd', firstPage + '–' + lastPage));
+      list.append(chapter);
+    }
+    section.append(element('p', 'Characters and PDF pages'), list);
+    return section;
+  }
+
   function bookCard(book) {
     const card = element('article', '', 'book-card');
     const details = element('div');
-    const age = book.age && (/age/i.test(book.age) ? book.age : 'Ages ' + book.age);
-    const meta = [age, book.pages && (book.pages + (book.pages === 1 ? ' page' : ' pages')), book.downloadSize];
-    details.append(element('h4', book.title), element('p', meta.filter(Boolean).join(' · '), 'book-meta'));
-    if (book.description) details.append(element('p', book.description, 'book-description'));
-    card.append(details, bookLinks(book));
+    const meta = [book.age, book.pages + ' pages', book.downloadSize];
+    details.append(element('h3', book.title), element('p', meta.join(' · '), 'book-meta'));
+    details.append(element('p', book.description, 'book-description'));
+    card.append(details, bookLinks(book), chapterList(book.chapters));
     return card;
   }
 
@@ -39,37 +50,20 @@
     const status = document.getElementById('volume-status');
     const volumesByAge = new Map();
 
-    for (const book of books.filter(book => book.kind === 'volume')) {
-      const age = book.age || 'Other volumes';
-      if (!volumesByAge.has(age)) volumesByAge.set(age, []);
-      volumesByAge.get(age).push(book);
+    for (const book of books) {
+      if (!volumesByAge.has(book.age)) volumesByAge.set(book.age, []);
+      volumesByAge.get(book.age).push(book);
     }
 
-    const ageRanges = element('optgroup');
-    ageRanges.label = 'Age ranges';
-    const earlier = element('optgroup');
-    earlier.label = 'Earlier editions';
-    const levels = new Map(window.creatureAppContent.activityAgeRange.options.map(option => {
-      const [level, range] = option.split(' — ');
-      return [range.replace(/^ages/i, 'Ages'), level];
-    }));
-
-    for (const [age, level] of levels) {
+    for (const label of window.creatureAppContent.activityAgeRange.options) {
+      const [level, range] = label.split(' — ');
+      const age = range.replace(/^ages/i, 'Ages');
       if (volumesByAge.has(age)) {
         const option = element('option', age + ' · ' + level);
         option.value = age;
-        ageRanges.append(option);
+        picker.append(option);
       }
     }
-    for (const age of volumesByAge.keys()) {
-      if (!levels.has(age)) {
-        const option = element('option', age);
-        option.value = age;
-        earlier.append(option);
-      }
-    }
-    if (ageRanges.childElementCount) picker.append(ageRanges);
-    if (earlier.childElementCount) picker.append(earlier);
 
     function showVolumes() {
       const visible = volumesByAge.get(picker.value) || [];
@@ -122,11 +116,6 @@
       card.append(actions);
     }
     card.append(fields);
-    for (const book of books.filter(item => item.characterId === character.id)) {
-      const related = element('div', '', 'related-book');
-      related.append(element('strong', book.title), bookLinks(book));
-      card.append(related);
-    }
     return card;
   }
 
@@ -153,7 +142,6 @@
   }
 
   setupVolumePicker();
-  document.getElementById('book-list').append(...books.filter(book => book.kind !== 'volume').map(bookCard));
   const cast = document.getElementById('character-list');
   const party = window.storyCharacterContent.characters.map(heroProfile);
   cast.append(characterGroup('The party and their little helper', party));
