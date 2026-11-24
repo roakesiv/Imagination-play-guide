@@ -1,6 +1,7 @@
 (() => {
   const get = id => document.getElementById(id);
   const type = get('easy-type');
+  const agePicker = get('easy-age');
   const result = get('easy-result');
   const editor = get('easy-edit');
   const fields = get('easy-fields');
@@ -15,6 +16,9 @@
   const lastPicks = new Map();
   let idea;
 
+  agePicker.append(...ages.options.map(age => new Option(age)));
+  agePicker.value = ages.defaultValue;
+
   function pick(key, options) {
     const choices = options.filter(value => value !== lastPicks.get(key));
     const chosen = choices[Math.floor(Math.random() * choices.length)];
@@ -28,17 +32,16 @@
 
   function randomIdea() {
     const draw = key => pick(key, ideaOptions[key]);
-    const age = idea?.age || ages.defaultValue;
     if (isPicture()) {
       return {
-        age, subject: draw('creatureMix'), theme: draw('occasions'), colors: draw('colors'),
+        subject: draw('creatureMix'), theme: draw('occasions'), colors: draw('colors'),
         setting: draw('home'), creatures: draw('companions'), extra: draw('extraDetail'),
         direction: pick('style', styles), photo: idea?.photo || 'no',
         versions: Number.isInteger(Number(idea?.versions)) && Number(idea.versions) > 0 ? idea.versions : '1',
         ink: idea?.ink || 'full color', words: idea?.words || ''
       };
     }
-    const next = { age };
+    const next = {};
     for (const field of window.creatureAppContent.fields) {
       next[field.key] = field.key === 'pictureStyle' ? pick('style', styles) : draw(field.key);
     }
@@ -75,7 +78,6 @@
 
   function showFields() {
     fields.replaceChildren();
-    addField('age', 'Child’s age or stage', ages.options);
     if (isPicture()) {
       addField('subject', 'Featured creature');
       addField('theme', 'Occasion or theme');
@@ -106,26 +108,27 @@
     const heading = get('easy-title');
     const summary = get('easy-summary');
     const hint = get('easy-hint');
-    hint.textContent = 'Copy the prompt and paste it into your image creator.';
+    const age = agePicker.value;
+    hint.textContent = 'Copy the prompt and paste it into ChatGPT or another AI tool that can create images.';
     if (isPicture()) {
       const withPhoto = idea.photo === 'yes';
       heading.textContent = idea.theme || type.selectedOptions[0].text;
       summary.textContent = [idea.subject, idea.setting, idea.creatures].filter(Boolean).join(' · ');
       output.value = window.rheaPartyPrint.buildPrompt({
-        ...idea, subjectText: withPhoto ? 'The subject of my attached photo' : idea.subject,
+        ...idea, age, subjectText: withPhoto ? 'The subject of my attached photo' : idea.subject,
         creatures: withPhoto ? [idea.subject, idea.creatures].filter(Boolean).join(', ') : idea.creatures,
         versions: Number(idea.versions), party: type.value === 'party', withPhoto, ownIdea: true, item: {}
       });
       if (withPhoto) hint.textContent += ' Attach your reference photo there.';
     } else {
-      const values = { ...idea, activityAgeRange: idea.age };
+      const values = { ...idea, activityAgeRange: age };
       const builder = window.creaturePromptBuilder;
       const artifactType = type.value === 'packet' ? 'activityBookPacket' : idea.worksheet || 'coloring';
       heading.textContent = idea.name || type.selectedOptions[0].text;
       const worksheet = worksheets.find(([key]) => key === idea.worksheet);
       summary.textContent = [worksheet?.[1], idea.creatureMix, idea.magic, idea.home].filter(Boolean).join(' · ');
       output.value = type.value === 'creature'
-        ? builder.buildImagePrompt(values) + '\n\nAudience: ' + idea.age + '.'
+        ? builder.buildImagePrompt(values) + '\n\nAudience: ' + age + '.'
         : builder.buildArtifactOutput(artifactType, values).output;
       if (type.value === 'packet') hint.textContent += ' Type NEXT after each page to make the next one.';
     }
@@ -137,6 +140,9 @@
     updateResult();
     result.hidden = false;
     get('easy-announcement').textContent = 'New idea: ' + get('easy-title').textContent + '.';
+  });
+  agePicker.addEventListener('change', () => {
+    if (idea) updateResult();
   });
   type.addEventListener('change', () => {
     idea = null;

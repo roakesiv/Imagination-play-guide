@@ -190,6 +190,8 @@ body:not([data-route="create"]) {
 .start-easy:hover h2 { text-decoration: underline; }
 .easy-panel { max-width: 43rem; display: grid; gap: 12px; padding: clamp(16px, 4vw, 28px); border: 1px solid #ccd8c9; border-radius: 16px; background: #fffefa; }
 .easy-panel label { display: block; font-weight: 750; color: #254b40; }
+.easy-intro { margin: 0; color: var(--muted); }
+.easy-setup label { margin-bottom: 4px; }
 .easy-panel select, .easy-panel input { width: 100%; min-height: 44px; }
 .easy-panel > button { justify-self: start; }
 #easy-result { min-width: 0; border-top: 1px solid #d6dfd4; padding-top: 16px; }

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Magic Creature Card Maker</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="rhea.css?v=print-activity">
+  <link rel="stylesheet" href="rhea.css?v=easy-age-picker">
 </head>
 <body>
   <main class="app-shell">
@@ -20,7 +20,7 @@
           <span aria-hidden="true">→</span>
         </a>
         <a class="start-easy" href="#easy">
-          <div><h2>Easy mode – make for me</h2><p>Pick what to make. We’ll dream up the details.</p></div>
+          <div><h2>Easy mode – make for me</h2><p>Pick what to make and get a prompt for an AI image tool.</p></div>
           <span aria-hidden="true">→</span>
         </a>
         <a class="start-rhea" href="#characters">
@@ -47,16 +47,23 @@
     <section data-view="easy" hidden aria-labelledby="easy-heading">
       <header class="world-heading"><h1 id="easy-heading" tabindex="-1">Easy mode</h1></header>
       <div class="easy-panel">
-        <label for="easy-type">What would you like to make?</label>
-        <select id="easy-type">
-          <option value="poster">Wall poster</option>
-          <option value="party">Party pictures · four to a sheet</option>
-          <option value="creature">Magic creature card</option>
-          <option value="coloring">Coloring page</option>
-          <option value="activity">Surprise activity page</option>
-          <option value="packet">10-page activity pack</option>
-        </select>
-        <button class="poster-print" type="button" id="easy-generate">Generate random</button>
+        <p class="easy-intro">You’ll get a prompt to paste into an AI tool that can create images.</p>
+        <div class="easy-setup">
+          <label for="easy-type">What would you like to make?</label>
+          <select id="easy-type">
+            <option value="poster">Wall poster</option>
+            <option value="party">Party pictures · four to a sheet</option>
+            <option value="creature">Magic creature card</option>
+            <option value="coloring">Coloring page</option>
+            <option value="activity">Surprise activity page</option>
+            <option value="packet">10-page activity pack</option>
+          </select>
+        </div>
+        <div class="easy-setup">
+          <label for="easy-age">Child’s age or stage</label>
+          <select id="easy-age"></select>
+        </div>
+        <button class="poster-print" type="button" id="easy-generate">Generate a prompt</button>
         <span id="easy-announcement" class="easy-sr-only" role="status"></span>
         <section id="easy-result" hidden aria-labelledby="easy-title">
           <h2 id="easy-title"></h2>
@@ -600,6 +607,6 @@
   <script src="rheaPartyPrint.js?v=easy-mode"></script>
   <script src="rheaView.js?v=print-activity"></script>
   <script src="easyIdeas.js"></script>
-  <script src="easyMode.js"></script>
+  <script src="easyMode.js?v=easy-age-picker"></script>
 </body>
 </html>
