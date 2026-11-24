@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Magic Creature Card Maker</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=one-idea">
   <link rel="stylesheet" href="rhea.css?v=easy-age-picker">
 </head>
 <body>
@@ -394,7 +394,7 @@
         <section>
           <h2>Make a creature together</h2>
           <ol>
-            <li>Ask what animals make up your creature and what magic it can do. Type your child’s words into the maker.</li>
+            <li>Ask what kind of creature your child imagines. One idea is enough. Open <strong>Add more details</strong> if they want to keep going.</li>
             <li>Select <strong>Make Creature</strong> for a summary and an image prompt. If you want a picture, copy the prompt into your image creator.</li>
             <li>Select <strong>Save Creature</strong> to keep the card in this browser. <strong>Export Saved Data</strong> downloads your current draft and saved cards as a JSON file. The maker currently supports export only.</li>
           </ol>
@@ -405,44 +405,40 @@
 
     <div data-view="create" hidden>
     <header class="hero">
-      <p class="eyebrow">Grown-up guided play</p>
       <h1 id="maker-heading" tabindex="-1">Magic Creature Card Maker</h1>
-      <p>
-        Ask a few playful questions, keep the exact silly answers, then make
-        a prompt to copy into ChatGPT or your favorite AI image creator.
-      </p>
+      <p>One idea is enough. Use your child’s words to make a prompt for an AI image tool.</p>
     </header>
 
-    <div id="parentTipsMount"></div>
-
-    <section class="panel" aria-labelledby="questions-heading">
-      <div class="section-heading">
-        <h2 id="questions-heading">Make a Creature</h2>
-        <button class="secondary-button" type="button" id="fillExampleButton">Fill Example</button>
-      </div>
-
-      <div class="story-character-picker" aria-labelledby="story-characters-heading">
-        <div>
-          <p class="eyebrow">Use existing character</p>
-          <h3 id="story-characters-heading">Story Characters</h3>
-          <p class="parent-script">Choose one of the six Rhea party characters, then select Use Character.</p>
-        </div>
-        <div class="story-character-controls">
-          <select id="storyCharacterSelect" aria-label="Story character"></select>
-          <button class="secondary-button compact-button" type="button" id="useStoryCharacterButton">Use Character</button>
-        </div>
-        <div class="story-character-preview" id="storyCharacterPreview" aria-live="polite"></div>
-      </div>
-
+    <section class="panel" aria-label="Creature questions">
       <form id="creatureForm">
-        <div id="questionFields"></div>
-        <div id="activityAgeRangeMount"></div>
-
+        <div id="starterQuestion"></div>
         <div class="action-row">
-          <button class="primary-button" type="submit">Make Creature</button>
-          <p class="save-status" id="saveStatus" role="status"></p>
+          <button class="primary-button" type="submit" id="makeCreatureButton">Make Creature</button>
+          <button class="secondary-button" type="button" id="fillExampleButton">Fill Example</button>
         </div>
+        <p class="save-status" id="saveStatus" role="status"></p>
+        <details class="maker-options" id="optionalCreatureDetails">
+          <summary>Add more details (optional)</summary>
+          <div class="maker-option-content">
+            <div id="questionFields"></div>
+            <div id="activityAgeRangeMount"></div>
+            <button class="primary-button" type="submit">Make Creature</button>
+          </div>
+        </details>
       </form>
+
+      <details class="maker-options" id="storyCharacterOptions">
+        <summary>Use a Rhea character</summary>
+        <div class="story-character-picker">
+          <p class="parent-script">Choose one of the six Rhea party characters, then select Use Character.</p>
+          <div class="story-character-controls">
+            <select id="storyCharacterSelect" aria-label="Story character"></select>
+            <button class="secondary-button compact-button" type="button" id="useStoryCharacterButton">Use Character</button>
+          </div>
+          <div class="story-character-preview" id="storyCharacterPreview" aria-live="polite"></div>
+        </div>
+      </details>
+      <div id="parentTipsMount"></div>
 
       <div class="saved-creatures" aria-labelledby="saved-creatures-heading">
         <div class="saved-creatures-heading">
@@ -457,12 +453,11 @@
     <section class="output-grid" aria-live="polite">
       <div class="panel output-panel">
         <div class="section-heading">
-          <h2>Image Prompt</h2>
+          <h2 id="image-prompt-heading" tabindex="-1">Image Prompt</h2>
           <button class="secondary-button" type="button" id="copyButton" disabled>Copy Prompt</button>
         </div>
         <p class="prompt-helper">
-          Press Button to Copy this prompt. Then paste it into ChatGPT or another AI image creator.
-          The app does the prompt engineering, no images atm.
+          Copy this prompt and paste it into ChatGPT or another AI tool that creates images.
         </p>
         <textarea id="promptOutput" readonly placeholder="Your image prompt will appear here after you tap Make Creature."></textarea>
         <p class="copy-status" id="copyStatus" role="status"></p>
@@ -600,7 +595,7 @@
   <script src="promptTemplates.js?v=rhea-age-levels"></script>
   <script src="promptBuilder.js"></script>
   <script src="storage.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=one-idea"></script>
   <script src="rheaVillagers.js"></script>
   <script src="rheaBooks.js?v=print-activity"></script>
   <script src="rheaStoryNotes.js"></script>

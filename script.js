@@ -74,6 +74,7 @@ renderStoryCharacterPicker();
 const form = document.querySelector('#creatureForm');
 const saveStatus = document.querySelector('#saveStatus');
 const promptOutput = document.querySelector('#promptOutput');
+const promptHeading = document.querySelector('#image-prompt-heading');
 const summaryOutput = document.querySelector('#summaryOutput');
 const detailsOutput = document.querySelector('#detailsOutput');
 const copyButton = document.querySelector('#copyButton');
@@ -119,12 +120,13 @@ function renderParentTips() {
 }
 
 function renderQuestionFields() {
-  const container = document.querySelector('#questionFields');
-  if (!container) {
-    return;
-  }
+  const starter = document.querySelector('#starterQuestion');
+  const optionalQuestions = document.querySelector('#questionFields');
+  const [firstField, ...otherFields] = fieldDefinitions;
+  starter.innerHTML = renderQuestion(firstField);
+  optionalQuestions.innerHTML = otherFields.map(renderQuestion).join('');
 
-  container.innerHTML = fieldDefinitions.map((field) => {
+  function renderQuestion(field) {
     const chips = field.id === 'pictureStyle'
       ? `<div class="chip-group" aria-label="Picture style suggestions">
           ${styleSuggestions.map((style) => `<button type="button" class="chip" data-style="${escapeHtml(style)}">${escapeHtml(style)}</button>`).join('')}
@@ -137,7 +139,7 @@ function renderQuestionFields() {
       <input id="${escapeHtml(field.id)}" name="${escapeHtml(field.id)}" type="text" placeholder="${escapeHtml(field.placeholder)}" autocomplete="off">
       ${chips}
     </div>`;
-  }).join('');
+  }
 }
 
 function renderActivityAgeRangeSelector() {
@@ -321,6 +323,7 @@ function useSelectedStoryCharacter() {
   clearGeneratedOutputs();
   saveCurrentCreature();
   setSaveStatus(`${character.name} loaded`);
+  document.querySelector('#makeCreatureButton').focus();
 }
 
 function setSaveStatus(message) {
@@ -550,7 +553,7 @@ function renderRecap(creatureData) {
 
 function generateOutputs(creatureData, artifactType = currentArtifactType) {
   if (!hasCreatureData(creatureData)) {
-    setSaveStatus('Add a creature detail, or choose Fill Example to start.');
+    setSaveStatus('Add one creature idea or choose Fill Example.');
     form.elements.creatureMix.focus();
     return false;
   }
@@ -588,7 +591,8 @@ form.addEventListener('submit', (event) => {
   const creatureData = getCreatureData();
   saveCurrentCreature(creatureData);
   if (generateOutputs(creatureData)) {
-    promptOutput.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    promptHeading.focus({ preventScroll: true });
+    promptOutput.closest('.output-panel').scrollIntoView({ block: 'start' });
   }
 });
 

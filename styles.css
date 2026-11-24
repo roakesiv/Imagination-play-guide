@@ -254,11 +254,35 @@ button:focus-visible {
   font-weight: 800;
 }
 
+#starterQuestion .question-block {
+  padding-bottom: 0;
+}
+
+#creatureForm .primary-button {
+  color: var(--ink);
+}
+
 .action-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 6px;
+}
+
+.maker-options {
+  border-top: 1px solid var(--line);
+}
+
+.maker-options summary {
+  min-height: 44px;
+  padding: 10px 0;
+  color: var(--secondary-dark);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.maker-option-content {
+  padding: 8px 0 16px;
 }
 
 .reset-action {
@@ -275,11 +299,6 @@ button:focus-visible {
   border: 2px solid #b7ded9;
   border-radius: 8px;
   background: #effaf8;
-}
-
-.story-character-picker h3 {
-  margin: 0 0 6px;
-  font-size: 1.08rem;
 }
 
 .story-character-picker .parent-script {
@@ -395,11 +414,13 @@ button:focus-visible {
 }
 
 #fillExampleButton {
-  background: var(--rainbow-red);
+  border: 2px solid #b7ded9;
+  background: #fffdf9;
+  color: var(--secondary-dark);
 }
 
 #fillExampleButton:hover {
-  background: #c62828;
+  background: #effaf8;
 }
 
 #resetButton {
