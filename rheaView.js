@@ -168,6 +168,7 @@
 
   const screens = {
     home: ['home', 'home-heading'],
+    grove: ['grove', 'grove-heading'],
     easy: ['easy', 'easy-heading'],
     'more-to-try': ['more-to-try', 'more-heading'],
     rhea: ['world', 'books-heading'],
@@ -183,7 +184,8 @@
     const hash = window.location.hash.slice(1);
     const target = document.getElementById(hash);
     const isDirectoryCategory = target?.matches('.activity-directory h2[id]');
-    const route = isDirectoryCategory ? 'more-to-try' : Object.hasOwn(screens, hash) ? hash : 'home';
+    const screen = hash.startsWith('grove/') ? 'grove' : hash;
+    const route = isDirectoryCategory ? 'more-to-try' : Object.hasOwn(screens, screen) ? screen : 'home';
     const [view, headingId] = screens[route];
     const previousRoute = document.body.dataset.route;
     document.body.dataset.route = route;
@@ -206,6 +208,7 @@
       if (screens[previousRoute]?.[0] !== view || useDraftForPoster) openPosterMaker(useDraftForPoster);
       useDraftForPoster = false;
     }
+    if (view === 'grove') window.groveView.render(hash);
     const heading = document.getElementById(headingId);
     document.title = route === 'home' || route === 'create' ? 'Magic Creature Card Maker' : heading.textContent + ' | Magic Creature Card Maker';
     if (isDirectoryCategory) {

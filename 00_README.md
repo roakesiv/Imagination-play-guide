@@ -6,6 +6,8 @@ The app helps an adult facilitator capture a child's magical creature idea, pres
 
 ## Current Status
 
+[Play Amor’s Grove on Islay Quest](https://roakesiv.github.io/Imagination-play-guide/#grove). Choose a family activity, earn a gem and watch the grove change. [Play guide and checks](Docs/Amors%20Grove.md)
+
 Current working version: Prototype 4.5 local production pipeline validated.
 
 Current validation focus: repeatable multi-character activity book production and remaining image generation/download friction.

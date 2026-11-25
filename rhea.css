@@ -36,6 +36,20 @@ body:not([data-route="create"]) {
   font-size: 1.1rem;
 }
 .start-print:hover strong { text-decoration: underline; }
+.start-grove {
+  grid-column: 1 / -1;
+  align-items: end;
+  min-height: 9rem;
+  padding: clamp(20px, 4vw, 32px);
+  background: linear-gradient(90deg, #173a32 0%, #173a32eb 34%, #173a3280 62%, transparent 86%),
+              #284d3e url("grove/map.webp") center 44% / cover;
+  color: #fff9e8;
+}
+.start-grove > div { max-width: min(30ch, 80%); }
+.start-grove .path-action { margin-top: 12px; color: #ffe7a3; }
+@media (max-width: 420px) {
+  .start-grove { background-image: linear-gradient(90deg, #173a32f5 0%, #173a32dd 55%, #173a3260), url("grove/map.webp"); }
+}
 .start-rhea, .start-create { padding: clamp(18px, 4vw, 34px); }
 .start-rhea { align-items: center; gap: 12px; justify-content: space-between; background: #194e45; color: #fffdf2; }
 .start-rhea > div { flex: 1; min-width: 0; }
