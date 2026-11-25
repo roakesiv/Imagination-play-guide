@@ -33,7 +33,7 @@ body[data-route="grove"] { min-height: 100vh; background-repeat: no-repeat; }
 .gv-lede { max-width: 51ch; font-size: 1.04rem; line-height: 1.55; margin: 8px 0 14px; }
 .gv-heading .gv-lede { margin: 16px 0 0; }
 .gv-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
-.gv-button, .gv-link, .gv-option, .gv-pin {
+.gv-button, .gv-link, .gv-option {
   color: var(--grove-green);
   font: inherit;
   cursor: pointer;
@@ -60,42 +60,39 @@ body[data-route="grove"] { min-height: 100vh; background-repeat: no-repeat; }
   color: #4e4a36; font-size: .92rem; font-weight: 700;
 }
 .gv-diamond { color: #84529b; font-size: 1.33rem; line-height: 1; text-shadow: 1px 1px #f8e8f5; }
-.gv-entry {
-  margin: 12px 0; border: 1px solid #b8bba4; border-radius: 18px; overflow: hidden;
-  background: linear-gradient(115deg, #fffcf2, #f2ebd5);
-  box-shadow: 0 6px 20px #353e2410;
+.gv-journey-header { display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; }
+.gv-journey-header .gv-heading { margin: 2px 0; }
+.gv-journey-header .gv-gems { margin: 0; }
+.gv-map-guide { margin: 5px 0 12px; font-size: 1rem; }
+.gv-entry-controls { margin: 7px 0; }
+.gv-journey-layout { display: grid; align-items: start; gap: 16px 20px; }
+.gv-journey-layout > *, .gv-journal { min-width: 0; }
+.gv-journal > .gv-actions { margin: 12px 0 0; }
+.gv-stop-panel {
+  padding: clamp(16px, 3vw, 23px); border: 1px solid #bcae86; border-top: 4px solid #6b7650;
+  border-radius: 5px 5px 14px 14px; color: #3e4b35; background: linear-gradient(110deg, #fffbeb, #f8f1df);
 }
-.gv-entry-copy { padding: clamp(20px, 4vw, 38px); align-self: center; }
-.gv-entry-copy .gv-heading { margin: 0; }
-.gv-entry-copy .gv-gems { margin-bottom: 0; }
-.gv-map { margin: 18px 0; }
-.gv-scene {
-  position: relative; isolation: isolate; overflow: hidden;
-  border: 1px solid #92a38c; border-radius: 15px;
-  background: #d6e4cf;
+.gv-stop-panel h2 {
+  margin: 0; color: #233f34;
+  font: 600 clamp(1.6rem, 4.6vw, 2.15rem)/1.15 Georgia, serif; letter-spacing: -.025em;
 }
-.gv-map-art { display: block; width: 100%; height: auto; }
-.gv-entry .gv-map { margin: 0; align-self: center; min-width: 0; }
-.gv-entry .gv-scene { border: none; border-radius: 0; }
-.gv-pin, .gv-scenery {
-  position: absolute; display: grid; place-items: center; transform: translate(-50%, -50%);
-  width: clamp(44px, 7%, 64px); aspect-ratio: 1; line-height: 1; text-align: center;
+.gv-stop-panel .gv-caption { margin: 0 0 5px; }
+.gv-stop-line { font: 1.06rem/1.43 Georgia, serif; margin: 9px 0 16px; }
+.gv-stop-activities { display: grid; gap: 7px; }
+.gv-stop-activities .gv-option { min-height: 48px; padding: 6px 10px; }
+.gv-stop-activities .gv-token { width: 31px; height: 31px; font-size: 1.15rem; }
+.gv-trail-heading { font: 600 1.12rem/1.2 Georgia, serif; margin: 20px 0 5px; }
+.gv-exits { display: flex; flex-wrap: wrap; gap: 3px 9px; }
+.gv-exit {
+  display: flex; align-items: center; gap: 6px; min-height: 44px;
+  border: 0; border-radius: 5px; padding: 4px 3px; color: #31583e; cursor: pointer;
+  background: transparent; font-family: inherit; font-size: .94rem; font-weight: 700; line-height: 1.2;
+  text-align: left; text-decoration: underline; text-underline-offset: 3px;
 }
-.gv-pin {
-  min-height: 44px; min-width: 44px; padding: 0; border: 2px solid #6c6448;
-  border-radius: 50%; background: #fff8e4f5;
-  box-shadow: 0 2px 4px #212b2590, inset 0 0 0 2px #e7d6ad;
-}
-.gv-pin .gv-icon { font-size: clamp(1.35rem, 4vw, 2rem); }
-.gv-pin:focus-visible, .gv-pin:hover { z-index: 3; background-color: #fff5bc; }
-.gv-pin.gv-discovered {
-  background: #fff9dded; border-color: #456739;
-  box-shadow: 0 2px 5px #18281c8c, inset 0 0 0 2px #c8da9a;
-}
-.gv-scenery {
-  width: clamp(30px, 9%, 76px); height: auto; pointer-events: none;
-  filter: drop-shadow(0 1.5px 1.5px #42442699);
-}
+.gv-exit small { display: block; font-size: .75rem; }
+.gv-exit-firefly, .gv-new-crossing { color: #5a4819; }
+.gv-new-crossing { padding: .55rem .75rem; border-left: 3px solid #b68d37; background: #fcf3cc; }
+.gv-reward-map, .gv-transit-map { max-width: 33rem; margin: 1rem auto; }
 .gv-landmark-glyph { font-size: clamp(1.65rem, 4.9vw, 2.65rem); }
 .gv-miniature { display: block; width: 100%; height: 100%; object-fit: contain; }
 .gv-landmark-tile {
@@ -107,23 +104,6 @@ body[data-route="grove"] { min-height: 100vh; background-repeat: no-repeat; }
   border-radius: 40% 40% 2px 2px; box-shadow: 0 0 6px #efad48;
   background: linear-gradient(90deg, transparent 44%, #8f7044 45% 55%, transparent 56%),
     linear-gradient(0deg, transparent 46%, #8f7044 47% 55%, transparent 56%), #ffdf79;
-}
-.gv-lit-windows { position: absolute; inset: 0; pointer-events: none; }
-.gv-lit-windows::before, .gv-lit-windows::after {
-  content: ''; position: absolute; width: 1.45%; height: 2.5%; transform: translate(-50%, -50%);
-  background: linear-gradient(90deg, transparent 46%, #9e793763 47% 53%, transparent 54%),
-    linear-gradient(0deg, transparent 46%, #9e793763 47% 53%, transparent 54%), #ffe19bde;
-  box-shadow: 0 0 6px 3px #ffd267a6; border-radius: 1px;
-}
-.gv-lit-windows::before { left: 85.8%; top: 39.5%; }
-.gv-lit-windows::after { left: 93.4%; top: 39.8%; }
-.gv-scenery:has(.gv-wand-shop) { width: clamp(54px, 16%, 140px); }
-.gv-scenery:has(.gv-wish-charm) { width: clamp(42px, 9%, 80px); }
-.gv-scenery.gv-highlight { filter: drop-shadow(0 0 3px #fffbe6) drop-shadow(0 0 8px #fff394); }
-.gv-map-choice {
-  position: absolute; bottom: -3px; right: -3px; display: grid; place-items: center;
-  background: #fffae9; border: 1px solid #456739; border-radius: 50%; width: 20px; height: 20px;
-  font-size: .74rem;
 }
 .gv-dialogue {
   display: grid; grid-template-columns: clamp(74px, 20vw, 145px) minmax(0, 1fr);
@@ -199,11 +179,7 @@ body[data-route="grove"] { min-height: 100vh; background-repeat: no-repeat; }
 .gv-notice { color: #70491d; background: #fff2ce; border-radius: 6px; padding: 9px 12px; }
 
 @media (min-width: 650px) {
-  .gv-entry { display: grid; grid-template-columns: .85fr 1.15fr; }
-  .gv-entry .gv-map { padding: 16px 16px 16px 0; }
-  .gv-entry .gv-scene { border: 1px solid #a2ad91; border-radius: 11px; }
-  .gv-entry-copy { padding: 24px; }
-  .gv-entry .gv-heading h1 { max-width: 9ch; font-size: clamp(2.8rem, 5vw, 3.6rem); }
+  .gv-journey-layout { grid-template-columns: minmax(0, 1.25fr) minmax(0, .85fr); }
   .gv-options, .gv-prep-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .gv-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .gv-three .gv-option { flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px; }
@@ -217,7 +193,8 @@ body[data-route="grove"] { min-height: 100vh; background-repeat: no-repeat; }
   .gv-reading { padding: 15px; }
   .gv-reading blockquote { line-height: 1.48; }
   .gv-dialogue::after { content: ''; display: table; clear: both; }
-  .gv-entry-copy .gv-lede { margin-top: 8px; }
+  .gv-journey-header h1 { font-size: 2.05rem; }
+  .gv-journey-header .gv-gems { font-size: .8rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   #grove-screen *, #grove-screen *::after { scroll-behavior: auto; animation: none; transition: none; }

@@ -1,4 +1,5 @@
 (() => {
+  const trails = window.groveTrails;
   const key = 'islayQuest.amorGrove.v1';
   const empty = JSON.stringify({ version: 1, readyIds: [], activeVisitId: null, visits: [] });
   let lastSnapshot = empty;
@@ -89,10 +90,63 @@
     });
   }
 
+  function journey(saved) {
+    if (saved.journey && Object.hasOwn(trails.byId, saved.journey.placeId) &&
+        Array.isArray(saved.journey.visited) && Array.isArray(saved.journey.walked)) {
+      return { placeId: saved.journey.placeId, visited: [...saved.journey.visited], walked: [...saved.journey.walked] };
+    }
+
+    // Earlier saves record where the family played, but contain no trail history.
+    let placeId = 'gate';
+    const visited = new Set([placeId]);
+    function locate(activityId) {
+      const stop = trails.placeForActivity(activityId);
+      if (stop) {
+        placeId = stop;
+        visited.add(stop);
+      }
+    }
+    progress(saved, (_, attempt) => locate(attempt.activityId));
+    const active = activeVisit(saved, saved.activeVisitId);
+    const resume = active?.resume?.split('/') || [];
+    if (resume[2] === 'activity') {
+      const pending = active.attempts.find(attempt => attempt.id === resume[3] && !attempt.completed);
+      if (pending) locate(pending.activityId);
+    }
+    return { placeId, visited: [...visited], walked: [] };
+  }
+
+  function move(saved, destination, expectedFrom) {
+    const current = journey(saved);
+    if (expectedFrom && expectedFrom !== current.placeId) return null;
+    if (destination === current.placeId) {
+      saved.journey = current;
+      return [destination];
+    }
+    const route = trails.route(current.placeId, destination, progress(saved).landmarks);
+    if (!route.length) return null;
+    const walked = new Set(current.walked);
+    for (let i = 1; i < route.length; i++) walked.add(trails.edge(route[i - 1], route[i]).id);
+    saved.journey = { placeId: destination, visited: [...new Set([...current.visited, ...route])], walked: [...walked] };
+    return route;
+  }
+
+  function travel(visitId, destination, expectedFrom) {
+    return change(saved => {
+      const visit = activeVisit(saved, visitId);
+      if (!visit) return null;
+      const route = move(saved, destination, expectedFrom);
+      if (route) visit.resume = '#grove/' + visit.id + '/map';
+      return route;
+    });
+  }
+
   function startAttempt(visitId, activityId, landmarkId) {
     return change(state => {
       const visit = activeVisit(state, visitId);
       if (!visit) return null;
+      const destination = trails.placeForActivity(activityId);
+      if (destination) move(state, destination);
       const id = newId();
       visit.attempts.push({ id, activityId, landmarkId, name: '', completed: false });
       visit.resume = '#grove/' + visit.id + '/activity/' + id;
@@ -115,6 +169,8 @@
       if (!attempt) return false;
       if (attempt.completed) return true;
       if (!activeVisit(state, visitId)) return false;
+      const destination = trails.placeForActivity(attempt.activityId);
+      if (destination) move(state, destination);
       if (typeof name === 'string') attempt.name = name;
       attempt.name = attempt.name.trim();
       // An earlier preview may be completed after a later one via browser history.
@@ -180,6 +236,6 @@
 
   window.groveState = {
     key, read, storageAvailable: () => persistent, setReady, startVisit, setResume,
-    startAttempt, nameAttempt, confirm, finish, progress, report, reward, suggestions
+    startAttempt, nameAttempt, confirm, finish, progress, report, reward, suggestions, journey, travel
   };
 })();

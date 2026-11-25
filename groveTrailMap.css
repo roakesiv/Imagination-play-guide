@@ -1,0 +1,211 @@
+/* The route, stones, traveler and earned scenery share the painting's coordinates. */
+.gt-map {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 32rem;
+  min-width: 0;
+  color: #243e31;
+}
+.gt-terrain {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 2px solid #706b46;
+  background: #c9d29d;
+  box-shadow: 0 3px 8px #544a2f2b;
+  container-type: inline-size;
+}
+.gt-terrain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  box-shadow: inset 0 0 0 2px #fff5c891;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.gt-country, .gt-roads {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.gt-country { object-fit: fill; }
+.gt-roads { z-index: 1; }
+.gt-trail path {
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.gt-edge { stroke: #796543; stroke-width: 2.65; }
+.gt-tread { stroke: #efd294; stroke-width: 2.02; }
+.gt-dust { stroke: #ad8652; stroke-width: .34; stroke-dasharray: .45 1.15; }
+.gt-tracks { fill: #855427; visibility: hidden; }
+.gt-trail.is-walked .gt-edge { stroke: #88633c; }
+.gt-trail.is-walked .gt-tread { stroke: #ffdb85; }
+.gt-trail.is-walked .gt-tracks { visibility: visible; }
+.gt-trail.is-walked .gt-dust { display: none; }
+.gt-shortcut .gt-edge { stroke: #64774b; stroke-width: 2.2; }
+.gt-shortcut .gt-tread { stroke: #fff1a5; stroke-width: 1.6; }
+.gt-shortcut .gt-dust { stroke: #877237; stroke-dasharray: .15 1.45; stroke-width: .42; }
+.gt-firefly-halo { fill: #ffed71; opacity: .75; }
+.gt-firefly { fill: #fffde0; stroke: #a27a25; stroke-width: .12; }
+.gt-shortcut.is-new .gt-fireflies { animation: gt-firelight .7s ease-in-out 3 alternate; }
+@keyframes gt-firelight { from { opacity: .65; } to { opacity: 1; } }
+.gt-trail.is-walking .gt-tread { stroke: #fff3b8; }
+.gt-crossing-label {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, -55%) rotate(-16deg);
+  padding: .18em .55em;
+  white-space: nowrap;
+  border: 1px solid #8b7546;
+  border-radius: 10px;
+  background: #fff4c9;
+  color: #4b462b;
+  font: italic 700 clamp(10px, 2.6cqw, 13px)/1.2 Georgia, serif;
+  pointer-events: none;
+}
+.gt-stop {
+  --stone-size: clamp(16px, 4.4cqw, 23px);
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 44px;
+  min-width: 48px;
+  margin: 0;
+  padding: 0;
+  transform: translate(-50%, calc(var(--stone-size) * -.5));
+  color: #322d1d;
+  border: 0;
+  border-radius: 5px;
+  background: none;
+  box-shadow: none;
+}
+button.gt-stop { cursor: pointer; touch-action: manipulation; }
+.gt-stone {
+  display: grid;
+  flex: 0 0 auto;
+  width: var(--stone-size);
+  height: var(--stone-size);
+  place-items: center;
+  border: 2px solid #634d31;
+  border-radius: 50%;
+  background: #faf0ce;
+  box-shadow: 0 1px 0 1px #f8e6a9, 0 3px 2px #4c453782, inset 0 0 0 1px #d1af70;
+  font: bold clamp(10px, 2.8cqw, 14px)/1 Georgia, serif;
+}
+.gt-sign {
+  display: block;
+  white-space: nowrap;
+  margin-top: 2px;
+  padding: 3px clamp(5px, 1.4cqw, 8px) 4px;
+  border: 1px solid #75613d;
+  border-radius: 7px 4px 6px 3px;
+  background: linear-gradient(#fff8dd, #f1dfad);
+  box-shadow: 0 2px 1px #483e2f5c;
+  font: 700 clamp(11px, 3.12cqw, 15px)/1.05 Georgia, 'Times New Roman', serif;
+}
+.gt-stop.is-visited .gt-stone {
+  color: #fff5cd;
+  background: #60774e;
+  border-color: #405539;
+  box-shadow: 0 1px 0 1px #e7e2b4, 0 2px 2px #374d3370;
+}
+.gt-stop.is-current .gt-sign {
+  color: #fff9da;
+  border-color: #d5af60;
+  background: #244c40;
+  box-shadow: 0 0 0 1px #314e36, 0 2px 3px #303e287d;
+}
+button.gt-stop:hover .gt-sign, button.gt-stop:focus-visible .gt-sign {
+  color: #2c3729;
+  background: #fff5bd;
+  border-color: #4c6548;
+}
+button.gt-stop:focus-visible { z-index: 9; outline: 3px solid #1b6086; outline-offset: 3px; }
+.gt-stop[aria-disabled=true] { cursor: progress; }
+.gt-traveler {
+  display: block;
+  position: absolute;
+  z-index: 6;
+  width: clamp(35px, 11.2cqw, 62px);
+  height: clamp(36px, 11.2cqw, 62px);
+  transform: translate(-50%, -96%);
+  pointer-events: none;
+}
+.gt-traveler::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 20%;
+  right: 20%;
+  bottom: 0;
+  height: 12%;
+  border-radius: 50%;
+  background: #4c532d73;
+  filter: blur(1px);
+}
+.gt-traveler-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+  scale: var(--gt-facing, 1) 1;
+  filter: drop-shadow(0 1px 0 #fff4d5) drop-shadow(0 2px 1px #4a463b91);
+}
+.gt-map.is-moving .gt-traveler-art { animation: gt-walk .31s ease-in-out infinite alternate; }
+@keyframes gt-walk {
+  from { transform: translateY(0) rotate(-2deg); }
+  to { transform: translateY(-3px) rotate(2deg); }
+}
+.gt-landmark {
+  position: absolute;
+  z-index: 2;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 1.5px 1px #48422e80);
+  pointer-events: none;
+}
+.gt-landmark .gv-miniature { width: 100%; height: 100%; }
+.gt-landmark .gv-window-icon {
+  width: 93%;
+  height: 95%;
+  border-width: 1px;
+  box-shadow: 0 0 4px 2px #ffda73, 0 0 9px #ffc434bd;
+}
+.gt-landmark[data-landmark="cottage-windows"]::after {
+  content: "";
+  position: absolute;
+  left: 270%;
+  top: 27%;
+  width: 61%;
+  height: 57%;
+  background: #ffe582;
+  box-shadow: 0 0 3px 1px #ffd76b;
+  transform: skewY(-17deg);
+}
+.gt-landmark.is-new {
+  z-index: 4;
+  filter: drop-shadow(0 0 2px white) drop-shadow(0 0 5px #ffd354) drop-shadow(0 2px 1px #615b38);
+}
+.gt-caption {
+  margin: 6px 0 0;
+  padding: 2px 0 3px;
+  color: #3a5343;
+  font: 650 .9rem/1.4 system-ui, sans-serif;
+  text-align: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gt-map .gt-traveler-art, .gt-shortcut.is-new .gt-fireflies { animation: none; }
+}
